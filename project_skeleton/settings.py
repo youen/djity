@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
+"""
+Settings file for an instance of Djity
+This file should not be modified: use local_settings.py instead
+"""
+
 import os.path
 
 from logging import debug,info,warn,error
 
-
-# Get root directory of this instance of DjityPortal
+# Get root directory of this instance of Djity
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 ###########################
