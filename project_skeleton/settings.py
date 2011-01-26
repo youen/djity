@@ -116,13 +116,6 @@ INSTALLED_APPS = (
 	# Dajax
 	'dajaxice',
 	'dajax',
-	'dajax_proxy',
-
-	#tinymce
-	'tinymce',
-
-	# Haystack search
-	'haystack',
 
 	#Djity Core
 	'djity.core.portlet',
@@ -130,25 +123,10 @@ INSTALLED_APPS = (
 	'djity.core.portal',
 	'djity.core.project',
 	'djity.core.simplepage',
-
-	#Djity Services
-	'djity.services.revtext',
-	'djity.services.moatserver',
-	#'djity.services.lod',
-	'djity.services.transmeta',
-	'djity.services.partner',
-
-	# Djity apps
-	'djity.modules.wiki',
-	'djity.modules.repository',
-	'djity.modules.blog',
 )
 
-DJITY_MODULES = (
-        'djity.modules.blog',
-        'djity.modules.wiki',
-        'djity.modules.repository',
-)
+DJITY_MODULES = ()
+DJITY_SERVICES = ()
 
 ##########################
 # Djity install settings #
@@ -194,37 +172,36 @@ USE_L10N = True
 import re
 LOCALE_INDEPENDENT_PATHS = (
 	re.compile('^/dajaxice/'),
-	re.compile('^/tinymce/'),
 )
-
-#TinyMCE
-TINYMCE_JS_URL = '%sjs/tiny_mce/tiny_mce_src.js'%MEDIA_URL
-TINYMCE_DEFAULT_CONFIG = {
-	'plugins': "",
-	'mode':"none",
-	'theme': "advanced",
-	'theme_advanced_buttons1' : "bold,italic,underline,undo,redo,link,unlink,image,forecolor,styleselect,removeformat,cleanup,code",
-	'theme_advanced_buttons3' : "",
-	'width' : '100%',
-}
-
-TINYMCE_SPELLCHECKER = True
-#TINYMCE_COMPRESSOR = True
 
 #LOCALEURL_USE_ACCEPT_LANGUAGE = True
 
 FIXTURE_DIRS = 'data/fixtures'
 
-###################################################
-# Import settings from djity services and modules #
-###################################################
-
-# Make it automatic by iterating on installed apps ?
-
-from djity.services.partner.settings import *
+###################################################################
+# Import local settings and those from djity services and modules #
+###################################################################
 
 # If you want to write over some service or module level configuration, do it
 # in local_settings.py
+
+try:
+	from local_settings import DJITY_MODULES,DJITY_SERVICES
+except:
+	warn('no modules and services declared in local_settings')
+
+djity_apps = DJITY_MODULES + DJITY_SERVICES
+
+if len (djity_apps) >= 0:
+	INSTALLED_APPS += djity_apps
+
+for app in djity_apps:
+	try:
+		exec("from %s.settings import *" % app)
+		info("settings for %s imported" % app)
+	except:
+		pass
+
 try:
     from local_settings import *
 except:

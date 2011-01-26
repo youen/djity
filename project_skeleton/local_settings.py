@@ -14,6 +14,8 @@ ADMINS = (
 	# ('Your Name', 'your_email@domain.com'),
 )
 
+ROOT_PROJECT_LABEL = "Djity"
+
 DATABASES = {
 	'default':{
 	'NAME' : "%s/data/test.db" % PROJECT_ROOT, # Name of base or path to database file if using sqlite3.
@@ -22,3 +24,18 @@ DATABASES = {
 #	'PASSWORD': 'zdsqomlk', # not required with sqlite
 	}
 }
+
+DJITY_MODULES = (
+    #'djity.modules.blog',
+    #'djity.modules.wiki',
+    #'djity.modules.repository',
+)
+
+DJITY_SERVICES = (
+	#'djity.services.revtext',
+	#'djity.services.moatserver',
+	#'djity.services.lod',
+	'djity.services.transmeta',
+	#'djity.services.partner',
+)
+
