@@ -1,0 +1,40 @@
+################
+# Djity Portal #
+################
+
+To be completed with a short presentation, a link, etc...
+
+##############
+# Change Log #
+##############
+
+* 0.1
+- core models
+
+* 0.2
+###############
+# Dependeces  #
+###############
+
+ Dajaxice (djity branch)
+ -----------------------
+
+	install our dajaxice from github
+
+>git clone git@github.com:youen/django-dajaxice.git dajaxice
+>cd dajaxice
+>[sudo] python setup.py install
+
+
+
+
+##############################
+# Usual developper commands: #
+##############################
+
+Reset all applications:
+	yes yes | ./manage.py reset revtext wiki portal project partner simplepage portlet blog moatserver style
+
+Create new portal (all applications should be reset first):
+	./manage.py create_portal
+

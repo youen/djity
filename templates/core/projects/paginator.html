@@ -1,0 +1,27 @@
+{% load djity %}
+{% load i18n %}
+
+
+{% if page.has_other_pages %}
+ <nav id="paginator" class="ui-widget ui-helper-hidden">
+	 {% if page.has_previous %}
+	 <a class="previous on" href="{{paginator_url}}page/{{page.previous_page_number }}" title="Page {{ posts.previous_page_number }}">Previous</a>
+	 {% else %}
+		<a class="previous off">Previous</a>
+		{% endif %}
+	<span class="pages">
+	 {% for page_number in paginator.page_range %}
+		{% if page_number == page.number %}
+			<a class="paginator active">{{ page_number }}</a>
+		{% else %}
+		<a class="on" href="{{paginator_url }}page/{{page_number}}">{{ page_number }}</a>
+		{% endif %}
+	{% endfor %}
+	</span>
+	 {% if page.has_next %}
+	 <a class="next on" href="{{paginator_url}}page/{{page.next_page_number}}" title="Page {{ page.next_page_number }}">Next</a></li>
+	 {% else %}
+	 <a class="next off" title="{% trans "No next page" %}">{% trans 'Next' %}</a>
+	 {% endif %}
+ </nav>
+ {% endif %}

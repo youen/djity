@@ -1,0 +1,55 @@
+{% load i18n %}
+{% load dajaxice_templatetags %}
+
+<!DOCTYPE html >
+<html>
+	<head>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.js"></script>
+        {% dajaxice_js_import %}
+        <script src="{{ MEDIA_URL }}js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/core/style/js/farbtastic.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/core/style/js/themeroller.js"></script>
+		<link rel="stylesheet" href="{{ MEDIA_URL }}/css/ui-darkness.css" type="text/css" />
+		<link rel="stylesheet" href="{{ MEDIA_URL }}/core/style/css/farbtastic.css" type="text/css" />
+		<link rel="stylesheet" href="{{ MEDIA_URL }}/core/style/css/themeroller.css" type="text/css" />
+
+		<script type="text/javascript">
+			window.onload=function(){
+				textures = {{ textures|safe}};
+				init_themeroller();
+		     };
+		</script>
+	</head>
+<body>
+	<div id="style_accordion">
+	{% for group in edit_style_content %}
+		<h3><a href="#">{{ group.0 }}</a></h3>
+		<div>
+		{% for item in group.1 %}
+			<label for="{{ item.1 }}">{{ item.0 }}:</label>
+			<input id="{{ item.1 }}" name="{{ item.1 }}" value="{{ item.2 }}" type="text" size="10">
+			{% if item.3 == 'color' %}
+				<div class="color_picker ui-helper-hidden ui-widget-content">#{{ item.1 }}</div>
+			{% endif %}
+			{% if item.3 == 'radius' %}
+				<div class="radius_slider">#{{ item.1 }}</div>
+			{% endif %}
+			{% if item.3 == 'size' %}
+				<div class="size_slider">#{{ item.1 }}</div>
+			{% endif %}
+			{% if item.3 == 'percent' %}
+				<div class="percent_slider">#{{ item.1 }}</div>
+			{% endif %}
+			{% if item.3 == 'texture' %}
+				<div class="texture_picker ui-helper-hidden ui-widget-content">#{{ item.1 }}</div>
+			{% endif %}
+			<br />
+		{% endfor %}
+		<br/><br/><br/><br/>
+		<br/><br/><br/><br/>
+		</div>
+	{% endfor %}
+	</div>
+	<input type="submit" id="save_button" class="ui-helper-hidden" value="Save">
+</body>

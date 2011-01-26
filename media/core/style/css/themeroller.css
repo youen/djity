@@ -1,0 +1,48 @@
+html{
+	height:100%;
+}
+
+body{
+	margin:0px;
+	margin-top:5px;
+	height:95%;
+}
+
+#style_accordion .ui-accordion-content{
+	padding:5px;
+}
+
+#style_accordion h3, #style_accordion .ui-accordion-content{
+	line-height:0.5em;
+	font-size:0.8em;
+}
+
+#style_accordion input{
+	margin-bottom:5px;
+}
+
+.ui-button{
+	line-height:0.6em;
+	font-size:0.8em;
+	margin-top:5px;
+	float:right;
+}
+
+.texture_picker{
+}
+
+.texture{
+	width:25px;
+	height:25px;
+	float:left;
+	margin:5px;
+	border: 1px solid;
+}
+
+.spacer{
+	clear:both;
+}
+
+.size_slider, .radius_slider, .percent_slider{
+	width: 80%;
+}

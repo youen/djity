@@ -1,0 +1,1 @@
+djity_module = 'SimplePage'

@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<li id={{tab_id}} class="{% ifequal tab_id module_name %} ui-tabs-selected ui-state-active {% endifequal %} ui-state-default ui-corner-top" >
+			<a href="{{ tab_url}}">{{ tab_display }}</a>
+
+				{% ifequal tab_id module_name %}
+				{% if  perm.manage %}
+				<span class="ui-icon ui-icon-close" title="{% trans 'Remove Tab' %}"></span>
+				<span class="ui-icon ui-icon-wrench" title="{% trans 'Configure Tab' %}"></span>
+				{% endif %}
+				{% endifequal %}
+			</li>
+

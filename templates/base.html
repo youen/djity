@@ -1,0 +1,284 @@
+{% load i18n %}
+{% load portlet_tag %}
+{% load djity %}
+{% load dajaxice_templatetags %}
+{% load localeurl_tags %}
+
+<!DOCTYPE html >
+<html lang={{LANGUAGE_CODE}}>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+        <title>{% if SITE_NAME %}{{ SITE_NAME }} : {% endif %}{% block head_title %}{% endblock %}</title>
+
+		<link id="ui_css" class="editable_css" rel="stylesheet" type="text/css" href="{% url ui_css project_name=project_name%}"/>
+		<link id="project_css" class="editable_css" rel="stylesheet" type="text/css" href="{% url project_css project_name=project_name %}"/>
+
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.js"></script>
+
+        {% if perm.manage %}
+		<link id="themeroller_url" type="text/html" href="{% url themeroller project_name=project_name %}" />
+		{% endif %}
+
+        {% dajaxice_js_import %}
+        <script src="{{ MEDIA_URL }}js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
+
+        <script type="text/javascript">
+			/* javascript context for ajax */
+	        project_name = "{{ project_name}}";
+			module_name = "{{module_name}}";
+			role = "{{ role }}";
+			anonymous = {% if user.is_anonymous %}true{% else%}false{% endif %};
+			view_perm =  {% if perm.view %}true{% else %}false{% endif %};
+			edit_perm = {% if perm.edit %}true{% else %}false{% endif %};
+			manage_perm = {% if perm.manage %}true{% else %}false{% endif %};
+			project_public = {% if project_public %}true{% else %}false{% endif %};
+			tab_name = "{{module_name}}";
+			LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
+			path = "{{ path }}";
+        </script>
+
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/djity.js"></script>
+	    {% block project_head %}{% endblock %}
+		{% block module_head %}{% endblock %}
+		<script type="text/javascript">
+			window.onload=function(){
+		        {{ onload|safe }}
+				initHeader();
+				{% block module_onload %}{% endblock %}
+		     };
+		</script>
+    </head>
+
+	<body class="{% block body_class %}{% endblock %}" >
+		<!--[if lte IE 7]>
+			<link rel="stylesheet" href="/wp-content/themes/2010/styles-ie6.css" />
+			<div class="alert-ie6" style="padding: 1em; background: #900; font-size: 1.1em; color: #fff;">
+				{% trans '<p><strong>Warning</strong></p>' %}
+			</div>
+		<![endif]-->
+
+        <header role="banner"  id="djity_header"  class="ui-widget ui-widget-content ui-corner-top ui-widget-header ui-tabs">
+
+            <div id="projects_hierarchy" class="ui-widget">
+                <div id="project_left1">
+				{% ifnotequal project.name "root" %}
+                    <div id="parent_projects">
+						{% for parent in parent_projects %}  <a href="/{{LANGUAGE_CODE}}/{{ parent.name }}">{{ parent }}</a>{% endfor %}
+					</div>
+                    <span id="project_title" class="dj-editable ui-widget ui-widget-content">
+                    {{ project }}
+					</span>
+                {% else %}
+	                <div id="project_logo" dir="ltr">
+						{% block logo_link_image %}<a href="/{{LANGUAGE_CODE}}"><img src="{{ MEDIA_URL }}images/djity_large_green.png" alt="{{ site_name }}"/></a>{% endblock %}
+					</div>
+                {% endifnotequal %}
+                </div>
+
+                <div id="project_left2">
+                    <nav id="project_buttons" class="ui-helper-hidden">
+                        {% if perm.manage %}
+							<a id="create_project_button" class="dj-mini-button">{% trans "New project" %}</a>
+							<a id="manage_users_button" class="dj-mini-button">{% trans "Manage users" %}</a>
+							<a id="project_visibility_button" class="dj-mini-button">{% trans "Project visibility" %}</a>
+							<a id="project_style_button" class="dj-mini-button">{% trans "Manage style" %}</a>
+						{% else %}
+							<a id="project_subscribe_button" class="dj-mini-button"></a>
+                        {% endif %}
+					</nav>
+                </div>
+                <div id="project_left3">
+                {% if children_projects %}
+                    <nav id="children_projects">
+                        {% for child in children_projects %}
+						<a href="/{{LANGUAGE_CODE}}/{{ child.name }}" class="dj-mini-button">{{ child }}</a>
+                        {% endfor %}
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+
+            <nav id="portal_parameters" class="ui-helper-hidden">
+                {% if user.is_authenticated %}
+				<a id="logout_button" class="dj-mini-button">{% trans "Sign out" %}</a>
+				<a id="profile_button">{{ user }}</a>
+                {% else %}
+				<a id="login_button" class="dj-mini-button">{% trans "Sign in" %}</a>
+				<a id="signup_button" >{% trans "Create an account" %}</a>
+                {% endif %}
+				<a id="choose_language_button" class="dj-mini-button">{% trans "Language" %}</a>
+            </nav>
+
+            <nav id="right_tabs" class="ui-helper-hidden" >
+				{% if perm.manage %}
+				<a id="create_tab_button" class="dj-mini-button">{% trans "Add new tab" %}</a>
+				{% endif %}
+                <ul  id="right_tabs_list" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix" >
+                    {% for module in module_tabs %}
+                        {% tab %}{{ module }}{% endtab %}
+                    {% endfor %}
+                </ul>
+                
+                
+            </nav>
+        <!--
+        Dialogs definition
+        -->
+
+        {% if perm.manage %}
+        <!-- Delete Tab -->
+        <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab ?' %}" class="ui-helper-hidden" >
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+            Tab {{ module_name }}  will be permanently deleted and cannot be recovered. Are you sure?</p>
+        </div>
+        
+
+        <!-- Edit Tab -->
+        <div id="{{ module_name }}-change-name" title="{% trans 'Edit name' %}" class="ui-helper-hidden" >
+                <input id="{{ module_name }}-title" value="" />
+        </div>
+        
+        <!-- Create Tab -->
+        <div id="create_tab_dialog" title="{% trans 'Create new Tab' %}" class="ui-helper-hidden" >
+                <select name="module_list" id="module_list" size=1 >
+                <input id="new_tab_name" value="" />
+                </select>
+
+        </div>
+
+        <!-- Create project dialog -->
+        <div id="create_project_dialog" title="{% trans 'Create project' %}" class="ui-helper-hidden" >
+                <input id="new_project_name" value="" />
+        </div>
+
+		<!-- project users management dialog -->
+		<div id="manage_users_dialog" class="ui-helper-hidden" title="{% trans 'Users Manager' %}">
+			<p id="manage_users_dialog_error"></p>
+			<div id='manage_users_dialog_table'>
+			</div>
+		</div>
+
+		<!-- project visibility configuration dialog -->
+			{% if project_public %}
+			<div id="project_visibility_dialog" class="ui-helper-hidden" title="{% trans "Make this project private ?" %}">
+				<p class="ui-state-highlight ui-corner-all">{% trans "Only registered members will be able to see this project." %}</p>
+				<input id="project_visibility" type="hidden" value="private">
+			</div>
+			{% else %}
+			<div id="project_visibility_dialog" class="ui-helper-hidden" title="{% trans "Make this project public ?" %}">
+				<p class="ui-state-highlight ui-corner-all">{% trans "Anonymous users will be able to see this project." %}</p>
+				<input id="project_visibility" type="hidden" value="public">
+			</div>
+			{% endif %}
+
+			<!-- themeroller independant frame -->
+			<div id="themeroller_container"
+				style="height:700px;border:none;z-index:2000;position:fixed;left:200px;top:100px;display:none;">
+				<div id="themeroller_handle" style="background-color:grey;padding-left:5px;color:white;cursor:move;-moz-border-radius-topleft:6px;-moz-border-radius-topright:7px;-moz-border-radius-bottomleft:6px;-moz-border-radius-bottomright:6px;font:none;font-family:Verdana,Arial,sans-serif;font-size:1.1em;font-weight:bold;">
+					{% trans "handle" %}
+				</div>
+				<iframe id="themeroller_frame" style="border:none;height:100%;padding:0;">
+					<p>{% trans "Your browser doesn't support iframes" %}</p>
+				</iframe>
+			</div>
+		{% else %}
+
+		<!-- form for subscribing a new user to the project -->
+		<div id="project_subscribe_dialog" class="ui-helper-hidden" title="{% trans "Connection needed" %}">
+			<p>{% trans "You need to be connected to request subscrition."%}</p>
+
+
+		</div>
+		{% endif %}
+
+		<!-- language selection dialog -->
+		<div id="choose_language_dialog" class="ui-helper-hidden">
+			{% if path %}
+				{% for lang in LANGUAGES %}
+					<a id='lang-{{ lang.0 }}' href="{{ path|chlocale:lang.0 }}">{{ lang.1 }}</a>
+				{% endfor %}
+			{% endif %}
+		</div>
+
+		<!-- login to djity -->
+		<div id="login_dialog" class="ui-helper-hidden" title="{% trans 'Login' %}"> 
+			<p id="login_dialog_error">
+			</p>  
+			<form method="post" action="." class="">
+				<label for="login_username">{% trans "user" %}</label>
+				<input id="login_username" name="username" type="text">
+				<label for="login_password">{% trans "password" %}</label>
+				<input id="login_password" name="password" type="password">
+			</form>
+		</div>
+
+		<!-- sign up to djity -->
+		<div id="register_dialog" class="ui-helper-hidden" title="{% trans 'Sign up !' %}"> 
+		</div>
+
+		<!-- sign up to djity -->
+		<div id="profile_dialog" class="ui-helper-hidden" title="{% trans 'Your profile' %}"> 
+		</div>
+    <!-- end header -->
+	</header>
+
+
+	<div id="body_active" class="ui-helper-clearfix ui-state-active ui-corner-bottom">
+		<div id="body_default" class="ui-helper-clearfix ui-corner-all ui-content">
+			<div id="top" class="line">
+				
+
+            {% for portlet in portlets_top %}
+                {% portlet %}{{ portlet }}{% endportlet %}
+            {% endfor %}
+        </div>
+	            <div id="toolbar">
+		            {% for portlet in portlets_toolbar %}
+		                {% portlet %}{{ portlet }}{% endportlet %}
+		            {% endfor %}
+		        </div>
+        <div id="main" class="line">
+            <aside id="left" class="item column">
+                {% for portlet in portlets_left %}
+                    {% portlet %}{{ portlet }}{% endportlet %}
+                {% endfor %}
+            </aside>
+
+			<div id="content" class="item column ui-corner-all">
+
+				<div id="sap-content">
+					<div id='messages' class="ui-widget">
+					{% if messages %}
+						{% for message in messages %}
+						<div class="ui-helper-hidden"> 	<p>{{ message|safe }}</p></div>
+						{% endfor %}
+					{% endif %}
+					</div>
+
+
+				<section role='main'>
+
+                    {% block body %}{% endblock %}    
+					</section>
+				{% include "core/projects/paginator.html" %}
+				</div>
+            </div>
+            
+            <aside id="right" class="item column">
+                {% for portlet in portlets_right %}
+                    {% portlet %}{{ portlet }}{% endportlet %}
+                {% endfor %}
+            </aside>
+        </div>
+
+        <footer role='contentinfo' id="bottom" class="line"> 
+            {% for portlet in portlets_bottom %}
+                {% portlet %}{{ portlet }}{% endportlet %}
+            {% endfor %}
+		</footer>
+		</div>
+		</div>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{% load i18n %}
+<table>
+	{% for member in members %}
+	<tr><th>{{ member.user }}</th>
+		{% for role in roles %}
+		<td><input type="radio"
+			name="{{member.user}}"
+			value="{{role}}"
+			id="{{member.user}}-{{role}}"
+			{% ifequal member.role role %}checked{% endifequal %}/>
+			<label	for="{{member.user}}-{{role}}">
+				{{role}}
+			</label>
+		</td>
+		{% endfor %}
+		<td><input type="radio"
+			name="{{member.user}}"
+			value="deleted"
+			id="{{member.user}}-deleted"
+			/>
+			<label	for="{{member.user}}-deleted" >
+				{% trans "Deleted" %}
+			</label>
+
+			
+	</tr>
+	{% endfor %}
+</table>

@@ -1,0 +1,24 @@
+from django.conf.urls.defaults import *
+
+from djity.core.style.views import project_css
+from djity.modules.wiki.urls import urlpatterns as wiki_urls
+from djity.modules.repository.urls import urlpatterns as repo_urls
+
+urlpatterns = patterns('djity.core.project.views',
+	# Root project urls
+	(r'^$','overview'),
+	(r'^project.css$',project_css),
+	(r'^wiki/',include(wiki_urls)),
+	(r'^repo/',include(repo_urls)),
+	# etc...
+
+	# Other projects
+	(r'^(?P<project>\w+)/project.css$',project_css),
+	(r'^(?P<project>\w+)/wiki/',include(wiki_urls)),
+	(r'^(?P<project>\w+)/repo/',include(repo_urls)),
+	# etc..
+
+    # all other urls are handled by djity.modules.simple_page
+	(r'^(?P<project>\w+)/(?P<page_name>\w+)',page)
+    (r'^/(?P<page_name>\w+)',page,
+)

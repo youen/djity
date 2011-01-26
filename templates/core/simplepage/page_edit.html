@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block module_head %}
+  {{ form.media }}
+{% endblock %}
+
+{% block body %}
+<form action={% url djity.modules.simplepage.views.edit module_name=module_name project_name=project_name %} method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

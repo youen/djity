@@ -1,0 +1,27 @@
+{% extends "core/portal/base.html" %}
+
+{% load i18n %}
+{% load localeurl_tags %}
+
+
+		{% block body %}
+<div id="box"><h4>Login</h4></div>
+{% if form.has_errors %}
+<div id="alert">
+	<p>{% trans "Your username and password didn't match. Please try again." %}</p>
+</div>  
+{% endif %}
+{% if user.is_authenticated %}
+<div id="alert">
+	<p>{% trans "You are already logged in as" %}"{{ user }}".</p>
+</div>  
+{% endif %}
+<form method="post" action=".">
+	{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit" value="Login" />
+	<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+
+		{% endblock %}

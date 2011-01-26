@@ -1,0 +1,42 @@
+
+{% load i18n %}
+
+
+  {% if form.errors %}
+  <p class="ui-widget-error">{% trans "Please correct the errors below:"%} {{ form.non_field_errors }}</p>
+  {% endif %}
+
+
+  
+    <p>
+      {% if form.username.errors %}
+        <p class="ui-state-error">{{ form.username.errors.as_text }}</p>
+      {% endif %}
+	  <label for="id_username">{% trans "Username:" %}</label>
+      {{ form.username }}
+    </p>
+    <p>
+      {% if form.email.errors %}
+        <p class="ui-state-error">{{ form.email.errors.as_text }}</p>
+      {% endif %}
+	  <label for="id_email">{% trans "Email address:" %}</label>
+      {{ form.email }}
+    </p>
+    <p>
+      {% if form.password1.errors %}
+        <p class="ui-state-error">{{ form.password1.errors.as_text }}</p>
+      {% endif %}
+	  <label for="id_password1">{% trans "Password:" %}</label>
+      {{ form.password1 }}
+    </p>
+    <p>
+      {% if form.password2.errors %}
+        <p class="ui-state-error">{{ form.password2.errors.as_text }}</p>
+      {% endif %}
+	  <label for="id_password2">{% trans "Password (type again to catch typos):" %}</label>
+      {{ form.password2 }}
+    </p>
+	
+  
+
+
