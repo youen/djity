@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='djity',
-    version='1.0',
+    version='0.2',
     description='A versatile portal for Web applications and projects based on Django',
     author='Team Djity',
     author_email='contact@djity.net',
