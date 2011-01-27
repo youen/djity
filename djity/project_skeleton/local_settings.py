@@ -26,16 +26,16 @@ DATABASES = {
 }
 
 DJITY_MODULES = (
-    #'djity.modules.blog',
-    #'djity.modules.wiki',
-    #'djity.modules.repository',
+    #'djityblog',
+    #'djitywiki',
+    #'djityrepository',
 )
 
 DJITY_SERVICES = (
-	#'djity.services.revtext',
-	#'djity.services.moatserver',
-	#'djity.services.lod',
-	'djity.services.transmeta',
+	#'djityrevtext',
+	#'djitymoatserver',
+	#'djitylod',
+	'djitytm',
 	#'djity.services.partner',
 )
 
