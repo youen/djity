@@ -49,12 +49,13 @@ and edit polls/models.py.
 		choice = models.CharField(max_length=200)
 		votes = models.IntegerField()
 
-The class `Quiz` is a proxy between Djity and your module. Edit  `polls/__init__.py` and import `Quiz` as `djity_module` :
+The `Quiz` class is a proxy between Djity and your module.
+Edit  `polls/__init__.py` and import `Quiz` as `djity_module` :
 
 
 .. sourcecode:: python
 
-	from polls.models import Quizz as djity_module
+	from polls.models import Quiz as djity_module
 
 Now, Djity know how to connect your module.
 
