@@ -200,24 +200,34 @@ if len (djity_apps) >= 0:
 # and create links to their media directories
 for app in djity_apps:
     try:
+        print("import settings from %s.settings" % app)
         exec("from %s.settings import *" % app)
-        info("settings for %s imported" % app)
+    except:
+        print("no module %s.settings" % app)
         
-        exec("import %s" % app)
-        module = eval(app)
+    try:
+        print("get path of application %s" % app)
+        exec("from %s import __path__ as app_path" % app)
+        print "-> %s" % app_path
+    except Exception,e:
+        print 1
+        warn(e)
+        print 2
+        continue
 
-        templates_path = module.__path__+"/templates"
+    try:
+        templates_path = app_path+"/templates"
         if os.path.isdir(templates_path):
             TEMPLATE_DIRS.append(templates_path)
-            info("get templates from %s" % templates_path)
+            print("get templates from %s" % templates_path)
 
-        media_path = module.__path__+"/media"
+        media_path = app_path+"/media"
         media_link = MEDIA_ROOT+"/"+app
         if os.path.isdir(media_path) and not os.path.exists(media_link):
             exec("ln -s %s %s" % (media_path, media_link))
-            info("create link to %s in %s" % (media_path, MEDIA_ROOT))
-    except:
-        pass
+            print("create link to %s in %s" % (media_path, MEDIA_ROOT))
+    except Exception,e:
+        warn(e)
 
 try:
     from local_settings import *
