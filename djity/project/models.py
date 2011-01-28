@@ -5,9 +5,9 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
 
-from djity.core.portal.models import SiteRoot
-from djity.core.portlet.models import update_portlets_context, TextPortlet
-from djity.services.transmeta import TransMeta
+from djity.portal.models import SiteRoot
+from djity.portlet.models import update_portlets_context, TextPortlet
+from djity.transmeta import TransMeta
 from djity.utils.inherit import SuperManager
 
 class Project(models.Model):

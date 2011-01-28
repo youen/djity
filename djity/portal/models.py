@@ -4,8 +4,8 @@ from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 
-from djity.services.transmeta import TransMeta
-from djity.core.portlet.models import TextPortlet,update_portlets_context
+from djity.transmeta import TransMeta
+from djity.portlet.models import TextPortlet,update_portlets_context
 
 class SiteRoot(models.Model):
     """

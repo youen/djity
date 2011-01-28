@@ -1,5 +1,5 @@
 from django.contrib import admin
-from djity.core.style.models import CSS
+from djity.style.models import CSS
 
 class CSSAdmin(admin.ModelAdmin):
     pass

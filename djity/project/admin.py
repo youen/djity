@@ -1,4 +1,4 @@
-from djity.core.project.models import Project,Version,Role,Permission,Member,Module
+from djity.project.models import Project,Version,Role,Permission,Member,Module
 from django.contrib import admin
 
 admin.site.register(Project)

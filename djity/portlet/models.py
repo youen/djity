@@ -5,7 +5,7 @@ from django.contrib.contenttypes import generic
 from django.template.loader import render_to_string
 
 from djity.utils.inherit import SuperManager
-from djity.services.transmeta import TransMeta
+from djity.transmeta import TransMeta
 
 class Portlet(models.Model):
     """
