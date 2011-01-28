@@ -35,7 +35,6 @@ DJITY_SERVICES = (
 	#'djityrevtext',
 	#'djitymoatserver',
 	#'djitylod',
-	'djitytm',
 	#'djity.services.partner',
 )
 

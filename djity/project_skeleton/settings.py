@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'djity.portal',
     'djity.project',
     'djity.simplepage',
+    'djity.transmeta',
 )
 
 DJITY_MODULES = ()
@@ -210,9 +211,7 @@ for app in djity_apps:
         exec("from %s import __path__ as app_path" % app)
         print "-> %s" % app_path
     except Exception,e:
-        print 1
         warn(e)
-        print 2
         continue
 
     try:
