@@ -3,11 +3,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 
 from dajax.core import Dajax
-from djity.core.project.decorators import check_perm_and_update_context
+from djity.project.decorators import check_perm_and_update_context
 from dajaxice.core import dajaxice_functions
 from .models import Project, Member, has_perm, get_role
 
-register = lambda name:dajaxice_functions.register_function('djity.core.project.ajax',name)
+register = lambda name:dajaxice_functions.register_function('djity.project.ajax',name)
 @check_perm_and_update_context(perm='edit')
 def save_tab_order(request,array,context=None):
     project = context['project']

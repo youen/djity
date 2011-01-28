@@ -1,13 +1,13 @@
 from django.conf import settings
 from django.template.loader import render_to_string
 from dajax.core import Dajax
-from djity.core.project.decorators import check_perm_and_update_context
+from djity.project.decorators import check_perm_and_update_context
 from django.utils.translation import ugettext_lazy as _ 
 from django.contrib import messages
 
 
 from dajaxice.core import dajaxice_functions
-register = lambda name:dajaxice_functions.register_function('djity.core.style.ajax',name)
+register = lambda name:dajaxice_functions.register_function('djity.style.ajax',name)
 
 """
 @check_perm_and_update_context(perm='manage')

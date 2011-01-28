@@ -6,12 +6,13 @@ Settings file for an instance of Djity
 This file should not be modified: use local_settings.py instead
 """
 
-import os.path
-
+import os
 from logging import debug,info,warn,error
+import djity
 
 # Get root directory of this instance of Djity
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+DJITY_ROOT = djity.__path__[0]
 
 ###########################
 # Django install settings #
@@ -83,7 +84,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'urls'
 
-TEMPLATE_DIRS = []
+TEMPLATE_DIRS = [DJITY_ROOT+"/templates",]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
@@ -196,6 +197,21 @@ djity_apps = DJITY_MODULES + DJITY_SERVICES
 if len (djity_apps) >= 0:
     INSTALLED_APPS += djity_apps
 
+
+
+def create_link(media_path,media_link):
+    """
+    create links to build a virtually unified media directory
+    """
+    if os.path.isdir(media_path) and not os.path.exists(media_link):
+        os.symlink(media_path,media_link)
+        print("create link to %s in %s" % (media_path, media_link))
+
+# create links for all directories in djity-core media dir
+djity_media = DJITY_ROOT+"/media"
+for d in os.listdir(djity_media):
+    create_link(djity_media+"/"+d,MEDIA_ROOT+"/"+d)
+
 # import djity apps separate settings
 # add their templates to the list
 # and create links to their media directories
@@ -209,6 +225,7 @@ for app in djity_apps:
     try:
         print("get path of application %s" % app)
         exec("from %s import __path__ as app_path" % app)
+        app_path = app_path[0]
         print "-> %s" % app_path
     except Exception,e:
         warn(e)
@@ -222,9 +239,7 @@ for app in djity_apps:
 
         media_path = app_path+"/media"
         media_link = MEDIA_ROOT+"/"+app
-        if os.path.isdir(media_path) and not os.path.exists(media_link):
-            exec("ln -s %s %s" % (media_path, media_link))
-            print("create link to %s in %s" % (media_path, MEDIA_ROOT))
+        create_link(media_path,media_link)
     except Exception,e:
         warn(e)
 

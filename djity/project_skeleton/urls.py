@@ -8,7 +8,7 @@ dajaxice_autodiscover()
 
 from django.conf import settings
 
-from djity.core.portal.urls import urlpatterns as portal_urls
+from djity.portal.urls import urlpatterns as portal_urls
 
 urlpatterns = patterns('',
 	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT, 'show_indexes':True}),

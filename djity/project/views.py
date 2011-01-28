@@ -2,7 +2,7 @@ from django.http import HttpResponse,HttpResponseNotFound,HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout as logout_response
 
-from djity.core.project.decorators import check_perm_and_update_context 
+from djity.project.decorators import check_perm_and_update_context 
 
 
 @check_perm_and_update_context()

@@ -29,7 +29,7 @@ class SiteRoot(models.Model):
             new = True
         
         if new:
-            from djity.core.project.models import Project
+            from djity.project.models import Project
             root_project = Project(name="root",label=settings.ROOT_PROJECT_LABEL,description="Djity portal instance root project",is_root=True)
             root_project.save()
             site_name = ""

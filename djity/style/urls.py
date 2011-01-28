@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('djity.core.style.views',
+urlpatterns = patterns('djity.style.views',
         url('texture','texture',name='texture'),
         url('icons','icons',name='icons'),
         url('themeroller.html','themeroller',name="themeroller"),

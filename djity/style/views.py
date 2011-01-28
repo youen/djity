@@ -4,10 +4,10 @@ from django.conf import settings
 from django.http import HttpResponse,HttpResponseNotFound,HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 
-from djity.core.portal.models import SiteRoot
-from djity.core.project.models import Project,is_active,has_perm
-from djity.core.project.decorators import check_perm_and_update_context
-from djity.core.style.models import CSS
+from djity.portal.models import SiteRoot
+from djity.project.models import Project,is_active,has_perm
+from djity.project.decorators import check_perm_and_update_context
+from djity.style.models import CSS
 
 def update_css_context(css_context,get):
     for style in css_context:

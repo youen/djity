@@ -3,9 +3,9 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import login ,authenticate
 from django.utils.translation import get_language
 from django.template import RequestContext
-from djity.core.portal.forms import RegistrationForm, ProfileForm
-from djity.core.portal.models import UserProfile
-from djity.core.project.decorators import check_perm_and_update_context 
+from djity.portal.forms import RegistrationForm, ProfileForm
+from djity.portal.models import UserProfile
+from djity.project.decorators import check_perm_and_update_context 
 
 def register(request):
 

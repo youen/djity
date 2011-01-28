@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('djity.core.simplepage.views',
+urlpatterns = patterns('djity.simplepage.views',
 	url(r'^$','page',{'module_name':'home'},name="simplepage-home-view"),
 	url(r'^/edit$','edit',{'module_name':'home'},name="simplepage-home-edit"),
 	url(r'^/draft$','draft',{'module_name':'home'},name="simplepage-home-draft"),

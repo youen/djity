@@ -1,14 +1,9 @@
 from django.conf.urls.defaults import *
 
-from djity.core.simplepage.urls import urlpatterns as simplepage_urls
-from djity.core.style.urls import urlpatterns as css_urls
-from djity.modules.wiki.urls import urlpatterns as wiki_urls
-from djity.modules.repository.urls import urlpatterns as repo_urls
-from djity.modules.quizz.urls import urlpatterns as quizz_urls
-from djity.modules.blog.urls import urlpatterns as blog_urls
+from djity.simplepage.urls import urlpatterns as simplepage_urls
+from djity.style.urls import urlpatterns as css_urls
 from djity.utils import djity_modules
 
-import imp
 from django.utils.importlib import import_module
 from django.conf import settings
 

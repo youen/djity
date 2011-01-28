@@ -5,9 +5,9 @@ from django.utils.translation import *
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
-from djity.core.project.decorators import check_perm_and_update_context
-from djity.services.transmeta.forms import LocalForm
-from djity.services.transmeta import get_lang_version, is_draft, get_draft, set_as_draft
+from djity.project.decorators import check_perm_and_update_context
+from djity.transmeta.forms import LocalForm
+from djity.transmeta import get_lang_version, is_draft, get_draft, set_as_draft
 
 
 from .forms import SimplePageForm 

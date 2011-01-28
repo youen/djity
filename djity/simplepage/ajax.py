@@ -4,11 +4,11 @@ from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 
 from dajax.core import Dajax
-from djity.core.project.decorators import check_perm_and_update_context
+from djity.project.decorators import check_perm_and_update_context
 from djity.utils.security import sanitize
-from djity.services.transmeta import is_draft
+from djity.transmeta import is_draft
 from dajaxice.core import dajaxice_functions
-register = lambda name:dajaxice_functions.register_function('djity.core.simplepage.ajax',name)
+register = lambda name:dajaxice_functions.register_function('djity.simplepage.ajax',name)
 
 @check_perm_and_update_context(perm='edit')
 def save_simple_page(request,div_id,html,context=None):

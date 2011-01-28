@@ -6,11 +6,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
 from django.contrib import messages
 
-from djity.core.portal.forms import RegistrationForm, ProfileForm
-from djity.core.project.decorators import check_perm_and_update_context
+from djity.portal.forms import RegistrationForm, ProfileForm
+from djity.project.decorators import check_perm_and_update_context
 
 from dajaxice.core import dajaxice_functions
-dajax_register = lambda name:dajaxice_functions.register_function('djity.core.portal.ajax',name)
+dajax_register = lambda name:dajaxice_functions.register_function('djity.portal.ajax',name)
 
 def logout(request):
     django_logout(request)

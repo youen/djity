@@ -139,7 +139,7 @@ class Project(models.Model):
 
 
 
-            from djity.core.style.models import CSS
+            from djity.style.models import CSS
             css = CSS()
             css.save()
             self.css = css
@@ -209,7 +209,7 @@ class Project(models.Model):
         """
         get the list of modules avaible for this project
         """
-        from djity.core.simplepage.models import SimplePage
+        from djity.simplepage.models import SimplePage
         from djity.utils import djity_modules
 
         result = [SimplePage]

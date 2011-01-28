@@ -9,8 +9,8 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 
 from django.template import RequestContext
-from djity.core.project.models import Project,Module,Role,Member
-from djity.core.portlet.models import update_portlets_context
+from djity.project.models import Project,Module,Role,Member
+from djity.portlet.models import update_portlets_context
 
 def check_perm_and_update_context(
         perm='view',
