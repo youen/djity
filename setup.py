@@ -11,5 +11,6 @@ setup(name='djity',
     packages= find_packages(),
     package_data={'djity':['templates/*/*/*','media/*/*/*/*','locale/*','tools/*','project_skeleton/*']},
     scripts=['scripts/djity-admin.py'],
-	requires=['django (>=1.2)']
+	requires=['django (>=1.2)','dajax (>=0.8.4)'],
 )
+

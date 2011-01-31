@@ -17,8 +17,6 @@ print "Copy %s > %s" % (skeleton_path,project_path)
 
 shutil.copytree(skeleton_path,project_path)
 
-#create media and data directory
-os.mkdir(project_path + '/media')
-os.mkdir(project_path + '/data')
 
-
+os.makedirs("%s/data/cache" % project_path)
+os.makedirs("%s/media" % project_path)
