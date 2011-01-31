@@ -7,7 +7,7 @@ from dajax.core import Dajax
 from djity.project.decorators import check_perm_and_update_context
 from djity.utils.security import sanitize
 from dajaxice.core import dajaxice_functions
-register = lambda name:dajaxice_functions.register_function('djity.core.portlet.ajax',name)
+register = lambda name:dajaxice_functions.register_function('djity.portlet.ajax',name)
 
 from .models import TextPortlet
 
