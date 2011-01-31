@@ -31,7 +31,7 @@ function parent_projects() {
 function portal_parameters() {
 	$('#logout_button').click(
 		function(){
-			Dajaxice.djity.core.portal.logout('Dajax.process',{});	
+			Dajaxice.djity.portal.logout('Dajax.process',{});	
 		});
 
 	$('#login_dialog').dialog({
@@ -40,7 +40,7 @@ function portal_parameters() {
 		show:'blind',
 		buttons:{
 			'Login': function() {
-				Dajaxice.djity.core.project.login(
+				Dajaxice.djity.portal.login(
 				'Dajax.process',{
 					'project_name':project_name,
 					'module_name':module_name,
@@ -163,7 +163,7 @@ function create_project_dialog(){
 			buttons: {
 				Ok : function() {
 					$(this).dialog('close');
-					Dajaxice.djity.core.project.create_project(
+					Dajaxice.djity.project.create_project(
 						'Dajax.process',{
 						'project_name':project_name,
 						'module_name':module_name,
@@ -197,7 +197,7 @@ function manage_users_dialog(){
 						users[this.name] = $(this).val();
 				});
 
-				Dajaxice.djity.core.project.manage_users(
+				Dajaxice.djity.project.manage_users(
 					'Dajax.process',{
 						'project_name':project_name,
 						'module_name':module_name,
@@ -212,7 +212,7 @@ function manage_users_dialog(){
 			}
 		},
 		open: function(event,ui){
-			Dajaxice.djity.core.project.manage_users(
+			Dajaxice.djity.project.manage_users(
 				'Dajax.process',{
 					'project_name':project_name,
 					'module_name':module_name,
@@ -260,7 +260,7 @@ function project_visibility_dialog(){
 		show:'blind',
 		buttons : {
 			OK : function(){
-				Dajaxice.djity.core.project.project_visibility(
+				Dajaxice.djity.project.project_visibility(
 					'Dajax.process',{
 						'project_name':project_name,
 						'module_name':module_name,
@@ -352,7 +352,7 @@ function project_subscribe_button(){
 	else{
 		$("#project_subscribe_button")
 			.click(function(){
-					Dajaxice.djity.core.project.project_subscribe(
+					Dajaxice.djity.project.project_subscribe(
 						'Dajax.process',{				
 							'project_name':project_name,
 							'module_name':module_name,
@@ -380,7 +380,7 @@ function register_dialog(){
 		buttons : {
 			OK : function(){
 
-				Dajaxice.djity.core.project.register(
+				Dajaxice.djity.portal.register(
 					'Dajax.process',{
 						'username': $('#id_username').val(),
 						'email': $('#id_email').val(),
@@ -395,7 +395,7 @@ function register_dialog(){
 			}
 		},
 		open: function(event,ui){
-			Dajaxice.djity.core.project.register(
+			Dajaxice.djity.portal.register(
 				'Dajax.process',{
 					'username': '',
 					'email': '',
@@ -431,7 +431,7 @@ function profile_dialog(){
 		buttons : {
 			OK : function(){
 
-				Dajaxice.djity.core.project.profile(
+				Dajaxice.djity.project.profile(
 					'Dajax.process',{
 						'project_name':project_name,
 						'password1': $('#id_password1').val(),
@@ -445,7 +445,7 @@ function profile_dialog(){
 			}
 		},
 		open: function(event,ui){
-			Dajaxice.djity.core.portal.profile(
+			Dajaxice.djity.portal.profile(
 				'Dajax.process',{
 					'project_name':project_name,
 					'password1': '',
@@ -539,7 +539,7 @@ function init_right_tabs() {
 
 			placeholder: 'dj-sorting-tab ui-state-highlight dj-mini-button',
 			update: function(event, ui) { 
-				Dajaxice.djity.core.project.save_tab_order(
+				Dajaxice.djity.project.save_tab_order(
 					'Dajax.process',{
 						'project_name':project_name,
 						'array':$('#right_tabs_list').sortable('toArray')
@@ -562,7 +562,7 @@ function init_right_tabs() {
 			buttons: {
 				Ok : function() {
 					$(this).dialog('close');
-					Dajaxice.djity.core.project.delete_tab(
+					Dajaxice.djity.project.delete_tab(
 						'Dajax.process',{
 						'project_name':project_name,
 						'module_name':module_name,
@@ -602,7 +602,7 @@ function init_right_tabs() {
 				Ok : function() {
 					$(this).dialog('close');
 					$('#' + tab_name ).find('a')[0].textContent = $('#' + tab_name + '-title').val();
-					Dajaxice.djity.core.project.save_tab_name(
+					Dajaxice.djity.project.save_tab_name(
 						'Dajax.process',{
 						'project_name':project_name,
 						'module_name':module_name,
@@ -649,7 +649,7 @@ function init_right_tabs() {
 			resizable:false,
 			show:'blind',
 			open: function(event,ui){
-				Dajaxice.djity.core.project.get_module(
+				Dajaxice.djity.project.get_module(
 					'Dajax.process',{
 					'project_name' : project_name,
 					}
@@ -665,7 +665,7 @@ function init_right_tabs() {
 			buttons: {
 				Ok : function() {
 					$(this).dialog('close');
-					Dajaxice.djity.core.project.add_module(
+					Dajaxice.djity.project.add_module(
 						'Dajax.process',{
 							'project_name':project_name,
 							'tab_name':$('#new_tab_name').val(),
@@ -771,7 +771,7 @@ function save_text_portlet(id,html) {
 	 * save change for a text portlet 
 	 *
 	 */	
-	Dajaxice.djity.core.portlet.save_text_portlet(
+	Dajaxice.djity.portlet.save_text_portlet(
 			'Dajax.process',{
 			'project_name':project_name,
 			'LANGUAGE_CODE':LANGUAGE_CODE,
@@ -782,7 +782,7 @@ function save_text_portlet(id,html) {
 }
 
 function project_title_callback(id,html){
-		Dajaxice.djity.core.project.save_project_title(
+		Dajaxice.djity.project.save_project_title(
 				'Dajax.process',{
 				'project_name':project_name,
 				'LANGUAGE_CODE':LANGUAGE_CODE,
