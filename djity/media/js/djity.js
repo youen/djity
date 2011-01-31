@@ -851,8 +851,12 @@ $.widget("ui.editable",{
 			autoOpen:false,
 			save_function : function(){},
 			buttons :  
-			[[{name:'save',icon:'ui-icon-disk',label:'save'}],
-			[{name:'bold'},{name:'italic'},{name:'underline'}]],
+			[
+			[{name:'save',icon:'ui-icon-disk',label:'save'}],
+			[{name:'bold'},{name:'italic'},{name:'underline'}],
+			//[{name:'insertOrderedList'},{name:'insertUnorderedList'}],
+			[{name:'justifyfull'},{name:'justifycenter'},{name:'justifyleft'},{name:'justifyright'}]
+			],
 			effect:'clip',
 	},
 	_create: function() {
@@ -974,6 +978,31 @@ $.widget("ui.editable",{
 	underline : function(){
 			document.execCommand ('underline', false, null);
 	},
+	justifycenter : function(){
+			document.execCommand ('justifycenter', false, null);
+	},
+	justifyleft : function(){
+			document.execCommand ('justifyleft', false, null);
+	},
+	justifyright : function(){
+			document.execCommand ('justifyright', false, null);
+	},
+	justifyfull : function(){
+			document.execCommand ('justifyfull', false, null);
+	},
+	insertOrderedList : function(){
+			document.execCommand ('insertOrderedList', false, null);
+	},
+	insertUnorderedList : function(){
+			document.execCommand ('insertUnorderedList', false, null);
+	},
+	insertLineBreak : function(){
+			document.execCommand ('insertLineBreak', false, null);
+	},
+
+
+
+
 
 });
 
