@@ -170,7 +170,7 @@ function themeroller_widgetify(){
 };
 
 function save_project_theme(){
-	Dajaxice.dajax_proxy.save_project_style(
+	Dajaxice.djity.style.save_project_style(
 		'Dajax.process',{
 		'project_name':top.project_name,
 		'style_values':get_edited_project_style(false),

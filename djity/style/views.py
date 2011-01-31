@@ -62,7 +62,7 @@ def texture(request,project_name):
         return HttpResponseNotFound()
 
     # check cache for previously computed image
-    cache = "%s/cache/%s_%s_%s" % (settings.TEXTURES_DIR,bg_color,percent,filename)
+    cache = "%s/cache/%s_%s_%s" % (settings.DATA_DIR,bg_color,percent,filename)
     if os.path.isfile(cache):
         response = HttpResponse(mimetype="image/png")
         cache = open(cache,'r')
@@ -92,7 +92,7 @@ def icons(request,project_name):
     except:
         return HttpResponseNotFound()
 
-    cache = "%s/cache/%s_icons.png" % (settings.ICONS_DIR,color)
+    cache = "%s/cache/%s_icons.png" % (settings.DATA_DIR,color)
     if os.path.isfile(cache):
         response = HttpResponse(mimetype="image/png")
         cache = open(cache,'r')

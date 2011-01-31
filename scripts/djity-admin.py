@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import djity,shutil
+import djity,shutil,os
 from optparse import OptionParser
 
 parser = OptionParser("usage: %prog project_directory")
@@ -16,4 +16,5 @@ skeleton_path =  djity.__path__[0]+'/project_skeleton'
 print "Copy %s > %s" % (skeleton_path,project_path)
 
 shutil.copytree(skeleton_path,project_path)
-
+os.makedirs("%s/data/cache" % project_path)
+os.makedirs("%s/media" % project_path)

@@ -49,6 +49,9 @@ TIME_FORMAT = None
 # Absolute path to the directory that holds media. Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = "%s/media" % PROJECT_ROOT
 
+# Absolute path to the directory containing data for this intance of djity
+DATA_DIR = "%s/data" % PROJECT_ROOT
+
 # Djity's themeroller textures and icons directories
 TEXTURES_DIR = "%s/images/textures/" % MEDIA_ROOT
 ICONS_DIR = "%s/images/icons/" % MEDIA_ROOT
