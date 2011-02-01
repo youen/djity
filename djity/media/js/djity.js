@@ -842,6 +842,27 @@ $.widget("ui.box", {
 });
 
 
+//usefull function from http://stackoverflow.com/questions/4652734/return-html-from-a-user-selection
+function getSelectionHtml() {
+	var html = "";
+	if (typeof window.getSelection != "undefined") {
+		var sel = window.getSelection();
+		if (sel.rangeCount) {
+			var container = document.createElement("div");
+			for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+				container.appendChild(sel.getRangeAt(i).cloneContents());
+			}
+			html = container.innerHTML;
+		}
+	} else if (typeof document.selection != "undefined") {
+		if (document.selection.type == "Text") {
+			html = document.selection.createRange().htmlText;
+			
+		}
+	}
+	return html;
+}
+
 $.widget("ui.editable",{
 		/* 
 		 * HTML5 editable
@@ -854,7 +875,7 @@ $.widget("ui.editable",{
 			[
 			[{name:'save',icon:'ui-icon-disk',label:'save'}],
 			[{name:'bold'},{name:'italic'},{name:'underline'}],
-			//[{name:'insertOrderedList'},{name:'insertUnorderedList'}],
+			[{name:'insertOrderedList'},{name:'insertUnorderedList'}],
 			[{name:'justifyfull'},{name:'justifycenter'},{name:'justifyleft'},{name:'justifyright'}]
 			],
 			effect:'clip',
