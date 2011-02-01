@@ -21,18 +21,6 @@ DJITY_ROOT = djity.__path__[0]
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
-)
-
-MANAGERS = ADMINS
-DATABASES = {
-    'default':{
-    'NAME' : "%s/data/test.db" % PROJECT_ROOT,         # Or path to database file if using sqlite3.
-    'ENGINE' : 'django.db.backends.sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'. #todo change
-    }
-}
-
 # Local time zone for this installation. Choices can be found here: http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your system time zone.
@@ -129,15 +117,9 @@ INSTALLED_APPS = (
     'djity.transmeta',
 )
 
-DJITY_MODULES = ()
-DJITY_SERVICES = ()
-
 ##########################
 # Djity install settings #
 ##########################
-
-#Root project label
-ROOT_PROJECT_LABEL = "Djity"
 
 # Default roles and permissions are used at the creation of a Djity project
 # They can be edited online afterward
@@ -189,18 +171,16 @@ FIXTURE_DIRS = 'data/fixtures'
 # If you want to write over some service or module level configuration, do it
 # in local_settings.py
 
-try:
-    from local_settings import DJITY_MODULES,DJITY_SERVICES
-except:
-    warn('no modules and services declared in local_settings')
+modules = open("%s/modules.txt" % PROJECT_ROOT).read().split('\n')
+modules.remove('')
+services = open("%s/services.txt" % PROJECT_ROOT).read().split('\n')
+services.remove('')
 
-djity_apps = DJITY_MODULES + DJITY_SERVICES
+djity_apps = modules + services
 
 # add activated djity modules and services to installed apps
 if len (djity_apps) >= 0:
     INSTALLED_APPS += djity_apps
-
-
 
 def create_link(media_path,media_link):
     """
