@@ -21,11 +21,15 @@ command = sys.argv[1]
 
 class ProjectSkeleton(Skeleton):
     src = djity.__path__[0]+'/project_skeleton'
-    vars = []
+    variables = [
+            Var('project_label', description="The label of the root project of this instance of Djity", default="Djity"),
+            Var('admin_name', description="Your name"),
+            Var('admin_email', description="Your email address"),
+            ]
 
 class ModuleSkeleton(Skeleton):
     src = djity.__path__[0]+'/module_skeleton'
-    vars = []
+    variables = []
 
 # execute command create_project
 if command == 'create_project':
