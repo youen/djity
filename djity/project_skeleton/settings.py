@@ -86,7 +86,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 )
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     #overwrite url dispatcher with localeurl
     'localeurl',
     
@@ -115,7 +115,7 @@ INSTALLED_APPS = (
     'djity.project',
     'djity.simplepage',
     'djity.transmeta',
-)
+]
 
 ##########################
 # Djity install settings #
@@ -176,7 +176,7 @@ modules.remove('')
 services = open("%s/services.txt" % PROJECT_ROOT).read().split('\n')
 services.remove('')
 
-djity_apps = modules + services
+djity_apps = list(modules + services)
 
 # add activated djity modules and services to installed apps
 if len (djity_apps) >= 0:
