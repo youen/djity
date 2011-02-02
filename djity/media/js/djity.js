@@ -760,7 +760,6 @@ function init_tag(){
 /* Define tools function  */
 
 function message(msg) {
-	msg_div = $('<div class="ui-helper-hidden" ><p>'+msg +'</p></div>');
 	$('#messages').notify('create',{text:msg});
 
 }
@@ -874,8 +873,8 @@ $.widget("ui.editable",{
 			[
 			[{name:'save',icon:'ui-icon-disk',label:'save'}],
 			[{name:'bold'},{name:'italic'},{name:'underline'}],
-			[{name:'insertOrderedList'},{name:'insertUnorderedList'}],
-			[{name:'justifyfull'},{name:'justifycenter'},{name:'justifyleft'},{name:'justifyright'}]
+			//[{name:'insertOrderedList'},{name:'insertUnorderedList'}],
+			//[{name:'justifyfull'},{name:'justifycenter'},{name:'justifyleft'},{name:'justifyright'}]
 			],
 			effect:'clip',
 	},
