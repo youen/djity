@@ -519,7 +519,7 @@ function widgetify() {
 			}
 	);
 
-	$('#messages').children('div').notify();
+	$('#messages').notify();
 
 	if(edit_perm){
 		$(".dj-editable").each(function(i,e){$(e).editable({save_function:eval(e.id +'_callback')});});
@@ -761,8 +761,7 @@ function init_tag(){
 
 function message(msg) {
 	msg_div = $('<div class="ui-helper-hidden" ><p>'+msg +'</p></div>');
-	$('#messages').prepend(msg_div);
-	msg_div.notify({expires:10000});
+	$('#messages').notify('create',{text:msg});
 
 }
 
@@ -931,6 +930,11 @@ $.widget("ui.editable",{
 						.appendTo(editorBox);
 			});
 
+			editorBox.position({
+						my:'left bottom',
+						at:'left top',
+						of:self.element,
+					 });
 
 					
     },
@@ -969,11 +973,6 @@ $.widget("ui.editable",{
 				
 				editorBox = self.editorBox;
 			
-			editorBox.position({
-						my:'left bottom',
-						at:'left top',
-						of:self.doc,
-					 });
 			
 			editorBox
 				.show(options.effect);

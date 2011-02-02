@@ -37,6 +37,8 @@
 			tab_name = "{{module_name}}";
 			LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
 			path = "{{ path }}";
+			context = "{{context}}"
+
         </script>
 
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/djity.js"></script>
@@ -249,12 +251,11 @@
 			<div id="content" class="item column ui-corner-all">
 
 				<div id="sap-content">
-					<div id='messages' class="ui-widget">
-					{% if messages %}
-						{% for message in messages %}
-						<div class="ui-helper-hidden"> 	<p>{{ message|safe }}</p></div>
-						{% endfor %}
-					{% endif %}
+					<div id='messages' class="ui-widget ui-helper-hidden">
+						<div id="default" class="ui-widget-content ui-state-highlight ui-corner-all" >
+							<p>#{text}</p>
+						</div>
+
 					</div>
 
 

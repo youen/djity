@@ -128,6 +128,9 @@ def check_perm_and_update_context(
                 if 'info_message' in request.GET:
                     context['info_message'] = request.GET['info_message']
 
+            #Recursive context for json 
+            context['context'] = context
+
             kwargs['context'] = context
             return func(*args,**kwargs)
         return _new_func
