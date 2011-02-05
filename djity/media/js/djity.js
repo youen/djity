@@ -17,6 +17,11 @@ function initHeader(){
 	toolbar();
 	paginator();
 	init_tag();
+    
+	//after all send notification
+	$(context.django_messages).each(function(item,msg){
+		$('#messages').notify('create',{text:msg});
+		});
 };
 
 function parent_projects() {

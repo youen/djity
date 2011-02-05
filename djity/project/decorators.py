@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 
 from django.template import RequestContext
+from djity.utils.context import DjityContext
+
 from djity.project.models import Project,Module,Role,Member
 from djity.portlet.models import update_portlets_context
 
@@ -35,7 +37,7 @@ def check_perm_and_update_context(
             """
             
             request  = args[0]
-            context = RequestContext(request)
+            context = DjityContext(request)
 
             # Get project_name and module_name, standard parameters of djity
             # module views. Put them in the context.
@@ -128,8 +130,6 @@ def check_perm_and_update_context(
                 if 'info_message' in request.GET:
                     context['info_message'] = request.GET['info_message']
 
-            #Recursive context for json 
-            context['context'] = context
 
             kwargs['context'] = context
             return func(*args,**kwargs)
