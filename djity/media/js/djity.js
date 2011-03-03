@@ -873,25 +873,12 @@ $.widget("ui.editable",{
 	options : {
 			show :'',
 			autoOpen:false,
-			save_function : function(){},
-			buttons :  
-			[
-			[{name:'save',icon:'ui-icon-disk',label:'save'}],
-			[{name:'bold'},{name:'italic'},{name:'underline'}],
-			//[{name:'insertOrderedList'},{name:'insertUnorderedList'}],
-			//[{name:'justifyfull'},{name:'justifycenter'},{name:'justifyleft'},{name:'justifyright'}]
-			],
-			effect:'clip',
+			save_function : function(){}
 	},
 	_create: function() {
 		var self=this,
 			options = self.options,
-			id = self.element.id,
-			editorBox = (self.editorBox =  $('<div></div>'))
-					 .appendTo(document.body)
-					 .css('position','absolute')
-			         .hide()
-					 .addClass('ui-widget ui-widget-header dj-editor-box ui-corner-top'),
+			id = self.element.id;
 
 			
 			_isOpen = false,
@@ -901,47 +888,11 @@ $.widget("ui.editable",{
 				})
 				.focus(function(){
 					self.open();
-				})
+				});
 
 			
-			doc.attr('contentEditable',true);
 			
-		self._create_buttons(options.buttons);
 	},
-	_create_buttons : function(buttons){
-			var self = this,
-				options = self.options,
-				editorBox = self.editorBox;
-			$(buttons).each(function(index,button_group){
-					var current_group = $('<span></span>')
-					$(button_group).each(function(index,b){
-
-						$('<a href="#" class='+b.name+' title='+b.label +'>'+b.name+'</a>')
-							.button({
-								icons:{
-									'primary':b.icon
-								},
-								text:false,
-								label:b.label,
-								
-							})
-							.addClass('dj-mini-button')
-							.click(	function (event){eval('self.'+b.name +'()');})
-							.appendTo(current_group);
-					});
-					current_group
-						.buttonset()
-						.appendTo(editorBox);
-			});
-
-			editorBox.position({
-						my:'left bottom',
-						at:'left top',
-						of:self.element,
-					 });
-
-					
-    },
 
 	_init: function() {
 		    if ( this.options.autoOpen ) {
@@ -949,86 +900,22 @@ $.widget("ui.editable",{
 			}
 	},
 	close : function(){
-
-			var self = this,
-				options = self.options,
-				editorBox = self.editorBox;
-
-			editorBox.hide(options.effect);
-			self.doc
-				.removeClass('ui-state-highlight')
 			self._isOpen = false;
-
-			
 	},
-
-
 	isOpen: function() {
 				return this._isOpen;
 	},
-
-	
-
 	open : function(){
 		if (this._isOpen) { return; }
-
-			var self = this,
-				options = self.options,
-				
-				editorBox = self.editorBox;
-			
-			
-			editorBox
-				.show(options.effect);
-					
-			self.doc.addClass('ui-state-highlight')
+			$(self.element).elrte({toolbar:'maxi'});	
 			self._isOpen  = true;
-			
-			  
 	},
-
 	save : function(){
 			var self = this,
-				options = self.options,
-				editorBox = self.editorBox;
+				options = self.options;
 			self.options.save_function(self.element.attr('id'),self.element.html());
 			self.close();	
 	},
-
-	bold : function(){
-			document.execCommand ('bold', false, null);
-	},
-	italic : function(){
-			document.execCommand ('italic', false, null);
-	},
-	underline : function(){
-			document.execCommand ('underline', false, null);
-	},
-	justifycenter : function(){
-			document.execCommand ('justifycenter', false, null);
-	},
-	justifyleft : function(){
-			document.execCommand ('justifyleft', false, null);
-	},
-	justifyright : function(){
-			document.execCommand ('justifyright', false, null);
-	},
-	justifyfull : function(){
-			document.execCommand ('justifyfull', false, null);
-	},
-	insertOrderedList : function(){
-			document.execCommand ('insertOrderedList', false, null);
-	},
-	insertUnorderedList : function(){
-			document.execCommand ('insertUnorderedList', false, null);
-	},
-	insertLineBreak : function(){
-			document.execCommand ('insertLineBreak', false, null);
-	},
-
-
-
-
 
 });
 
