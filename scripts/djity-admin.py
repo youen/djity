@@ -31,13 +31,15 @@ class ModuleSkeleton(Skeleton):
     src = djity.__path__[0]+'/module_skeleton'
     variables = []
 
+
+
 # execute command create_project
 if command == 'create_project':
     sys.argv[0] += ' create_project'
     sys.argv.remove('create_project')
     ProjectSkeleton.cmd()
 
-# execute command create_project
+# execute command create_module
 if command == 'create_module':
     sys.argv[0] += ' create_module'
     sys.argv.remove('create_module')
