@@ -2,7 +2,7 @@
 
 import djity,shutil,os,sys
 from optparse import OptionParser
-from skeleton import Skeleton, Var
+from skeleton import Skeleton, Var, Bool
 
 commands = ['create_project','create_module']
 
@@ -25,6 +25,7 @@ class ProjectSkeleton(Skeleton):
             Var('project_label', description="The label of the root project of this instance of Djity", default="Djity"),
             Var('admin_name', description="Your name"),
             Var('admin_email', description="Your email address"),
+            Bool('debug_toolbar', description="Activate Django debug toolbar ?", default=True)
             ]
 
 class ModuleSkeleton(Skeleton):

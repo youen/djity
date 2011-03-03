@@ -171,12 +171,12 @@ FIXTURE_DIRS = 'data/fixtures'
 # If you want to write over some service or module level configuration, do it
 # in local_settings.py
 
-modules = open("%s/modules.txt" % PROJECT_ROOT).read().split('\n')
-modules.remove('')
-services = open("%s/services.txt" % PROJECT_ROOT).read().split('\n')
-services.remove('')
+DJITY_MODULES = open("%s/modules.txt" % PROJECT_ROOT).read().split('\n')
+DJITY_MODULES.remove('')
+DJITY_SERVICES = open("%s/services.txt" % PROJECT_ROOT).read().split('\n')
+DJITY_SERVICES.remove('')
 
-djity_apps = list(modules + services)
+djity_apps = list(DJITY_MODULES + DJITY_SERVICES)
 
 # add activated djity modules and services to installed apps
 if len (djity_apps) >= 0:
@@ -226,11 +226,26 @@ for app in djity_apps:
     except Exception,e:
         warn(e)
 
+# import and overwrite all settings defined locally
 try:
     from local_settings import *
 except:
     warn('no local settings found')
 
+# apply django debug toolbar if specified in settings
+try:
+    dt = DEBUG_TOOLBAR
+except:
+    warn("no parameter 'debug_toolbar' found in settings")
+    dt = False
+
+if dt:
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    # debug toolbar will only work locally
+    INTERNAL_IPS = ('127.0.0.1',)
+    INSTALLED_APPS += ('debug_toolbar',)
+
+# import settings specific to theme management
 try:
     from style_settings import *
 except:

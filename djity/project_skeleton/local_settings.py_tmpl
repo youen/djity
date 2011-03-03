@@ -25,3 +25,7 @@ DATABASES = {{
 	}}
 }}
 
+# in order to activate the django debug toolbar you will need to have it
+# installed: 'pip install django-debug-toolbar'
+DEBUG_TOOLBAR = {debug_toolbar!r}
+
