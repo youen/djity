@@ -19,9 +19,9 @@ import sys, os
 
 # for autodoc API generation, prepare django environment
 sys.path.insert(0, os.path.abspath('../../'))
-import settings
-from django.core.management import setup_environ
-setup_environ(settings)
+#import settings
+#from django.core.management import setup_environ
+#setup_environ(settings)
 
 # -- General configuration -----------------------------------------------------
 
