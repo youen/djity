@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{#{% load parser %}#}
+
+{% block module_head %}
+	<script type="text/javascript" src="{{ MEDIA_URL }}core/simplepage/js/simplepage.js"></script>
+
+{% endblock %}
+
+{% block body %}
+<div id="simple_page_content" class='dj-editable'>
+	{{page_content|safe}}
+</div>
+{% endblock %}
