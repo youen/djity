@@ -27,7 +27,7 @@ class ProjectSkeleton(Skeleton):
             Var('admin_name', description="Your name", default="admin"),
             Var('admin_email', description="Your email address", default="admin@example.com"),
             Bool('debug_toolbar', description="Activate Django debug toolbar ?", default=False),
-            Bool('develop', description="Create and initialize a default development project", default=False),
+            Bool('develop', description="Build and run a default development project server", default=False),
             ]
        
     def run(self, dst_dir, run_dry=False):
