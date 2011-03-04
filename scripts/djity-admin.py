@@ -3,6 +3,7 @@
 import djity,shutil,os,sys
 from optparse import OptionParser
 from skeleton import Skeleton, Var, Bool
+from subprocess import Popen,call,PIPE
 
 commands = ['create_project','create_module']
 
@@ -23,10 +24,32 @@ class ProjectSkeleton(Skeleton):
     src = djity.__path__[0]+'/project_skeleton'
     variables = [
             Var('project_label', description="The label of the root project of this instance of Djity", default="Djity"),
-            Var('admin_name', description="Your name"),
-            Var('admin_email', description="Your email address"),
-            Bool('debug_toolbar', description="Activate Django debug toolbar ?", default=True)
+            Var('admin_name', description="Your name", default="admin"),
+            Var('admin_email', description="Your email address", default="admin@example.com"),
+            Bool('debug_toolbar', description="Activate Django debug toolbar ?", default=False),
+            Bool('develop', description="Create and initialize a default development project", default=False),
             ]
+       
+    def run(self, dst_dir, run_dry=False):
+        """
+        overwrite the standard run method from Skeleton.
+        If the option develop is activated, build the project with default
+        development parameters.
+        """
+        Skeleton.run(self, dst_dir, run_dry)
+        if self['admin_name']:
+            print "setup a default developement project..."
+            p = Popen("./manage.py syncdb",stdin=PIPE,stdout=PIPE,stderr=PIPE,shell=True,cwd=dst_dir)
+            print "create links for media directories in %s/media" % dst_dir
+            print "create tables"
+            print "define superuser '%s'" % self['admin_name']
+            p.communicate("yes\n%s\n%s\n" % (self['admin_name'],self['admin_email']))
+            print "install indexes"
+            print "run 'manage.py create_portal'"
+            call("./manage.py create_portal",shell=True,cwd=dst_dir)
+            print "run 'manage.py runserver'"
+            call("./manage.py runserver",shell=True,cwd=dst_dir)
+
 
 class ModuleSkeleton(Skeleton):
     src = djity.__path__[0]+'/module_skeleton'
