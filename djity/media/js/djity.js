@@ -946,6 +946,8 @@ $.widget("ui.editable",{
 	},
 	close : function(){
 
+		if (!this._isOpen) { return; }
+
 			var self = this,
 				options = self.options,
 				editorBox = self.editorBox;
@@ -995,7 +997,11 @@ $.widget("ui.editable",{
 			var self = this,
 				options = self.options,
 				editorBox = self.editorBox;
-			self.element.elrte();
+			self.element.hide();
+
+			self.element.elrte({lang:context.LANGUAGES[0][0],toolbar:'maxi'});
+			self.element.elrte('val',self.element.html());
+			self.element.elrte('open');
 			self.close();
 	},
 
