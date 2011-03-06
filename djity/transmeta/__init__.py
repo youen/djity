@@ -35,61 +35,17 @@ def get_all_translatable_fields(model):
         model_trans_fields.update(parent_trans_fields)
     return tuple(model_trans_fields)
 
-def is_draft(instance,field,lang=None):
-    """
-    Test if the field in the language lang (or in the current language) is a draft
-    """
-    if lang== None:
-        lang = get_language()
-    if hasattr(instance,'%s_draft'%field):
-        return lang in getattr(instance,'%s_draft'%field).split(',')
-    return False
-
-def get_draft(instance,field,lang=None):
-    """
-    return the draft version of the field in the current language.
-    if field is not a draft, raise an exception
-    """
-    if lang== None:
-        lang = get_language()
-
-    if hasattr(instance,'%s_draft'%field):
-        if lang in getattr(instance,'%s_draft'%field).split(','):
-            return getattr(instance,'%s_%s'%(field,lang))
-    raise Exception('The field %s is not a draft in %s'%(field,lang))
-
-def set_as_draft(instance,field,value=True,lang=None):
-    """
-    Set the field  in the language lang (or in the current language) of instance as a draft.
-    """
-
-    if lang== None:
-        lang = get_language()
-    draft_lang = getattr(instance,'%s_draft'%field).split(',')
-    if value:
-        if lang not in draft_lang:
-            draft_lang.append(lang)
-            setattr(instance,'%s_draft'%field,','.join(draft_lang))
-            return True
-    elif lang in draft_lang:
-        draft_lang.remove(lang)
-        setattr(instance,'%s_draft'%field,','.join(draft_lang))
-        return True
-
-    return False
 
 def get_lang_version(instance,field):
  
     attname = lambda x: get_real_fieldname(field, x)
-    def has_attr_not_draft(lang):
-        if getattr(instance, attname(lang),None):
-            return  not is_draft(instance,field,lang)
-        return False
-    if  has_attr_not_draft(get_language()):
+    def has_attr(lang):
+        return getattr(instance, attname(lang),None)
+    if  has_attr(get_language()):
         result = get_language()
-    elif has_attr_not_draft(get_language()[:2]):
+    elif has_attr(get_language()[:2]):
         result = get_language()[:2]
-    elif has_attr_not_draft(instance.transmeta_default_language):
+    elif has_attr(instance.transmeta_default_language):
         result = instance.transmeta_default_language
     elif getattr(instance, attname(settings.LANGUAGE_CODE), None):
             result = settings.LANGUAGE_CODE
@@ -107,21 +63,19 @@ def default_value(field):
 
     attname = lambda lang: get_real_fieldname(field, lang)
 
-    def has_attr_not_draft(instance,lang):
-        if getattr(instance, attname(lang),None):
-            return  not is_draft(instance,field,lang)
-        return False
+    def has_attr(instance,lang):
+        return  getattr(instance, attname(lang),None)
 
 
 
 
     def default_value_func(self):
 
-        if  has_attr_not_draft(self,get_language()):
+        if  has_attr(self,get_language()):
             result = getattr(self, attname(get_language()))
-        elif has_attr_not_draft(self,get_language()[:2]):
+        elif has_attr(self,get_language()[:2]):
             result = getattr(self, attname(get_language()[:2]))
-        elif has_attr_not_draft(self,self.transmeta_default_language):
+        elif has_attr(self,self.transmeta_default_language):
             result = getattr(self, attname(self.transmeta_default_language))
         elif getattr(self, attname(settings.LANGUAGE_CODE), None):
             result = getattr(self, attname(settings.LANGUAGE_CODE))
@@ -173,7 +127,6 @@ class TransMeta(models.base.ModelBase):
 
             class Meta:
                 translate = ('my_i18n_field',)
-                draftable = ('my_i18n_field',)
 
     Then we'll be able to access a specific language by
     <field_name>_<language_code>. If just <field_name> is
@@ -194,12 +147,6 @@ class TransMeta(models.base.ModelBase):
         if 'Meta' in attrs and hasattr(attrs['Meta'], 'translate'):
             fields = attrs['Meta'].translate
             delattr(attrs['Meta'], 'translate')
-            #draftable field
-            if hasattr(attrs['Meta'], 'draftable'):
-                draftable = attrs['Meta'].draftable
-                delattr(attrs['Meta'], 'draftable')
-            else :
-                draftable = [],
 
             if hasattr(attrs['Meta'], 'ordering'):
                 for field in  fields:
@@ -239,13 +186,6 @@ class TransMeta(models.base.ModelBase):
                         dict(field=field, name=name))
 
             original_attr = attrs[field]
-            if field in draftable:
-                draft_field = models.CharField(
-                            max_length=64,
-                            verbose_name='%s draft'%(original_attr.verbose_name),
-                            default= '')
-                draft_field_name = '%s_draft'%(field)
-                attrs[draft_field_name] = draft_field
 
             for lang in settings.LANGUAGES:
                 lang_code = lang[LANGUAGE_CODE]

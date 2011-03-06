@@ -52,4 +52,3 @@ class SimplePage(Module):
 
     class Meta:
         translate = ('content',)
-        draftable = ('content',)
