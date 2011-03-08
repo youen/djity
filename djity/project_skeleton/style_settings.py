@@ -7,15 +7,15 @@ DEFAULT_STYLE = [
         ["font_family","Verdana,Arial,sans-serif"],
         ["font_size","1.1em"],
 
-        ["header_background_color","#CCCCCC"],
-        ["header_background_texture","03__highlight_soft.png"],
-        ["header_background_percent","80"],
+        ["header_background_color","#ff3838"],
+        ["header_background_texture","03_highlight_soft.png"],
+        ["header_background_percent","100"],
 		["header_border_color","#000000"],
 		["header_text_color","#000000"],
 		["header_link_color","#000000"],
 		["header_icon_color","#000000"],
 
-        ["wcontent_background_color","#CCCCCC"],
+        ["wcontent_background_color","#e7dada"],
         ["wcontent_background_texture","03_highlight_soft.png"],
         ["wcontent_background_percent","80"],
 		["wcontent_border_color","#000000"],
@@ -23,7 +23,7 @@ DEFAULT_STYLE = [
 		["wcontent_link_color","#000000"],
 		["wcontent_icon_color","#000000"],
 
-        ["default_background_color","#CCCCCC"],
+        ["default_background_color","#ffffff"],
         ["default_background_texture","03_highlight_soft.png"],
         ["default_background_percent","80"],
 		["default_border_color","#000000"],
@@ -31,7 +31,7 @@ DEFAULT_STYLE = [
 		["default_link_color","#000000"],
 		["default_icon_color","#000000"],
 
-        ["highlight_background_color","#CCCCCC"],
+        ["highlight_background_color","#e7dada"],
         ["highlight_background_texture","03_highlight_soft.png"],
         ["highlight_background_percent","80"],
 		["highlight_border_color","#000000"],
@@ -47,7 +47,7 @@ DEFAULT_STYLE = [
 		["error_link_color","#000000"],
 		["error_icon_color","#000000"],
 
-        ["active_background_color","#CCCCCC"],
+        ["active_background_color","#e7dada"],
         ["active_background_texture","03_highlight_soft.png"],
         ["active_background_percent","80"],
 		["active_border_color","#000000"],
@@ -55,7 +55,7 @@ DEFAULT_STYLE = [
 		["active_link_color","#000000"],
 		["active_icon_color","#000000"],
 
-        ["focus_background_color","#CCCCCC"],
+        ["focus_background_color","#e7dada"],
         ["focus_background_texture","03_highlight_soft.png"],
         ["focus_background_percent","80"],
 		["focus_border_color","#000000"],
