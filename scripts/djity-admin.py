@@ -53,9 +53,25 @@ class ProjectSkeleton(Skeleton):
 
 class ModuleSkeleton(Skeleton):
     src = djity.__path__[0]+'/module_skeleton'
-    variables = []
-
-
+    variables = [
+            Var('module_name',description="The name of the module, Python package will be preceded by 'djity_' and PIP package will be preceded by 'djity-'"),
+            Var('author_name',description="Your name, or the name of the developers team",default=""),
+            Var('author_email',description="An email address to contact the developer(s)",default=""),
+            Var('url',description="The official page",default=""),
+            Var('description',description="A short description of this module, you should probably write more detailed information in the README file",default=""),
+            ]
+    def run(self, dst_dir, run_dry=False):
+        """
+        overwrite the standard run method from Skeleton.
+        Get rif of whitespaces in module name.
+        Add a 'class_name' var by uppercasing the first letter of 'module_name'.
+        """
+        self.get_missing_variables()
+        if ' ' in self['module_name']:
+            print "'module_name' should not contain whitespaces, replace by underscores."
+            self['module_name'] = self['module_name'].replace(' ','_').lower()
+        self['class_name'] = ''.join([word[0].upper()+word[1:] for word in self['module_name'].split('_')])
+        self.write(dst_dir, run_dry=run_dry)
 
 # execute command create_project
 if command == 'create_project':

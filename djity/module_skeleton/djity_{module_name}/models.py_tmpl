@@ -8,12 +8,12 @@ class {class_name}(Module):
 	your application and Djity, allowing Djity to manage this module in a
 	standard way.
 
-	At creation, this module simply displays a list of messages.
+	At creation, this module simply displays a message.
     """
     #get the module manager
     objects = SuperManager()
 
 class Message(models.Model):
-	{module_name} = models.ForeignKey(class_name)
+	{module_name} = models.ForeignKey({class_name})
 	content = models.CharField(max_length=200, default='Hello World !')
 
