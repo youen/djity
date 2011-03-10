@@ -18,4 +18,4 @@ def {module_name}_view(request,context=None):
     # update djity's context for templates to render correctly
     context.update({{'view':'{module_name}','message':message}})
     # render the template en return it
-    return render_to_response('{module_name}/{module_name}.html',context)
+    return render_to_response('{package_name}/{module_name}.html',context)
