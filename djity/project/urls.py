@@ -25,7 +25,7 @@ urlpatterns = patterns('',
 for app in settings.DJITY_APPS:
     url = import_module('%s.urls'%app)
     urlpatterns += patterns('',
-            (r'^%s/'%app.split('.')[-1],include(url),{'project_name':'root'}),
+            (r'^%s/'%url.prefix,include(url),{'project_name':'root'}),
     )
 
 urlpatterns += patterns('',
@@ -38,7 +38,7 @@ urlpatterns += patterns('',
 for app in settings.DJITY_APPS:
     url = import_module('%s.urls'%app)
     urlpatterns += patterns('',
-                (r'^(?P<project_name>[-\w]+)/%s/'%app.split('.')[-1],include(url)),
+                (r'^(?P<project_name>[-\w]+)/%s/'%url.prefix,include(url)),
     )
 
 # all other urls are handled by djity.modules.simple_page

@@ -20,6 +20,28 @@ if len(sys.argv)<=1 or not sys.argv[1] in commands:
 
 command = sys.argv[1]
 
+def ls_apps():
+    """
+    Find all available djity applications on the system
+    """
+    apps = set()
+    for path in sys.path:
+        try:
+            packages = os.listdir(path)
+        except:
+            continue
+        for package in packages:
+            if package.startswith('djity_'):
+                # remove information related to eggs
+                package = package.split('.')[0]
+                package = package.split('-')[0]
+                try:
+                    exec("import %s" % package)
+                except:
+                    continue
+                apps.add(package)
+    return apps
+
 class ProjectSkeleton(Skeleton):
     src = djity.__path__[0]+'/project_skeleton'
     variables = [
@@ -36,6 +58,24 @@ class ProjectSkeleton(Skeleton):
         If the option develop is activated, build the project with default
         development parameters.
         """
+
+        # add a boolean variable for each available djity application
+        # on the system
+        apps = ls_apps()
+        for app in apps:
+            self.variables.append(Bool(app, description="Install this application",default=True))
+
+        # use Skeleton to ask user's input
+        self.get_missing_variables()
+        
+        # derive apps.txt content from the user's input
+        self['apps'] = ""
+        for app in apps:
+            if self[app]:
+                self['apps'] += "%s\n" % app
+
+        # use Skeleton to create destinatrion directory 
+        self.write(dst_dir, run_dry=run_dry)
         Skeleton.run(self, dst_dir, run_dry)
         if self['admin_name']:
             print "setup a default developement project..."
@@ -66,6 +106,7 @@ class ApplicationSkeleton(Skeleton):
         Get rif of whitespaces in module name.
         Add a 'class_name' var by uppercasing the first letter of 'module_name'.
         """
+        # use Skeleton to ask user's input
         self.get_missing_variables()
         
         # derive automatic parameters from user defined application name

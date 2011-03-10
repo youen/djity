@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.contrib import messages
+from django.utils.translation import ugettext_lazy as _
 
 from djity.project.decorators import check_perm_and_update_context
 
@@ -11,9 +12,9 @@ def {module_name}_view(request,context=None):
     # Get the current instance of the module to render
     {module_name} = context['module']
     # fetch its message
-    message = {module_name}.message
+    message = _({module_name}.message)
     # will display a notification
-    messages.add_message(message)
+    messages.add_message(request,messages.INFO,unicode(message))
     # update djity's context for templates to render correctly
     context.update({{'view':'{module_name}','message':message}})
     # render the template en return it

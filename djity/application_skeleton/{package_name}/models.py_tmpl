@@ -28,5 +28,5 @@ class {class_name}(Module):
         """
         return the application's start page
         """
-        return djreverse('{module_name}-main',context,module_name=self.name)
+        return djreverse('{module_name}-main',context)
 
