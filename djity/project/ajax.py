@@ -54,13 +54,13 @@ def get_module(request, context=None):
     dajax= Dajax()
     out = ""
     project = context['project']
-    for model in  project.get_availabe_modules():
+    for model in  project.get_available_modules():
         out += "<option value='%s'>%s</option>\n"%(model.__name__,model._meta.verbose_name)
     dajax.assign('#module_list','innerHTML',out)
     dajax.script("""
     $('#new_tab_name')
-	    .val($("#module_list option:selected").text())
-		.select();
+        .val($("#module_list option:selected").text())
+        .select();
     """)
 
     return dajax.json()
@@ -72,7 +72,10 @@ def add_module(request, tab_name, module_type, context=None):
     # build dictionary of classes available for modules
     from django.db.models import Max
     from django.db.models.loading import get_app
-    model  = get_app(module_type.lower()).__getattribute__(module_type)
+    try:
+        model  = get_app(module_type.lower()).__getattribute__(module_type)
+    except:
+        model  = get_app('djity_'+module_type.lower()).__getattribute__(module_type)
     #bug context return tuple !
     project,=context['project'],
     i = project.modules.aggregate(Max('tab_position'))['tab_position__max'] + 1

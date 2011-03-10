@@ -1,0 +1,5 @@
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('{package_name}.views',
+    url(r'^$','{module_name}_view',{{'module_name':'{module_name}'}},name='{module_name}-main'),
+)

@@ -5,7 +5,7 @@ from optparse import OptionParser
 from skeleton import Skeleton, Var, Bool
 from subprocess import Popen,call,PIPE
 
-commands = ['create_project','create_module']
+commands = ['create_project','create_app']
 
 # if no valid command was specified, display help accordingly
 if len(sys.argv)<=1 or not sys.argv[1] in commands:
@@ -51,14 +51,14 @@ class ProjectSkeleton(Skeleton):
             call("./manage.py runserver",shell=True,cwd=dst_dir)
 
 
-class ModuleSkeleton(Skeleton):
-    src = djity.__path__[0]+'/module_skeleton'
+class ApplicationSkeleton(Skeleton):
+    src = djity.__path__[0]+'/application_skeleton'
     variables = [
-            Var('module_name',description="The name of the module, Python package will be preceded by 'djity_' and PIP package will be preceded by 'djity-'"),
+            Var('application_name',description="Package, module and class names will be derived from it"),
             Var('author_name',description="Your name, or the name of the developers team",default=""),
             Var('author_email',description="An email address to contact the developer(s)",default=""),
             Var('url',description="The official page",default=""),
-            Var('description',description="A short description of this module, you should probably write more detailed information in the README file",default=""),
+            Var('description',description="A short description of this application, you should probably write more detailed information in the README file",default=""),
             ]
     def run(self, dst_dir, run_dry=False):
         """
@@ -67,10 +67,15 @@ class ModuleSkeleton(Skeleton):
         Add a 'class_name' var by uppercasing the first letter of 'module_name'.
         """
         self.get_missing_variables()
-        if ' ' in self['module_name']:
-            print "'module_name' should not contain whitespaces, replace by underscores."
-            self['module_name'] = self['module_name'].replace(' ','_').lower()
-        self['class_name'] = ''.join([word[0].upper()+word[1:] for word in self['module_name'].split('_')])
+        
+        # derive automatic parameters from user defined application name
+        self['class_name'] = ''.join([word[0].upper()+word[1:] for word in self['application_name'].lower().split(' ')])
+        print 'Class Name -> %s' % self['class_name']
+        self['module_name'] = self['class_name'].lower()
+        print 'Module Name -> %s' % self['module_name']
+        self['package_name'] = "djity_%s" % self['module_name']
+        print 'Package Name -> %s' % self['package_name']
+
         self.write(dst_dir, run_dry=run_dry)
 
 # execute command create_project
@@ -80,7 +85,7 @@ if command == 'create_project':
     ProjectSkeleton.cmd()
 
 # execute command create_module
-if command == 'create_module':
-    sys.argv[0] += ' create_module'
-    sys.argv.remove('create_module')
-    ModuleSkeleton.cmd()
+if command == 'create_app':
+    sys.argv[0] += ' create_app'
+    sys.argv.remove('create_app')
+    ApplicationSkeleton.cmd()

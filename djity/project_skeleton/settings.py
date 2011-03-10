@@ -8,6 +8,7 @@ This file should not be modified: use local_settings.py instead
 
 import os
 from logging import debug,info,warn,error
+from django.utils.importlib import import_module
 import djity
 
 # Get root directory of this instance of Djity
@@ -165,22 +166,18 @@ LOCALE_INDEPENDENT_PATHS = (
 FIXTURE_DIRS = 'data/fixtures'
 
 ###################################################################
-# Import local settings and those from djity services and modules #
+# Import local settings and those from djity apps                 #
 ###################################################################
 
 # If you want to write over some service or module level configuration, do it
 # in local_settings.py
 
-DJITY_MODULES = open("%s/modules.txt" % PROJECT_ROOT).read().split('\n')
-DJITY_MODULES.remove('')
-DJITY_SERVICES = open("%s/services.txt" % PROJECT_ROOT).read().split('\n')
-DJITY_SERVICES.remove('')
-
-djity_apps = list(DJITY_MODULES + DJITY_SERVICES)
+DJITY_APPS = list(set(open("%s/apps.txt" % PROJECT_ROOT).read().split('\n')))
+DJITY_APPS.remove('')
 
 # add activated djity modules and services to installed apps
-if len (djity_apps) >= 0:
-    INSTALLED_APPS += djity_apps
+if len (DJITY_APPS) >= 0:
+    INSTALLED_APPS += DJITY_APPS
 
 def create_link(media_path,media_link):
     """
@@ -198,33 +195,34 @@ for d in os.listdir(djity_media):
 # import djity apps separate settings
 # add their templates to the list
 # and create links to their media directories
-for app in djity_apps:
+for app in DJITY_APPS:
     try:
-        print("import settings from %s.settings" % app)
+        # get settings for this app
         exec("from %s.settings import *" % app)
     except:
-        print("no module %s.settings" % app)
-        
+        # no settings for this app
+        pass
     try:
-        print("get path of application %s" % app)
-        exec("from %s import __path__ as app_path" % app)
+        # get the path of the python package for the current app
+        app_path = import_module(app).__path__
         app_path = app_path[0]
-        print "-> %s" % app_path
     except Exception,e:
         warn(e)
         continue
 
     try:
+        # if found add template directory to the list
         templates_path = app_path+"/templates"
         if os.path.isdir(templates_path):
             TEMPLATE_DIRS.append(templates_path)
-            print("get templates from %s" % templates_path)
 
+        # if necessary create link to this app's media directory
         media_path = app_path+"/media"
         media_link = MEDIA_ROOT+"/"+app
         create_link(media_path,media_link)
     except Exception,e:
         warn(e)
+
 
 # import and overwrite all settings defined locally
 try:

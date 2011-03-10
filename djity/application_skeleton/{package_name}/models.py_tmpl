@@ -1,0 +1,32 @@
+from django.db import models
+
+from djity.project.models import Module
+from djity.utils.inherit import SuperManager
+from djity.utils import djreverse
+
+
+class {class_name}(Module):
+    """
+    Main class of this new Djity application. This class acts like a proxy between
+    your application and Djity, allowing Djity to manage his modules in a
+    standard way.
+
+    At creation, this application simply displays a message in a tab.
+    """
+    #get the module manager
+    objects = SuperManager()
+
+    message = models.CharField(max_length=200, default='Hello World !')
+
+    def subnav(self,project_name):
+        """
+        return sub navigation list
+        """
+        return []
+
+    def djity_url(self,context):
+        """
+        return the application's start page
+        """
+        return djreverse('{module_name}-main',context,module_name=self.name)
+

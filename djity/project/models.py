@@ -205,7 +205,7 @@ class Project(models.Model):
         context['parent_projects'] = filter(lambda p:has_perm(p,context['user'],'view') ,self.get_parents())
         context['children_projects'] = filter(lambda p:has_perm(p,context['user'],'view') ,self.children.all())
     
-    def get_availabe_modules(self):
+    def get_available_modules(self):
         """
         get the list of modules avaible for this project
         """
@@ -213,10 +213,10 @@ class Project(models.Model):
         from djity.utils import djity_modules
 
         result = [SimplePage]
-        instaled_modules_name  = [module.name for module in self.modules.all() ]
+        installed_modules_name  = [module.name for module in self.modules.all() ]
 
         for model in djity_modules():
-                if model.__name__.lower() not in instaled_modules_name:
+                if model.__name__.lower() not in installed_modules_name:
                     result.append(model)
         return result
 
