@@ -49,6 +49,8 @@ def check_perm_and_update_context(
             context['module_name'] = module_name
             if module_name: del kwargs['module_name']
 
+            context['required_perm'] = perm
+
             # if the origin path is specified, clean it and set it
             if 'path' in kwargs:
                 path = urllib.unquote(kwargs['path'])
@@ -78,19 +80,10 @@ def check_perm_and_update_context(
 
             context['project'] = project
 
-            # attempt to get the role of the user
-            try:
-                if user.is_anonymous():
-                    context['role'] = Role.objects.get(project=project,name='anonymous')
-                else:
-                     context['role'] =  Member.objects.get(user=user,project=project).role
-                   
-            except Member.DoesNotExist:
-                context['role'] = Role.objects.get(project=project,name='anonymous')
-            
+
             project.update_context(context)
 
-            # if the user is allowed to use this view, redirect or ask for
+            # if the user is not allowed to use this view, redirect or ask for
             # authentication of return error
             if perm not in context['perm']:
                 if redirect_url:

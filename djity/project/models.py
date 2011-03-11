@@ -22,22 +22,10 @@ class Project(models.Model):
     description = models.TextField(default="")
     created_on = models.DateTimeField(auto_now=True)
     is_root = models.BooleanField(default=False)
+    is_permissions_inheritance = models.BooleanField(default=False)
     parent = models.ForeignKey('self',related_name="children",null=True,default=None) 
     css = models.OneToOneField('style.CSS')
 
-    PARSER_CHOICES = (
-            ('h',_('Html')),
-            ('c',_('Creole')), 
-            ('t',_('Textile')),
-            ('m',_('Markdown')),
-            ('r',_('ReStruturedText')), #TODO: find a RST widget
-            )
-
-    parser = models.CharField(max_length=1,
-                        choices= PARSER_CHOICES,
-                        default='c',
-                        blank=False, null=True, 
-                        verbose_name=_('Wiki syntax parser'))
 
     class Meta :
         translate = ('label','description')
@@ -173,16 +161,47 @@ class Project(models.Model):
             parents = []
         return parents
 
+
+    def get_role(self,user):
+        """
+        Return the role for the user `user` of this project.
+        If user user is anonymous or user haven't role for this project, return the anonymous role.
+        If this project inherit permissions return the role for the parent project.
+        """
+        if self.is_permissions_inheritance : 
+            return self.parent.get_role(user)
+        else:
+            # attempt to get the role of the user
+            try:
+                if user.is_anonymous():
+                    return Role.objects.get(project=self,name='anonymous')
+                else:
+                    return  Member.objects.get(user=user,project=self).role     
+            except Member.DoesNotExist:
+                return Role.objects.get(project=self,name='anonymous')
+
+    def get_permissions(self):
+        """
+        Return the permissions of this projeject or the permission of parent project if this project inherit permissions
+        """
+        if self.is_permissions_inheritance : 
+            return self.parent.get_permissions()
+        else:
+            return self.permission_set.all()
+
     def update_context(self,context):
         """
         Get context for all project templates or sub templates
         """
+
+
+            
         # Get site level context
         SiteRoot.objects.get(label='home').update_context(context)
         # Add project level context
         context.update({
             'project_name':self.name,
-            'parser':self.parser,
+            'role':self.get_role(context['user'])
         })
         
         # Create dictionary of modules connected and their subnavigation menu
@@ -198,7 +217,7 @@ class Project(models.Model):
 
         #permission 
         context['perm'] = {}
-        for perm in filter(lambda x:x.is_authorized(context['role']),self.permission_set.all()):
+        for perm in filter(lambda x:x.is_authorized(context['role']),self.get_permissions()):
             context['perm'][perm.name] = perm
 
         # get hierarchy of parent projects

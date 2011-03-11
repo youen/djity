@@ -18,7 +18,9 @@ function initHeader(){
 	paginator();
 	init_tag();
    
+	elRTE.prototype.options.lang = context.LANGUAGE_CODE;
    //change elRTE save function	
+
 	elRTE.prototype.save = function (){
 		this.editor.prev().editable('close_editor');
 	}	
@@ -903,7 +905,7 @@ $.widget("ui.editable",{
 			
 			doc.attr('contentEditable',true);
 			
-		    $('<a href="#"  title="save">save</a>')
+		    $('<button  title="save">save</button>')
 				.button({
 					icons:{
 						'primary':''
@@ -917,7 +919,7 @@ $.widget("ui.editable",{
 				.appendTo(editorBox);
 
 
-			$('<a href="#"  title="Editor">save</a>')
+			$('<button  title="Rich Edit">Riche Edit</button>')
 				.button({
 					icons:{
 						'primary':''
@@ -999,7 +1001,7 @@ $.widget("ui.editable",{
 				editorBox = self.editorBox;
 			self.element.hide();
 
-			self.element.elrte({lang:context.LANGUAGES[0][0],toolbar:'maxi'});
+			self.element.elrte({lang:context.LANGUAGES_CODE,toolbar:'maxi'});
 			self.element.elrte('val',self.element.html());
 			self.element.elrte('open');
 			self.close();
