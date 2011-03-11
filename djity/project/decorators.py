@@ -108,9 +108,6 @@ def check_perm_and_update_context(
             if module_name != None:
                 try:
                     module = Module.objects.get(name=module_name,project=project).as_leaf_class()
-
-                    if not module.is_active:
-                        raise Http404
                     
                     context['module'] = module
                     update_portlets_context(module,context)

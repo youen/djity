@@ -5,7 +5,7 @@ from django.http import HttpResponse,HttpResponseNotFound,HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 
 from djity.portal.models import SiteRoot
-from djity.project.models import Project,is_active,has_perm
+from djity.project.models import Project
 from djity.project.decorators import check_perm_and_update_context
 from djity.style.models import CSS
 
