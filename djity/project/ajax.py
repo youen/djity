@@ -5,7 +5,7 @@ from django.contrib import messages
 from dajax.core import Dajax
 from djity.project.decorators import check_perm_and_update_context
 from dajaxice.core import dajaxice_functions
-from .models import Project, Member, has_perm, get_role
+from .models import Project, Member
 
 register = lambda name:dajaxice_functions.register_function('djity.project.ajax',name)
 @check_perm_and_update_context(perm='edit')

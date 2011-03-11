@@ -12,7 +12,8 @@ from djity.utils.inherit import SuperManager
 
 class Project(models.Model):
     """
-    A developement and documentation project model for Djity's forge
+    A class for independant projects in Djity Portal, with users, permissions,
+    installed modules, etc...
     """
 
     __metaclass__ = TransMeta
@@ -25,7 +26,6 @@ class Project(models.Model):
     inherit_permissions = models.BooleanField(default=False)
     parent = models.ForeignKey('self',related_name="children",null=True,default=None) 
     css = models.OneToOneField('style.CSS')
-
 
     class Meta :
         translate = ('label','description')
@@ -125,8 +125,6 @@ class Project(models.Model):
             if not self.name:
                 self.name = slugify(self.label)
 
-
-
             from djity.style.models import CSS
             css = CSS()
             css.save()
@@ -192,10 +190,7 @@ class Project(models.Model):
     def update_context(self,context):
         """
         Get context for all project templates or sub templates
-        """
-
-
-            
+        """ 
         # Get site level context
         SiteRoot.objects.get(label='home').update_context(context)
         # Add project level context
@@ -252,19 +247,6 @@ class Project(models.Model):
             Member(project=self,user=user,role=awaiting).save()
             return True
 
-        
-class Version(models.Model):
-    """
-    A planned version of a project
-    """
-    project = models.ForeignKey(Project)
-    name = models.CharField(max_length=200, unique=True)
-    description = models.TextField(default="")
-    deadline = models.DateTimeField()
-
-    def __unicode__(self):
-        return self.name 
-
 class Role(models.Model):
     """
     Model for available roles of projects' members
@@ -316,45 +298,6 @@ class Permission(models.Model):
         if role.name == 'manager':
             return True
 
-
-
-    def user_is_authorized(self,user):
-        """
-        Is a user authorized to access this permission ?
-        """
-        # Get generic roles
-        anonymous = Role.objects.get(project=self.project,name='anonymous')
-        manager = Role.objects.get(project=self.project,name='manager') 
-    
-    
-        # Get authorized roles
-        roles = self.authorized_roles.all()
-    
-        # If public is in authorized_roles always accept permission
-        if anonymous in roles:
-            return True
-
-        if user.is_anonymous():
-            return False
-
-        # attempt to get the role of the user
-        try:
-            user_role = Member.objects.get(user=user,project=self.project).role
-        except Member.DoesNotExist:
-            return False
-    
-        # manager has all permissions
-        if manager == user_role:
-            return True
-    
-    
-        # Finally check if the user's role was explicitly authorized
-        return user_role in roles
-
-
-    def __unicode__(self):
-        return self.name
-
 class Module(models.Model):
     
     __metaclass__ = TransMeta
@@ -368,10 +311,6 @@ class Module(models.Model):
     label = models.CharField(_('Label'),max_length=200,
                 help_text = _('the label view in tabs')
             )
-    is_active = models.BooleanField( _('is active'),
-        default=True,
-        help_text=_("if disabled, this module won't appear in the project")
-        )
 
     module_label = _('Module')
 
@@ -410,60 +349,3 @@ class Module(models.Model):
 class ModuleNotConnectedException(Exception):
     pass
 
-class ModuleNotActiveException(Exception):
-    pass
-
-###
-# Define functions used by modules views to check the validity of a request
-###
-def get_context(project_name,module_name,user):
-    """
-    Test for a project if module module_name is active 
-    and return the project, instance of this module for this project and the context
-    """
-    try:
-        project = Project.objects.get(name=project_name)
-        module = Module.objects.get(name=module_name,project=project).as_leaf_class()
-    except:
-        raise ModuleNotConnectedException()
-    if module.is_active:
-        context = project.get_context()
-        context = get_portlets_context(module,context)
-        context['project'] = project
-        context['module'] = module
-        return context
-    else:
-        raise ModuleNotActiveException(_(u'%s is not active')%mc)
-
-def is_active(project,module_name):
-    """
-    Check if a module is registered in a project
-    """
-    # If module instance doesn't exist return false
-    try:
-        module = Module.objects.get(name=module_name,project=project)
-    except:
-        return False
-
-    # Otherwise, ok this module is registered on this project 
-    return module.is_active
-
-def has_perm(project,user,permission_name):
-    """
-    Check if a user has a permission on a project
-    """
-    try:
-        perm = Permission.objects.get(project=project,name=permission_name)
-    except:
-        return False
-    
-    return perm.user_is_authorized(user)
-
-def get_role(project,user):
-    try:
-       role = Member.objects.get(user=user,project=project).role
-    except:
-        return None
-
-    return role
-    
