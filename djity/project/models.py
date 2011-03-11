@@ -27,7 +27,6 @@ def has_perm(permission,role,status):
     permission = settings.STATUS_PERMISSIONS[status].get(permission,permission)
     return role >= settings.PERMISSION_MIN_ROLE[permission]
 
-
 class Project(models.Model):
     """
     A class for independant projects in Djity Portal, with users, permissions,
