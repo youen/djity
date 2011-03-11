@@ -11,8 +11,9 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from djity.utils.context import DjityContext
 
-from djity.project.models import Project,perm_in_context
+from djity.project.models import Project
 from djity.portlet.models import update_portlets_context
+from djity.utils import perm_in_context
 
 def check_perm_and_update_context(
         perm='view',

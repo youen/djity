@@ -7,25 +7,11 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 
 from djity.portal.models import SiteRoot
-from djity.portlet.models import update_portlets_context, TextPortlet
+from djity.portlet.models import TextPortlet
 from djity.transmeta import TransMeta
+from djity.utils import has_perm, perm_in_context
 from djity.utils.inherit import SuperManager
 
-
-def perm_in_context(permission,context):
-    """
-    proxy to has_perm method, using djity's context to get parameters
-    """
-    return has_perm(permission,context['role'],context['module'].status)
-
-def has_perm(permission,role,status):
-    """
-    Using constants defined in settings, determine if a role
-    grants a permission according to a module status.
-    """
-    # update permission according to the current status if appropriate
-    permission = settings.STATUS_PERMISSIONS[status].get(permission,permission)
-    return role >= settings.PERMISSION_MIN_ROLE[permission]
 
 class Project(models.Model):
     """

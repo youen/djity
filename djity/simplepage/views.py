@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from djity.project.decorators import check_perm_and_update_context
-from djity.project.models import perm_in_context
+from djity.utils import perm_in_context
 from djity.transmeta.forms import LocalForm
 from djity.transmeta import get_lang_version
 

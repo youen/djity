@@ -35,3 +35,20 @@ def djity_modules():
             pass
 
     return result
+
+
+def perm_in_context(permission,context):
+    """
+    proxy to has_perm method, using djity's context to get parameters
+    """
+    return has_perm(permission,context['role'],context['module'].status)
+
+def has_perm(permission,role,status):
+    """
+    Using constants defined in settings, determine if a role
+    grants a permission according to a module status.
+    """
+    # update permission according to the current status if appropriate
+    permission = settings.STATUS_PERMISSIONS[status].get(permission,permission)
+    return role >= settings.PERMISSION_MIN_ROLE[permission]
+
