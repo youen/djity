@@ -22,7 +22,7 @@ class Project(models.Model):
     description = models.TextField(default="")
     created_on = models.DateTimeField(auto_now=True)
     is_root = models.BooleanField(default=False)
-    is_permissions_inheritance = models.BooleanField(default=False)
+    inherit_permissions = models.BooleanField(default=False)
     parent = models.ForeignKey('self',related_name="children",null=True,default=None) 
     css = models.OneToOneField('style.CSS')
 
@@ -165,10 +165,10 @@ class Project(models.Model):
     def get_role(self,user):
         """
         Return the role for the user `user` of this project.
-        If user user is anonymous or user haven't role for this project, return the anonymous role.
+        If `user` is anonymous or `user` haven't role for this project, return the anonymous role.
         If this project inherit permissions return the role for the parent project.
         """
-        if self.is_permissions_inheritance : 
+        if self.inherit_permissions : 
             return self.parent.get_role(user)
         else:
             # attempt to get the role of the user
@@ -182,9 +182,9 @@ class Project(models.Model):
 
     def get_permissions(self):
         """
-        Return the permissions of this projeject or the permission of parent project if this project inherit permissions
+        Return the permissions of this project or the permission of parent project if this project inherit permissions
         """
-        if self.is_permissions_inheritance : 
+        if self.inherit_permissions : 
             return self.parent.get_permissions()
         else:
             return self.permission_set.all()

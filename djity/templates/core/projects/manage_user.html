@@ -1,5 +1,6 @@
 {% load i18n %}
 <table>
+	{% if not inherit_permissions %}
 	{% for member in members %}
 	<tr><th>{{ member.user }}</th>
 		{% for role in roles %}
@@ -25,4 +26,7 @@
 			
 	</tr>
 	{% endfor %}
+	{% else %}
+
+	{% endif %}
 </table>
