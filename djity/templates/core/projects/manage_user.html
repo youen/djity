@@ -1,6 +1,5 @@
 {% load i18n %}
 <table>
-	{% if not inherit_permissions %}
 	{% for member in members %}
 	<tr><th>{{ member.user }}</th>
 		{% for role in roles %}
@@ -9,7 +8,7 @@
 			value="{{role}}"
 			id="{{member.user}}-{{role}}"
 			{% ifequal member.role role %}checked{% endifequal %}/>
-			<label	for="{{member.user}}-{{role}}">
+			<label	for="{{member.user}}-{{role}}" class='role'> 
 				{{role}}
 			</label>
 		</td>
@@ -19,14 +18,15 @@
 			value="deleted"
 			id="{{member.user}}-deleted"
 			/>
-			<label	for="{{member.user}}-deleted" >
+			<label	for="{{member.user}}-deleted" class='role'>
 				{% trans "Deleted" %}
 			</label>
 
 			
 	</tr>
 	{% endfor %}
-	{% else %}
 
-	{% endif %}
+	<input type="checkbox" id="inherit-permissions"/>
+	<label id="inherit-perimissions-label" for="inherit-permissions">{% trans "Inherit Permissions" %}</label>
+
 </table>

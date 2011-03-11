@@ -289,11 +289,17 @@ function project_visibility_dialog(){
 }
 
 function manage_users_dialog_widgetify(){
-	$('#manage_users_dialog_table').buttonset();
 	$('#manage_users_dialog_table label')
 	.css('width','100%')
 	.addClass('ui-corner-all');
 
+	$('#manage_users_dialog_table .role').button({'disabled':true});
+
+	$('#inherit-permissions-label').click(function(){
+		$('#manage_users_dialog_table .role').button('option','disable',false);
+			});
+
+	$('#manage_users_dialog_table').buttonset();
 	$('#manage_users_dialog_table th')
 		.addClass('ui-widget-header');
 
@@ -851,26 +857,57 @@ $.widget("ui.box", {
 });
 
 
-//usefull function from http://stackoverflow.com/questions/4652734/return-html-from-a-user-selection
-function getSelectionHtml() {
-	var html = "";
-	if (typeof window.getSelection != "undefined") {
-		var sel = window.getSelection();
-		if (sel.rangeCount) {
-			var container = document.createElement("div");
-			for (var i = 0, len = sel.rangeCount; i < len; ++i) {
-				container.appendChild(sel.getRangeAt(i).cloneContents());
-			}
-			html = container.innerHTML;
+$.widget("ui.role_manager",{
+		/*
+		 *  Djity user's role manager
+		 */
+
+	options : {
+		inherit_permissions:true, //inherit permissions
+		errors:[],// error messages
+		},
+
+	_create : function()
+	{
+		var self=this,
+		options =self.options,
+		id = self.element.id;
+	},
+
+	_init : function()
+	{
+		var self = this,
+		options = self.options;
+
+		self._inherit_permissions = options.inherit_permissions;
+
+	},
+
+	inherit_toggle : function()
+	{
+		var self = this,
+		options = self.options,
+		inherit = self._inherit;
+		if( inherit)
+		{
+			self._inherit = false;
 		}
-	} else if (typeof document.selection != "undefined") {
-		if (document.selection.type == "Text") {
-			html = document.selection.createRange().htmlText;
-			
+		else
+		{
+			self._inherit = true;
 		}
+
+	},
+
+	close : function ()
+	{
+
 	}
-	return html;
-}
+	
+
+
+});
+
 
 $.widget("ui.editable",{
 		/* 
