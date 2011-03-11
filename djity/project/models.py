@@ -10,6 +10,17 @@ from djity.portlet.models import update_portlets_context, TextPortlet
 from djity.transmeta import TransMeta
 from djity.utils.inherit import SuperManager
 
+# Roles are defined as constants
+ANONYMOUS = 0
+USER = 1
+CONTRIBUTOR = 2
+MANAGER = 3
+
+# module statuses as well
+DRAFT = 0
+PRIVATE = 1
+PUBLIC = 2
+
 class Project(models.Model):
     """
     A class for independant projects in Djity Portal, with users, permissions,
