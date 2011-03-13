@@ -13,7 +13,6 @@ from djity.utils.context import DjityContext
 
 from djity.project.models import Project
 from djity.portlet.models import update_portlets_context
-from djity.utils import perm_in_context
 
 def check_perm_and_update_context(
         perm='view',
@@ -93,7 +92,7 @@ def check_perm_and_update_context(
 
             # if the user is not allowed to use this view, redirect or ask for
             # authentication of return error
-            if not perm_in_context(perm,context):
+            if not perm in context['perm']:
                 if redirect_url:
                     redirect_kwargs = {'project_name':project_name}
                     if redirect_args:

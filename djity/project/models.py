@@ -9,7 +9,7 @@ from django.conf import settings
 from djity.portal.models import SiteRoot
 from djity.portlet.models import TextPortlet
 from djity.transmeta import TransMeta
-from djity.utils import has_perm, perm_in_context
+from djity.utils import has_perm, granted_perms
 from djity.utils.inherit import SuperManager
 
 
@@ -157,6 +157,7 @@ class Project(models.Model):
             name = module.name
             if name == context['module_name']:
                 context['module'] = module
+                context['perm'] = granted_perms(context['role'],module.status)
             if has_perm('view',context['role'],module.status):
                 context['module_tabs'].append(name)
                 context["%s_tab_display"%name] = module.label.capitalize()
