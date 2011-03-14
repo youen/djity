@@ -26,8 +26,8 @@ def check_perm_and_update_context(
     """
 
     if not login_url:
-        from django.conf import settings
         login_url = settings.LOGIN_URL
+
     def _dec(func):
 
         def _new_func(*args,**kwargs):
@@ -35,7 +35,7 @@ def check_perm_and_update_context(
             Test for a project if module module_name is active 
             and save the project, instance of this module for this project in the context
             """
-
+            
             # init context using request arguments
             request  = args[0]
             context = DjityContext(request)
@@ -87,7 +87,7 @@ def check_perm_and_update_context(
             project.update_context(context)
 
             # if module was not found by projet.update_context() raise 404
-            if not context['module']:
+            if module_name and not 'module' in context:
                 raise Http404
 
             # if the user is not allowed to use this view, redirect or ask for
@@ -113,7 +113,8 @@ def check_perm_and_update_context(
 
             # Add context of project and module level portlets
             update_portlets_context(context['project'],context)
-            update_portlets_context(context['module'],context)
+            if 'module' in context:
+                update_portlets_context(context['module'],context)
 
             #add info message from url in context
             if request.method == 'GET':

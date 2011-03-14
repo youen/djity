@@ -151,8 +151,6 @@ class Project(models.Model):
         # and a list of the module tabs according to the role of the user
         # and check if the required permission is granted on the current module
         context['module_tabs'] = []
-        context['module'] = None
-        context['granted_perm'] = False
         for module in self.modules.order_by('tab_position'):
             name = module.name
             if name == context['module_name']:
@@ -162,6 +160,12 @@ class Project(models.Model):
                 context['module_tabs'].append(name)
                 context["%s_tab_display"%name] = module.label.capitalize()
                 context["%s_tab_url"%name] = module.djity_url(context)
+
+        # if no module name is declared we are in the project's context
+        # for example the request might be for project.css
+        # in this case permissions are asked for a current status of public
+        if context['module_name'] is None:
+            context['perm'] = granted_perms(context['role'],settings.PUBLIC)
 
         # get hierarchy of parent projects
         context['parent_projects'] = filter(lambda p:can_view(context['user']) ,self.get_parents())

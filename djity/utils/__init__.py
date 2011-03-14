@@ -41,7 +41,11 @@ def granted_perms(role,status):
     """
     return the list of permissions granted to a user according to his role and the status of a module
     """
-    return filter(lambda p:has_perm(p,role,status), settings.PERMISSIONS)
+    perms = filter(lambda p:has_perm(p,role,status), settings.PERMISSIONS)
+    perms_dict = {}
+    for p in perms:
+        perms_dict[p] = True
+    return perms_dict
 
 def has_perm(permission,role,status):
     """
