@@ -4,11 +4,14 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
+from django.conf import settings
 
 from djity.portal.models import SiteRoot
-from djity.portlet.models import update_portlets_context, TextPortlet
+from djity.portlet.models import TextPortlet
 from djity.transmeta import TransMeta
+from djity.utils import has_perm, granted_perms
 from djity.utils.inherit import SuperManager
+
 
 class Project(models.Model):
     """
@@ -23,67 +26,12 @@ class Project(models.Model):
     description = models.TextField(default="")
     created_on = models.DateTimeField(auto_now=True)
     is_root = models.BooleanField(default=False)
-    inherit_permissions = models.BooleanField(default=False)
+    inherit_members = models.BooleanField(default=False)
     parent = models.ForeignKey('self',related_name="children",null=True,default=None) 
     css = models.OneToOneField('style.CSS')
 
     class Meta :
         translate = ('label','description')
-
-    def init_permissions(self,creator):
-        """
-        Initialize first member, default roles and permissions 
-        """
-        from django.conf import settings
-
-        # Create default roles as defined in settings.py
-        for role in settings.DEFAULT_ROLES:
-            Role(name=role[0],description=role[1],project=self).save()
-
-        # Create generic roles
-        manager = Role(name='manager',description="Project manager",project=self)
-        manager.save()
-        Role(name='anonymous',description="Anyone including anonymous",project=self).save()
-        Role(name='awaiting',description="Users awaiting validation",project=self).save()
-
-        # Create default permissions as defined in settings.py
-        project_roles = dict([(role.name,role) for role in  Role.objects.filter(project=self)])
-
-        for permission,(description,roles) in settings.DEFAULT_PERMISSIONS.iteritems():
-            p = Permission(name=permission, description=description, project=self)
-            p.save()
-            if 'anyone' in roles:
-                for role in project_roles.values():
-                    p.authorized_roles.add(role)
-            else:
-                for role in roles:
-                    p.authorized_roles.add(project_roles[role])
-        
-        # Set current user as manager of the new project
-        Member(project=self,user=creator,role=manager).save()
-
-    @property
-    def is_public(self):
-        """
-        Check if the project is viewable by anonymous users
-        """ 
-        public = Role.objects.get(project=self,name='anonymous')
-        view_perm = Permission.objects.get(project=self,name='view')
-        return public in view_perm.authorized_roles.all()
-
-    def set_visibility(self,visibility='private'):
-        """
-        set visibility to public or private
-        """
-        public = Role.objects.get(project=self,name='anonymous')
-        view_perm = Permission.objects.get(project=self,name='view')
-        roles = view_perm.authorized_roles
-        if visibility == 'public':
-            if public not in roles.all():
-                roles.add(public)
-        else:
-            if public in roles.all():
-                roles.remove(public)
 
     def init_modules(self,modules=None):
         """
@@ -102,7 +50,7 @@ class Project(models.Model):
             try:
                 Module.objects.get(project=self,name=name)
             except:
-                model(project=self,name=name,label=name,tab_position=i).save()
+                model(project=self,name=name,label=name,tab_position=i,status=settings.DRAFT).save()
 
     def save(self,*args,**kwargs):
         """
@@ -135,9 +83,8 @@ class Project(models.Model):
         # todo after saving
         if new:
 
-            # Init permissions with superuser as manager (should be a parameter
-            # later on)
-            self.init_permissions(user)
+            # Set current user as manager of the new project
+            Member(project=self,user=user,role=settings.MANAGER).save()
             self.init_modules()
             
             #add a footer portlet
@@ -159,33 +106,36 @@ class Project(models.Model):
             parents = []
         return parents
 
-
     def get_role(self,user):
         """
         Return the role for the user `user` of this project.
         If `user` is anonymous or `user` haven't role for this project, return the anonymous role.
         If this project inherit permissions return the role for the parent project.
         """
-        if self.inherit_permissions : 
+        if self.inherit_members: 
             return self.parent.get_role(user)
         else:
             # attempt to get the role of the user
             try:
                 if user.is_anonymous():
-                    return Role.objects.get(project=self,name='anonymous')
+                    return settings.ANONYMOUS
                 else:
                     return  Member.objects.get(user=user,project=self).role     
             except Member.DoesNotExist:
-                return Role.objects.get(project=self,name='anonymous')
+                return settings.ANONYMOUS
 
-    def get_permissions(self):
+    def view_project(self,user):
         """
-        Return the permissions of this project or the permission of parent project if this project inherit permissions
+        check if a user can view a project,
+        used to build parent hierarchy in update_context,
+        we consider that a user can view a project if he can view at least 
+        one of its modules
         """
-        if self.inherit_permissions : 
-            return self.parent.get_permissions()
-        else:
-            return self.permission_set.all()
+        role = self.get_role(user)
+        for module in self.modules:
+            if has_perm('view',role,module.status):
+                return True
+        return False
 
     def update_context(self,context):
         """
@@ -193,31 +143,33 @@ class Project(models.Model):
         """ 
         # Get site level context
         SiteRoot.objects.get(label='home').update_context(context)
-        # Add project level context
-        context.update({
-            'project_name':self.name,
-            'role':self.get_role(context['user'])
-        })
+      
+        # Fetch the role of the current user in this project
+        context['role'] = self.get_role(context['user'])
         
-        # Create dictionary of modules connected and their subnavigation menu
-        module_tabs = []
+        # Create dictionary of modules connected and their subnavigation menu,
+        # and a list of the module tabs according to the role of the user
+        # and check if the required permission is granted on the current module
+        context['module_tabs'] = []
         for module in self.modules.order_by('tab_position'):
-            module_tabs.append(module.name)
-            context["%s_tab_display"%module.name] = module.label.capitalize()
-            context["%s_tab_url"%module.name] = module.djity_url(context)
-        context["module_tabs"] = module_tabs
+            name = module.name
+            if name == context['module_name']:
+                context['module'] = module
+                context['perm'] = granted_perms(context['role'],module.status)
+            if has_perm('view',context['role'],module.status):
+                context['module_tabs'].append(name)
+                context["%s_tab_display"%name] = module.label.capitalize()
+                context["%s_tab_url"%name] = module.djity_url(context)
 
-        # Add context of project level portlets
-        update_portlets_context(self,context)
-
-        #permission 
-        context['perm'] = {}
-        for perm in filter(lambda x:x.is_authorized(context['role']),self.get_permissions()):
-            context['perm'][perm.name] = perm
+        # if no module name is declared we are in the project's context
+        # for example the request might be for project.css
+        # in this case permissions are asked for a current status of public
+        if context['module_name'] is None:
+            context['perm'] = granted_perms(context['role'],settings.PUBLIC)
 
         # get hierarchy of parent projects
-        context['parent_projects'] = filter(lambda p:has_perm(p,context['user'],'view') ,self.get_parents())
-        context['children_projects'] = filter(lambda p:has_perm(p,context['user'],'view') ,self.children.all())
+        context['parent_projects'] = filter(lambda p:can_view(context['user']) ,self.get_parents())
+        context['children_projects'] = filter(lambda p:p.can_view(context['user']) ,self.children.all())
     
     def get_available_modules(self):
         """
@@ -247,56 +199,19 @@ class Project(models.Model):
             Member(project=self,user=user,role=awaiting).save()
             return True
 
-class Role(models.Model):
-    """
-    Model for available roles of projects' members
-    """
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-    project = models.ForeignKey(Project)
-
-    def __unicode__(self):
-        return self.name 
-
 class Member(models.Model):
     """
     A member of a project in Djity's forge
     """
     project = models.ForeignKey(Project)
     user = models.ForeignKey(User,related_name="project_memberships")
-    role = models.ForeignKey(Role)
+    role = models.IntegerField()
 
     def __unicode__(self):
         return "%s: %s of %s" % (self.user,self.role,self.project)
 
     class Meta:
-
         unique_together = ('user','project')
-
-class Permission(models.Model):
-    """
-    Permissions are queried by projects's modules and are associated to a project and its users' roles
-    """
-    name = models.CharField("name",max_length=200)
-    description = models.TextField("description")
-    project = models.ForeignKey(Project)
-    authorized_roles = models.ManyToManyField(Role)
-
-    def is_authorized(self,role):
-        """
-        Is a role authorized to access this permission ?
-        """
-        # Get authorized roles
-        authorized_roles = self.authorized_roles.all()
-
-        # If public is in authorized_roles always accept permission
-        if role in authorized_roles:
-            return True
-
-
-        # manager has all permissions
-        if role.name == 'manager':
-            return True
 
 class Module(models.Model):
     
@@ -311,6 +226,7 @@ class Module(models.Model):
     label = models.CharField(_('Label'),max_length=200,
                 help_text = _('the label view in tabs')
             )
+    status = models.IntegerField(default=settings.DRAFT)
 
     module_label = _('Module')
 

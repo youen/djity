@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from djity.utils.context import DjityContext
 
-from djity.project.models import Project,Module,Role,Member
+from djity.project.models import Project
 from djity.portlet.models import update_portlets_context
 
 def check_perm_and_update_context(
@@ -26,8 +26,8 @@ def check_perm_and_update_context(
     """
 
     if not login_url:
-        from django.conf import settings
         login_url = settings.LOGIN_URL
+
     def _dec(func):
 
         def _new_func(*args,**kwargs):
@@ -36,6 +36,7 @@ def check_perm_and_update_context(
             and save the project, instance of this module for this project in the context
             """
             
+            # init context using request arguments
             request  = args[0]
             context = DjityContext(request)
 
@@ -60,10 +61,10 @@ def check_perm_and_update_context(
             # Fetch project, or 404
             try:
                 project = Project.objects.get(name=project_name)
-        
             except Project.DoesNotExist:
                 raise Http404
 
+            # set user, path and laguange values in context
             user = request.user
             context['user'] = request.user
             path = urlquote(request.get_full_path())
@@ -78,14 +79,20 @@ def check_perm_and_update_context(
             context['LANGUAGE_CODE'] = LANGUAGE_CODE
             context['LANGUAGES'] = settings.LANGUAGES
 
+            # the project itselt goes in the context
             context['project'] = project
 
-
+            # the project also contributes to the context
+            # actually permissions are resolved here
             project.update_context(context)
+
+            # if module was not found by projet.update_context() raise 404
+            if module_name and not 'module' in context:
+                raise Http404
 
             # if the user is not allowed to use this view, redirect or ask for
             # authentication of return error
-            if perm not in context['perm']:
+            if not perm in context['perm']:
                 if redirect_url:
                     redirect_kwargs = {'project_name':project_name}
                     if redirect_args:
@@ -103,23 +110,16 @@ def check_perm_and_update_context(
                     return HttpResponseRedirect('%s?%s=%s' % tup)
                 else:
                     return HttpResponseForbidden()
-            context['project_public'] = project.is_public
 
-            if module_name != None:
-                try:
-                    module = Module.objects.get(name=module_name,project=project).as_leaf_class()
-                    
-                    context['module'] = module
-                    update_portlets_context(module,context)
+            # Add context of project and module level portlets
+            update_portlets_context(context['project'],context)
+            if 'module' in context:
+                update_portlets_context(context['module'],context)
 
-                except Module.DoesNotExist:
-                    raise Http404
-
-            #add info or erro message from url in context
+            #add info message from url in context
             if request.method == 'GET':
                 if 'info_message' in request.GET:
                     context['info_message'] = request.GET['info_message']
-
 
             kwargs['context'] = context
             return func(*args,**kwargs)

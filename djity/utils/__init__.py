@@ -35,3 +35,24 @@ def djity_modules():
             pass
 
     return result
+
+
+def granted_perms(role,status):
+    """
+    return the list of permissions granted to a user according to his role and the status of a module
+    """
+    perms = filter(lambda p:has_perm(p,role,status), settings.PERMISSIONS)
+    perms_dict = {}
+    for p in perms:
+        perms_dict[p] = True
+    return perms_dict
+
+def has_perm(permission,role,status):
+    """
+    Using constants defined in settings, determine if a role
+    grants a permission according to a module status.
+    """
+    # update permission according to the current status if appropriate
+    perm = settings.STATUS_PERMISSIONS[status].get(permission,permission)
+    return role >= settings.PERMISSION_MIN_ROLE[perm]
+

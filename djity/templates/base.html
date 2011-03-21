@@ -36,13 +36,11 @@
 			view_perm =  {% if perm.view %}true{% else %}false{% endif %};
 			edit_perm = {% if perm.edit %}true{% else %}false{% endif %};
 			manage_perm = {% if perm.manage %}true{% else %}false{% endif %};
-			project_public = {% if project_public %}true{% else %}false{% endif %};
+			project_public = true;
 			tab_name = "{{module_name}}";
 			LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
 			path = "{{ path }}";
 			context = {{ json_context|safe }};
-
-
         </script>
 
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/djity.js"></script>
@@ -169,12 +167,12 @@
 		<!-- project visibility configuration dialog -->
 			{% if project_public %}
 			<div id="project_visibility_dialog" class="ui-helper-hidden" title="{% trans "Make this project private ?" %}">
-				<p class="ui-state-highlight ui-corner-all">{% trans "Only registered members will be able to see this project." %}</p>
+				<p class="ui-state-highlight ui-corner-all">{% trans "Only registered members will be able to see this project. (DEPRECATED)" %}</p>
 				<input id="project_visibility" type="hidden" value="private">
 			</div>
 			{% else %}
 			<div id="project_visibility_dialog" class="ui-helper-hidden" title="{% trans "Make this project public ?" %}">
-				<p class="ui-state-highlight ui-corner-all">{% trans "Anonymous users will be able to see this project." %}</p>
+				<p class="ui-state-highlight ui-corner-all">{% trans "Anonymous users will be able to see this project. (DEPRECATED)" %}</p>
 				<input id="project_visibility" type="hidden" value="public">
 			</div>
 			{% endif %}

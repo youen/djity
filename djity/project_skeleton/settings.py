@@ -118,26 +118,46 @@ INSTALLED_APPS = [
     'djity.transmeta',
 ]
 
+###########################################
+# Djity roles and permissions definitions #
+###########################################
+
+# Role values are defined in constants
+ANONYMOUS = 0
+AWAITING = 1
+USER = 2
+CONTRIBUTOR = 3
+MANAGER = 4
+
+# Module status values as well
+DRAFT = 0
+PRIVATE = 1
+PUBLIC = 2
+
+# permissions are associated with the minimal value
+# or role needed to grant them
+PERMISSION_MIN_ROLE = {
+    'view_public':ANONYMOUS,
+    'view_private':USER,
+    'edit':CONTRIBUTOR,
+    'upload':CONTRIBUTOR,
+    'manage':MANAGER,
+}
+
+# generic permission names can lead to different actual
+# permissions according on the status of the current module
+STATUS_PERMISSIONS = {
+    DRAFT:{'view':'edit'},
+    PRIVATE:{'view':'view_private'},
+    PUBLIC:{'view':'view_public'}
+}
+
+# list of permissions to check when updating djity's context
+PERMISSIONS = ['view','edit','upload','manage']
+
 ##########################
 # Djity install settings #
 ##########################
-
-# Default roles and permissions are used at the creation of a Djity project
-# They can be edited online afterward
-# Generic roles ('manager','anyone' and 'public') don't to be declared here
-# 'anyone' stands for 'any member of the project', 'public' means really anyone
-DEFAULT_ROLES = [
-    ('contributor',"Project contributor"),
-    ('user',"Project user"),
-]
-
-# manager implicitly has all permissions
-DEFAULT_PERMISSIONS = {
-    'view':("Permission to navigate in the project's page",['anyone']),
-    'edit':("Permission to edit project's content",['contributor']),
-    'upload':("Permission to put and delete files and documents",['contributor']),
-    'manage':("Permission to perform administration tasks on the project",[]),
-}
 
 # Djity project modules declarations
 DEFAULT_PROJECT_MODULES = [
