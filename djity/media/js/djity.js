@@ -5,7 +5,7 @@ function initHeader(){
 	 */
 	widgetify();
 	init_right_tabs();
-	if (manage_perm){
+	if (dj_context.perm.manage){
 		project_manage_buttons();
 	}
 	else {
@@ -18,14 +18,14 @@ function initHeader(){
 	paginator();
 	init_tag();
    
-	elRTE.prototype.options.lang = context.LANGUAGE_CODE;
+	elRTE.prototype.options.lang = dj_context.LANGUAGE_CODE;
    //change elRTE save function	
 
 	elRTE.prototype.save = function (){
 		this.editor.prev().editable('close_editor');
 	}	
    //after all send notification
-	$(context.django_messages).each(function(item,msg){
+	$(dj_context.django_messages).each(function(item,msg){
 		$('#messages').notify('create',{text:msg});
 		});
 };
@@ -124,11 +124,15 @@ function project_manage_buttons () {
 		});
 
 		project_visibility_dialog();
-		if(project_public){
-			visibility_icon = 'ui-icon-unlocked';
-		}else{
-			visibility_icon = 'ui-icon-locked';
-		}
+		/*
+		 * if(project_public){
+		 *	visibility_icon = 'ui-icon-unlocked';
+		 * }else{
+		 *	visibility_icon = 'ui-icon-locked';
+		 *}
+		 */
+		visibility_icon = 'ui-icon-locked';
+
 		$('#project_visibility_button').button({
 			icons: {
 				primary: visibility_icon
@@ -210,8 +214,8 @@ function manage_users_dialog(){
 
 				Dajaxice.djity.project.manage_users(
 					'Dajax.process',{
-						'project_name':project_name,
-						'module_name':module_name,
+						'project_name':dj_context.project_name,
+						'module_name':dj_context.module_name,
 						'path':path,
 						'users': users,
 						'target':'#manage_users_dialog'
@@ -225,8 +229,8 @@ function manage_users_dialog(){
 		open: function(event,ui){
 			Dajaxice.djity.project.manage_users(
 				'Dajax.process',{
-					'project_name':project_name,
-					'module_name':module_name,
+					'project_name':dj_context.project_name,
+					'module_name':dj_context.module_name,
 					'target':'#manage_users_dialog_table'
 				});
 		},
@@ -273,8 +277,8 @@ function project_visibility_dialog(){
 			OK : function(){
 				Dajaxice.djity.project.project_visibility(
 					'Dajax.process',{
-						'project_name':project_name,
-						'module_name':module_name,
+						'project_name':dj_context.project_name,
+						'module_name':dj_context.module_name,
 						'path':path,
 						'visibility':$('#project_visibility').val(),
 					});
@@ -371,8 +375,8 @@ function project_subscribe_button(){
 			.click(function(){
 					Dajaxice.djity.project.project_subscribe(
 						'Dajax.process',{				
-							'project_name':project_name,
-							'module_name':module_name,
+							'project_name':dj_context.project_name,
+							'module_name':dj_context.module_name,
 						});
 					})
 
@@ -450,7 +454,7 @@ function profile_dialog(){
 
 				Dajaxice.djity.project.profile(
 					'Dajax.process',{
-						'project_name':project_name,
+						'project_name':dj_context.project_name,
 						'password1': $('#id_password1').val(),
 						'password2': $('#id_password2').val(),
 						
@@ -464,7 +468,7 @@ function profile_dialog(){
 		open: function(event,ui){
 			Dajaxice.djity.portal.profile(
 				'Dajax.process',{
-					'project_name':project_name,
+					'project_name':dj_context.project_name,
 					'password1': '',
 					'password2': '',
 				});
@@ -505,7 +509,7 @@ function choose_language_button(){
 	$("#choose_language_button")
 		.button({
 			icons: {
-				primary: 'dj-icon-'+LANGUAGE_CODE
+				primary: 'dj-icon-'+dj_context.LANGUAGE_CODE
 			},
 			text: false
 		})
@@ -514,8 +518,6 @@ function choose_language_button(){
 			return false;
 		});
 };
-
-
 
 function widgetify() {
 	$("input:submit").button();
@@ -538,7 +540,7 @@ function widgetify() {
 
 	$('#messages').notify();
 
-	if(edit_perm){
+	if(dj_context.perm.edit){
 		$(".dj-editable").each(function(i,e){$(e).editable({save_function:eval(e.id +'_callback')});});
 	}
 }
@@ -550,7 +552,7 @@ function init_right_tabs() {
 	 *
 	 */
 		
-	if (manage_perm){
+	if (dj_context.perm.manage){
 		$("#right_tabs_list").disableSelection();
 		$('#right_tabs_list').sortable({
 
@@ -558,7 +560,7 @@ function init_right_tabs() {
 			update: function(event, ui) { 
 				Dajaxice.djity.project.save_tab_order(
 					'Dajax.process',{
-						'project_name':project_name,
+						'project_name':dj_context.project_name,
 						'array':$('#right_tabs_list').sortable('toArray')
 				
 					});	
@@ -570,7 +572,7 @@ function init_right_tabs() {
 	 * Create delete tab dialog 
 	 */
 
-	$('#' + tab_name + '-delete')
+	$('#' + dj_context.module_name + '-delete')
 		.dialog({
 			autoOpen:false,
 			modal: true,
@@ -581,8 +583,8 @@ function init_right_tabs() {
 					$(this).dialog('close');
 					Dajaxice.djity.project.delete_tab(
 						'Dajax.process',{
-						'project_name':project_name,
-						'module_name':module_name,
+						'project_name':dj_context.project_name,
+						'module_name':dj_context.module_name,
 				
 					});	
 				},
@@ -593,9 +595,9 @@ function init_right_tabs() {
 		});
 
 	//bind edit name dialog
-	$('#' + tab_name + ' .ui-icon-close')
+	$('#' + dj_context.module_name + ' .ui-icon-close')
 		.click(function(){
-				$('#' + tab_name + '-delete').dialog('open');
+				$('#' + dj_context.module_name + '-delete').dialog('open');
 				return false;
 		});
 
@@ -603,7 +605,7 @@ function init_right_tabs() {
 	 * Create a edit name dialog 
 	 */
 
-	$('#' + tab_name + '-change-name')
+	$('#' + dj_context.module_name + '-change-name')
 		.dialog({
 			autoOpen:false,
 			modal: true,
@@ -621,10 +623,10 @@ function init_right_tabs() {
 					$('#' + tab_name ).find('a')[0].textContent = $('#' + tab_name + '-title').val();
 					Dajaxice.djity.project.save_tab_name(
 						'Dajax.process',{
-						'project_name':project_name,
-						'module_name':module_name,
+						'project_name':dj_context.project_name,
+						'module_name':dj_context.module_name,
 						'LANGUAGE_CODE':LANGUAGE_CODE,
-						'label': $('#' + tab_name + '-title').val(),
+						'label': $('#' + dj_context.tab_name + '-title').val(),
 				
 					});	
 					
@@ -636,9 +638,9 @@ function init_right_tabs() {
 		});
 
 	//bind edit name dialog
-	$('#' + tab_name + ' .ui-icon-wrench')
+	$('#' + dj_context.tab_name + ' .ui-icon-wrench')
 		.click(function(){
-				$('#' + tab_name + '-change-name').dialog('open');
+				$('#' + dj_context.tab_name + '-change-name').dialog('open');
 				return false;
 		});
 
@@ -668,7 +670,7 @@ function init_right_tabs() {
 			open: function(event,ui){
 				Dajaxice.djity.project.get_module(
 					'Dajax.process',{
-					'project_name' : project_name,
+					'project_name' : dj_context.project_name,
 					}
 				
 				);
@@ -684,7 +686,7 @@ function init_right_tabs() {
 					$(this).dialog('close');
 					Dajaxice.djity.project.add_module(
 						'Dajax.process',{
-							'project_name':project_name,
+							'project_name':dj_context.project_name,
 							'tab_name':$('#new_tab_name').val(),
 							'module_type':$("#module_list option:selected").val(),
 						}
@@ -741,7 +743,7 @@ function paginator() {
 
 function init_tag(){
 	$('.tag').box({
-			closeable:manage_perm,
+			closeable:dj_context.perm.manage,
 			icon: 'ui-icon-tag',
 			state: 'ui-state-default',
 			close: function (){
@@ -754,7 +756,7 @@ function init_tag(){
 			select:function(event,ui){
 			$('<span class="tag"><p><a>' + ui.item.value + '</a></p></span>')
 				.box({
-					closeable:manage_perm,
+					closeable:dj_context.perm.manage,
 					icon: 'ui-icon-tag',
 					state: '',
 					effect:'',
@@ -788,8 +790,8 @@ function save_text_portlet(id,html) {
 	 */	
 	Dajaxice.djity.portlet.save_text_portlet(
 			'Dajax.process',{
-			'project_name':project_name,
-			'LANGUAGE_CODE':LANGUAGE_CODE,
+			'project_name':dj_context.project_name,
+			'LANGUAGE_CODE':dj_context.LANGUAGE_CODE,
 			'div_id':id,
 			'html':html,
 			}
@@ -799,8 +801,8 @@ function save_text_portlet(id,html) {
 function project_title_callback(id,html){
 		Dajaxice.djity.project.save_project_title(
 				'Dajax.process',{
-				'project_name':project_name,
-				'LANGUAGE_CODE':LANGUAGE_CODE,
+				'project_name':dj_context.project_name,
+				'LANGUAGE_CODE':dj_context.LANGUAGE_CODE,
 				'div_id':id,
 				'html':html,
 		}

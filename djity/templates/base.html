@@ -29,18 +29,7 @@
 
         <script type="text/javascript">
 			/* javascript context for ajax */
-	        project_name = "{{ project_name}}";
-			module_name = "{{module_name}}";
-			role = "{{ role }}";
-			anonymous = {% if user.is_anonymous %}true{% else%}false{% endif %};
-			view_perm =  {% if perm.view %}true{% else %}false{% endif %};
-			edit_perm = {% if perm.edit %}true{% else %}false{% endif %};
-			manage_perm = {% if perm.manage %}true{% else %}false{% endif %};
-			project_public = true;
-			tab_name = "{{module_name}}";
-			LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
-			path = "{{ path }}";
-			context = {{ json_context|safe }};
+			dj_context = {{ json_context|safe }};
         </script>
 
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/box.js"></script>
@@ -70,7 +59,7 @@
 
         <header role="banner"  id="djity_header"  class="ui-widget ui-widget-content ui-corner-top ui-widget-header ui-tabs">
 
-            <div id="projects_hierarchy" class="ui-widget">
+		<div id="projects_hierarchy" class="ui-widget">
                 <div id="project_left1">
 				{% ifnotequal project.name "root" %}
                     <div id="parent_projects">
@@ -106,7 +95,7 @@
                         {% endfor %}
                     </nav>
                     {% endif %}
-                </div>
+				</div>
             </div>
 
             <nav id="portal_parameters" class="ui-helper-hidden">
