@@ -37,6 +37,8 @@
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/leftabs.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/notify.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/role_manager.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/project_buttons.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/project_subscribe.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/djity.js"></script>
 	    {% block project_head %}{% endblock %}
 		{% block module_head %}{% endblock %}
@@ -60,7 +62,7 @@
         <header role="banner"  id="djity_header"  class="ui-widget ui-widget-content ui-corner-top ui-widget-header ui-tabs">
 
 		<div id="projects_hierarchy" class="ui-widget">
-                <div id="project_left1">
+            <div id="project_left1">
 				{% ifnotequal project.name "root" %}
                     <div id="parent_projects">
 						{% for parent in parent_projects %}  <a href="/{{LANGUAGE_CODE}}/{{ parent.name }}">{{ parent }}</a>{% endfor %}
@@ -76,7 +78,8 @@
                 </div>
 
                 <div id="project_left2">
-                    <nav id="project_buttons" class="ui-helper-hidden">
+					<nav id="project_buttons" class="ui-helper-hidden">
+						<!--
                         {% if perm.manage %}
 							<a id="create_project_button" class="dj-mini-button">{% trans "New project" %}</a>
 							<a id="manage_users_button" class="dj-mini-button">{% trans "Manage users" %}</a>
@@ -84,7 +87,8 @@
 							<a id="project_style_button" class="dj-mini-button">{% trans "Manage style" %}</a>
 						{% else %}
 							<a id="project_subscribe_button" class="dj-mini-button"></a>
-                        {% endif %}
+						{% endif %}
+						<--
 					</nav>
                 </div>
                 <div id="project_left3">

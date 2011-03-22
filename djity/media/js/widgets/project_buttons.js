@@ -1,0 +1,131 @@
+function project_manage_buttons () {
+
+		create_project_dialog();
+		$('#create_project_button').button({
+			icons: {
+				primary: 'ui-icon-circle-plus'
+			},
+			text: false
+		})
+		.addClass('ui-corner-tl')
+		.click(function(){
+				$('#create_project_dialog').dialog('open');
+				return false;
+		});
+
+		manage_users_dialog();
+		$('#manage_users_button').button({
+			icons: {
+				primary: 'ui-icon-person'
+			},
+			text: false
+		})
+		.addClass('ui-corner-tr')
+		.click(function(){
+				$('#manage_users_dialog').dialog('open');
+				return false;
+		});
+
+		project_visibility_dialog();
+		/*
+		 * if(project_public){
+		 *	visibility_icon = 'ui-icon-unlocked';
+		 * }else{
+		 *	visibility_icon = 'ui-icon-locked';
+		 *}
+		 */
+		visibility_icon = 'ui-icon-locked';
+
+		$('#project_visibility_button').button({
+			icons: {
+				primary: visibility_icon
+			},
+			text: false
+		})
+		.addClass('ui-corner-bl')
+		.click(function(){
+			$('#project_visibility_dialog').dialog('open');
+			return false;
+		})
+		.css('clear:right');
+
+		//project_style_dialog();
+		$('#project_style_button').button({
+			icons: {
+				primary: 'ui-icon-pencil'
+			},
+			text: false
+		})
+		.addClass('ui-corner-br')
+		.click(function(){
+				themeroller_frame();
+				return false;
+				}		
+		);
+
+		$('#project_buttons a')
+			.removeClass('ui-corner-all');
+
+		$('#project_buttons').removeClass('ui-helper-hidden');
+};
+
+
+
+function create_project_dialog(){
+	/*
+	 * Create project creation dialog 
+	 */
+	$("#create_project_dialog").dialog({
+			autoOpen:false,
+			modal: true,
+			resizable:false,
+			show:'blind',
+			buttons: {
+				Ok : function() {
+					$(this).dialog('close');
+					Dajaxice.djity.project.create_project(
+						'Dajax.process',{
+						'project_name':project_name,
+						'module_name':module_name,
+						'path':path,
+						'name': $('#new_project_name').val(),
+					});	
+					
+				},
+				Cancel: function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+};
+
+
+function themeroller_frame(){
+	if($("#themeroller_frame").attr('src') == undefined){
+		var themeroller_url = $("#themeroller_url").attr('href');
+		$("#themeroller_frame").attr('src',themeroller_url);
+		$("#themeroller_container").draggable({handle:'#themeroller_handle'});
+	};
+	if($("#themeroller_container").css('display') == 'block'){
+		$("#themeroller_container").css('display','none');
+		$("#project_style_button").toggleClass('ui-state-highlight')
+	}else{
+		$("#themeroller_container").css('display','block');
+		$("#project_style_button").toggleClass('ui-state-highlight')
+	};
+}
+
+function project_style_dialog(){
+	/*
+	 * Create project style edition dialog
+	 */
+	$('#project_style_dialog').dialog({
+		autoOpen:false,
+		modal: false,
+		show:'blind',
+		resizable:true,
+		autoResize:true,
+		height:'400',
+		dialogClass:'themeroller_dialog',
+	});
+};
