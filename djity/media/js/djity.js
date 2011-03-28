@@ -1,4 +1,21 @@
 
+function dj_remote(func,params){
+	/*
+	 * this function defines a standard way for all djity functions and widgets
+	 * to interact with the remote server.
+	 * 
+	 * Today only ajax calls through the dajax framework are supported.
+	 */
+
+	/* add standard djity context parameters */
+	params['project_name'] = dj_context.project_name;
+	params['module_name'] = dj_context.module_name;
+	params['LANGUAGE_CODE'] = dj_context.LANGUAGE_CODE;
+
+	/* call the function using dajax */
+	eval("Dajaxice."+func+"('Dajax.process',params);");	
+};
+
 function initHeader(){
 	/*
 	 * encapsulate all header initialization function
@@ -137,33 +154,26 @@ function init_tag(){
 function message(msg) {
 	$('#messages').notify('create',{text:msg});
 
-}
+};
 
 function save_text_portlet(id,html) {
 	/*
 	 * save change for a text portlet 
 	 *
-	 */	
-	Dajaxice.djity.portlet.save_text_portlet(
-			'Dajax.process',{
-			'project_name':dj_context.project_name,
-			'LANGUAGE_CODE':dj_context.LANGUAGE_CODE,
+	 */
+	dj_remote('djity.portlet.save_text_portlet',{
 			'div_id':id,
 			'html':html,
 			}
-	);	
-}
+	);
+};
 
 function project_title_callback(id,html){
-		Dajaxice.djity.project.save_project_title(
-				'Dajax.process',{
-				'project_name':dj_context.project_name,
-				'LANGUAGE_CODE':dj_context.LANGUAGE_CODE,
-				'div_id':id,
-				'html':html,
+	dj_remote('djity.portlet.save_project_title',{
+			'div_id':id,
+			'html':html,
 		}
-																							);	
-}
+	);
+};
 
-/* Define jquery-ui custom widgets for djity */
 
