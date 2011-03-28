@@ -169,13 +169,10 @@ body {
 	padding:2px;
 }
 
-#project_visibility_button {
-	clear:left;
-}
-
 #project_buttons a {
 	margin: 0;
 	float:left;
+	clear:left;
 }
 
 #portal_parameters {

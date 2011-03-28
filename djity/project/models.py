@@ -124,7 +124,7 @@ class Project(models.Model):
             except Member.DoesNotExist:
                 return settings.ANONYMOUS
 
-    def view_project(self,user):
+    def can_view(self,user):
         """
         check if a user can view a project,
         used to build parent hierarchy in update_context,
@@ -132,7 +132,7 @@ class Project(models.Model):
         one of its modules
         """
         role = self.get_role(user)
-        for module in self.modules:
+        for module in self.modules.all():
             if has_perm('view',role,module.status):
                 return True
         return False
@@ -156,6 +156,8 @@ class Project(models.Model):
             if name == context['module_name']:
                 context['module'] = module
                 context['perm'] = granted_perms(context['role'],module.status)
+                context['tab_status'] = module.status
+                context['status_display'] = settings.STATUS_DISPLAY
             if has_perm('view',context['role'],module.status):
                 context['module_tabs'].append(name)
                 context["%s_tab_display"%name] = module.label.capitalize()
@@ -168,7 +170,7 @@ class Project(models.Model):
             context['perm'] = granted_perms(context['role'],settings.PUBLIC)
 
         # get hierarchy of parent projects
-        context['parent_projects'] = filter(lambda p:can_view(context['user']) ,self.get_parents())
+        context['parent_projects'] = filter(lambda p:p.can_view(context['user']) ,self.get_parents())
         context['children_projects'] = filter(lambda p:p.can_view(context['user']) ,self.children.all())
     
     def get_available_modules(self):

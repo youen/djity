@@ -155,6 +155,11 @@ STATUS_PERMISSIONS = {
 # list of permissions to check when updating djity's context
 PERMISSIONS = ['view','edit','upload','manage']
 
+# Status display in user interface
+STATUS_DISPLAY = [[DRAFT,'Draft'],[PRIVATE,'Private'],[PUBLIC,'Public']]
+
+
+
 ##########################
 # Djity install settings #
 ##########################

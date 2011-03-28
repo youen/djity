@@ -7,7 +7,7 @@ function project_manage_buttons () {
 			},
 			text: false
 		})
-		.addClass('ui-corner-tl')
+		.addClass('ui-corner-tl ui-corner-tr')
 		.click(function(){
 				$('#create_project_dialog').dialog('open');
 				return false;
@@ -20,34 +20,10 @@ function project_manage_buttons () {
 			},
 			text: false
 		})
-		.addClass('ui-corner-tr')
 		.click(function(){
 				$('#manage_users_dialog').dialog('open');
 				return false;
 		});
-
-		project_visibility_dialog();
-		/*
-		 * if(project_public){
-		 *	visibility_icon = 'ui-icon-unlocked';
-		 * }else{
-		 *	visibility_icon = 'ui-icon-locked';
-		 *}
-		 */
-		visibility_icon = 'ui-icon-locked';
-
-		$('#project_visibility_button').button({
-			icons: {
-				primary: visibility_icon
-			},
-			text: false
-		})
-		.addClass('ui-corner-bl')
-		.click(function(){
-			$('#project_visibility_dialog').dialog('open');
-			return false;
-		})
-		.css('clear:right');
 
 		//project_style_dialog();
 		$('#project_style_button').button({
@@ -56,7 +32,7 @@ function project_manage_buttons () {
 			},
 			text: false
 		})
-		.addClass('ui-corner-br')
+		.addClass('ui-corner-bl ui-corner-br')
 		.click(function(){
 				themeroller_frame();
 				return false;
@@ -85,9 +61,9 @@ function create_project_dialog(){
 					$(this).dialog('close');
 					Dajaxice.djity.project.create_project(
 						'Dajax.process',{
-						'project_name':project_name,
-						'module_name':module_name,
-						'path':path,
+						'project_name':dj_context.project_name,
+						'module_name':dj_context.module_name,
+						'path':dj_context.path,
 						'name': $('#new_project_name').val(),
 					});	
 					

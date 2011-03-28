@@ -18,14 +18,15 @@ def save_tab_order(request,array,context=None):
     return result.json()
 register('save_tab_order')
 
-@check_perm_and_update_context(perm='edit')
-def save_tab_name(request,label,context=None):
+@check_perm_and_update_context(perm='manage')
+def edit_tab(request,label,status,context=None):
     module = context['module']
     module.label = label
+    module.status = int(status)
     module.save()
     result =  Dajax()
     return result.json()
-register('save_tab_name')
+register('edit_tab')
 
 @check_perm_and_update_context(perm='edit')
 def save_project_title(request,div_id,html,context=None):
@@ -110,6 +111,13 @@ def create_project(request,name,context=None):
     return dajax.json()
 register('create_project')
 
+"""
+@check_perm_and_update_context(perm='manage')
+def module_visibility(request,visibility,context=None):
+    module = context['module']
+"""
+
+
 @check_perm_and_update_context(perm='manage')
 def manage_users(request,target,users=None,context=None):
     project = context['project']
@@ -163,16 +171,6 @@ def manage_users(request,target,users=None,context=None):
 
     return dajax.json()
 register('manage_users')
-
-@check_perm_and_update_context(perm='manage')
-def project_visibility(request,visibility,context=None):
-    dajax = Dajax()
-    context['project'].set_visibility(visibility)
-    msg = unicode(_("The current project is now %s"%visibility))
-    messages.add_message(request, messages.INFO,msg)
-    dajax.script('location.reload()')
-    return dajax.json()
-register('project_visibility')
 
 @check_perm_and_update_context()
 def project_subscribe(request,context=None):

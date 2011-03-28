@@ -39,6 +39,9 @@
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/role_manager.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/project_buttons.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/project_subscribe.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/projects_hierarchy.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/portal_parameters.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/right_tabs.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/djity.js"></script>
 	    {% block project_head %}{% endblock %}
 		{% block module_head %}{% endblock %}
@@ -79,16 +82,13 @@
 
                 <div id="project_left2">
 					<nav id="project_buttons" class="ui-helper-hidden">
-						<!--
                         {% if perm.manage %}
 							<a id="create_project_button" class="dj-mini-button">{% trans "New project" %}</a>
 							<a id="manage_users_button" class="dj-mini-button">{% trans "Manage users" %}</a>
-							<a id="project_visibility_button" class="dj-mini-button">{% trans "Project visibility" %}</a>
 							<a id="project_style_button" class="dj-mini-button">{% trans "Manage style" %}</a>
 						{% else %}
 							<a id="project_subscribe_button" class="dj-mini-button"></a>
 						{% endif %}
-						<--
 					</nav>
                 </div>
                 <div id="project_left3">
@@ -138,14 +138,19 @@
         
 
         <!-- Edit Tab -->
-        <div id="{{ module_name }}-change-name" title="{% trans 'Edit name' %}" class="ui-helper-hidden" >
-                <input id="{{ module_name }}-title" value="" />
+        <div id="{{ module_name }}-edit" title="{% trans 'Edit tab parameters' %}" class="ui-helper-hidden" >
+			<input id="{{ module_name }}-title" value="" />
+			<select name="tab_statuses" id="{{ module_name }}-status" size=1>
+				{% for value,display in status_display %}
+				<option value="{{ value }}" {% if value == tab_status %}selected='selected'{% endif %} >{{ display }}</option>
+				{% endfor %}
+			</select>
         </div>
         
         <!-- Create Tab -->
         <div id="create_tab_dialog" title="{% trans 'Create new Tab' %}" class="ui-helper-hidden" >
                 <select name="module_list" id="module_list" size=1 >
-                <input id="new_tab_name" value="" />
+					<input id="new_tab_name" value="" />
                 </select>
 
         </div>
@@ -161,19 +166,6 @@
 			<div id='manage_users_dialog_table'>
 			</div>
 		</div>
-
-		<!-- project visibility configuration dialog -->
-			{% if project_public %}
-			<div id="project_visibility_dialog" class="ui-helper-hidden" title="{% trans "Make this project private ?" %}">
-				<p class="ui-state-highlight ui-corner-all">{% trans "Only registered members will be able to see this project. (DEPRECATED)" %}</p>
-				<input id="project_visibility" type="hidden" value="private">
-			</div>
-			{% else %}
-			<div id="project_visibility_dialog" class="ui-helper-hidden" title="{% trans "Make this project public ?" %}">
-				<p class="ui-state-highlight ui-corner-all">{% trans "Anonymous users will be able to see this project. (DEPRECATED)" %}</p>
-				<input id="project_visibility" type="hidden" value="public">
-			</div>
-			{% endif %}
 
 			<!-- themeroller independant frame -->
 			<div id="themeroller_container"
