@@ -26,7 +26,7 @@ function project_manage_buttons () {
 				return false;
 		});
 
-		project_visibility_dialog();
+		//project_visibility_dialog();
 		/*
 		 * if(project_public){
 		 *	visibility_icon = 'ui-icon-unlocked';
