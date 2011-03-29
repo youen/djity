@@ -5,9 +5,9 @@ function simple_page_content_callback(id,html) {
 	 */					
 	Dajaxice.djity.simplepage.save_simple_page(
 			'Dajax.process',{
-			'project_name':project_name,
-			'LANGUAGE_CODE':context.LANGUAGE_CODE,
-			'module_name':module_name,
+			'project_name':dj_context.project_name,
+			'LANGUAGE_CODE':dj_context.LANGUAGE_CODE,
+			'module_name':dj_context.module_name,
 			'div_id':id,
 			'html':html,
 			}

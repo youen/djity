@@ -12,9 +12,9 @@ function portal_parameters() {
 			'Login': function() {
 				Dajaxice.djity.portal.login(
 				'Dajax.process',{
-					'project_name':project_name,
-					'module_name':module_name,
-					'path':path,
+					'project_name':dj_context.project_name,
+					'module_name':dj_context.module_name,
+					'path':dj_context.path,
 					'username':$('#login_username').val(),
 					'password':$('#login_password').val(),
 				});
