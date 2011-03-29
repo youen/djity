@@ -39,7 +39,7 @@ def djity_modules():
 
 def granted_perms(role,status):
     """
-    return the list of permissions granted to a user according to his role and the status of a module
+    return the list of permissions granted to a user according to his `role` and the `status` of a module
     """
     perms = filter(lambda p:has_perm(p,role,status), settings.PERMISSIONS)
     perms_dict = {}

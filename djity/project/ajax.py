@@ -1,6 +1,7 @@
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _ 
 from django.contrib import messages
+from django.conf import settings
 
 from dajax.core import Dajax
 from djity.project.decorators import check_perm_and_update_context
@@ -162,7 +163,7 @@ def manage_users(request,target,users=None,context=None):
             return dajax.json()
 
 
-    context['roles'] = filter(lambda r:r.name not in ['anyone','anonymous'],project.role_set.all())
+    context['roles'] = filter(lambda r:r[0] != 0 ,settings.ROLES_DISPLAY)
     context['members'] = Member.objects.filter(project=project)
     context['users'] = [m.user for m in context['members']] 
     render = render_to_string("core/projects/manage_user.html",context)

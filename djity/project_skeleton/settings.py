@@ -158,6 +158,14 @@ PERMISSIONS = ['view','edit','upload','manage']
 # Status display in user interface
 STATUS_DISPLAY = [[DRAFT,'Draft'],[PRIVATE,'Private'],[PUBLIC,'Public']]
 
+# role display in UI
+ROLES_DISPLAY = [
+        (ANONYMOUS,'Anonymous'),
+        (AWAITING,'Awaiting'),
+        (USER ,'User'),
+        (CONTRIBUTOR,'Contributor'),
+        (MANAGER,'Manager'),
+        ]
 
 
 ##########################

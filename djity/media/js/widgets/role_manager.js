@@ -73,8 +73,8 @@ function manage_users_dialog(){
 					'Dajax.process',{
 						'project_name':dj_context.project_name,
 						'module_name':dj_context.module_name,
-						'path':path,
-						'users': users,
+						'path':dj_context.path,
+						'users': dj_context.users,
 						'target':'#manage_users_dialog'
 					});
 

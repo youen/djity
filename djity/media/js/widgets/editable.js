@@ -53,11 +53,24 @@ $.widget("ui.editable",{
 						'primary':''
 					},
 					text:false,
-					label:'Editor',
+					label:'Rich Edit',
 								
 				})
 				.addClass('dj-mini-button')
 				.click(	function (event){self.editor();})
+				.appendTo(editorBox);
+
+			$('<button  title="Cancel">Cancel</button>')
+				.button({
+					icons:{
+						'primary':''
+					},
+					text:false,
+					label:'Cancel',
+								
+				})
+				.addClass('dj-mini-button')
+				.click(	function (event){self.cancel();})
 				.appendTo(editorBox);
 
 			editorBox.position({
@@ -111,6 +124,7 @@ $.widget("ui.editable",{
 					
 			self.doc.addClass('ui-state-highlight')
 			self._isOpen  = true;
+			self.rollback=self.element.html();
 			
 			  
 	},
@@ -129,7 +143,7 @@ $.widget("ui.editable",{
 				editorBox = self.editorBox;
 			self.element.hide();
 
-			self.element.elrte({lang:context.LANGUAGES_CODE,toolbar:'maxi'});
+			self.element.elrte({lang:dj_context.LANGUAGES_CODE,toolbar:'maxi'});
 			self.element.elrte('val',self.element.html());
 			self.element.elrte('open');
 			self.close();
@@ -141,6 +155,12 @@ $.widget("ui.editable",{
 			self.element.elrte('close');
 			self.element.show();
 			self.save();
+	},
+
+	cancel : function(){
+			var self = this;
+			self.element.html(self.rollback);
+			self.close();
 	},
 
 	bold : function(){
