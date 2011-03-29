@@ -86,8 +86,8 @@ function manage_users_dialog(){
 		open: function(event,ui){
 			Dajaxice.djity.project.manage_users(
 				'Dajax.process',{
-					'project_name':dj_context.project_name,
-					'module_name':dj_context.module_name,
+					'project_name':dj.project_name,
+					'module_name':dj.module_name,
 					'target':'#manage_users_dialog_table'
 				});
 		},

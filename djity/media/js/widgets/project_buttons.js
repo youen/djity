@@ -61,9 +61,9 @@ function create_project_dialog(){
 					$(this).dialog('close');
 					Dajaxice.djity.project.create_project(
 						'Dajax.process',{
-						'project_name':dj_context.project_name,
-						'module_name':dj_context.module_name,
-						'path':dj_context.path,
+						'project_name':dj.project_name,
+						'module_name':dj.module_name,
+						'path':dj.path,
 						'name': $('#new_project_name').val(),
 					});	
 					

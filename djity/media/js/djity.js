@@ -1,11 +1,28 @@
 
+dj.remote = function(func,params){
+	/*
+	 * this function defines a standard way for all djity functions and widgets
+	 * to interact with the remote server.
+	 * 
+	 * Today only ajax calls through the dajax framework are supported.
+	 */
+
+	/* add standard djity context parameters */
+	params.project_name = this.project_name;
+	params.module_name = this.module_name;
+	params.LANGUAGE_CODE = this.LANGUAGE_CODE;
+
+	/* call the function using dajax */
+	eval("Dajaxice."+func+"('Dajax.process',params);");	
+};
+
 function initHeader(){
 	/*
 	 * encapsulate all header initialization function
 	 */
 	widgetify();
 	init_right_tabs();
-	if (dj_context.perm.manage){
+	if (dj.perm.manage){
 		project_manage_buttons();
 	}
 	else {
@@ -18,14 +35,14 @@ function initHeader(){
 	paginator();
 	init_tag();
    
-	elRTE.prototype.options.lang = dj_context.LANGUAGE_CODE;
+	elRTE.prototype.options.lang = dj.LANGUAGE_CODE;
    //change elRTE save function	
 
 	elRTE.prototype.save = function (){
 		this.editor.prev().editable('close_editor');
 	}	
    //after all send notification
-	$(dj_context.django_messages).each(function(item,msg){
+	$(dj.django_messages).each(function(item,msg){
 		$('#messages').notify('create',{text:msg});
 		});
 };
@@ -51,7 +68,7 @@ function widgetify() {
 
 	$('#messages').notify();
 
-	if(dj_context.perm.edit){
+	if(dj.perm.edit){
 		$(".dj-editable").each(function(i,e){$(e).editable({save_function:eval(e.id +'_callback')});});
 	}
 }
@@ -99,7 +116,7 @@ function paginator() {
 
 function init_tag(){
 	$('.tag').box({
-			closeable:dj_context.perm.manage,
+			closeable:dj.perm.manage,
 			icon: 'ui-icon-tag',
 			state: 'ui-state-default',
 			close: function (){
@@ -112,7 +129,7 @@ function init_tag(){
 			select:function(event,ui){
 			$('<span class="tag"><p><a>' + ui.item.value + '</a></p></span>')
 				.box({
-					closeable:dj_context.perm.manage,
+					closeable:dj.perm.manage,
 					icon: 'ui-icon-tag',
 					state: '',
 					effect:'',
@@ -137,33 +154,26 @@ function init_tag(){
 function message(msg) {
 	$('#messages').notify('create',{text:msg});
 
-}
+};
 
 function save_text_portlet(id,html) {
 	/*
 	 * save change for a text portlet 
 	 *
-	 */	
-	Dajaxice.djity.portlet.save_text_portlet(
-			'Dajax.process',{
-			'project_name':dj_context.project_name,
-			'LANGUAGE_CODE':dj_context.LANGUAGE_CODE,
+	 */
+	dj.remote('djity.portlet.save_text_portlet',{
 			'div_id':id,
 			'html':html,
 			}
-	);	
-}
+	);
+};
 
 function project_title_callback(id,html){
-		Dajaxice.djity.project.save_project_title(
-				'Dajax.process',{
-				'project_name':dj_context.project_name,
-				'LANGUAGE_CODE':dj_context.LANGUAGE_CODE,
-				'div_id':id,
-				'html':html,
+	dj.remote('djity.portlet.save_project_title',{
+			'div_id':id,
+			'html':html,
 		}
-																							);	
-}
+	);
+};
 
-/* Define jquery-ui custom widgets for djity */
 

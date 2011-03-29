@@ -110,7 +110,7 @@ function profile_dialog(){
 
 				Dajaxice.djity.project.profile(
 					'Dajax.process',{
-						'project_name':dj_context.project_name,
+						'project_name':dj.project_name,
 						'password1': $('#id_password1').val(),
 						'password2': $('#id_password2').val(),
 						
@@ -124,7 +124,7 @@ function profile_dialog(){
 		open: function(event,ui){
 			Dajaxice.djity.portal.profile(
 				'Dajax.process',{
-					'project_name':dj_context.project_name,
+					'project_name':dj.project_name,
 					'password1': '',
 					'password2': '',
 				});
@@ -165,7 +165,7 @@ function choose_language_button(){
 	$("#choose_language_button")
 		.button({
 			icons: {
-				primary: 'dj-icon-'+dj_context.LANGUAGE_CODE
+				primary: 'dj-icon-'+dj.LANGUAGE_CODE
 			},
 			text: false
 		})

@@ -14,7 +14,7 @@ function project_subscribe_button(){
 
 	})
 
-	switch(dj_context.role){
+	switch(dj.role){
 		case 'awaiting':
 			button_label = "Cancel subscription";
 			break;
@@ -27,7 +27,7 @@ function project_subscribe_button(){
 		
 	$("#project_subscribe_button")
 		.button({
-			disabled:(dj_context.role=='awaiting'),
+			disabled:(dj.role=='awaiting'),
 			icons: {
 				primary:'ui-icon-person'
 			},
@@ -35,7 +35,7 @@ function project_subscribe_button(){
 			label:button_label,
 		});
 	
-	if(dj_context.user == "anonymous"){
+	if(dj.user == "anonymous"){
 		$("#project_subscribe_button")
 			.click(function(){
 					$('#project_subscribe_dialog').dialog('open');
@@ -47,8 +47,8 @@ function project_subscribe_button(){
 			.click(function(){
 					Dajaxice.djity.project.project_subscribe(
 						'Dajax.process',{				
-							'project_name':dj_context.project_name,
-							'module_name':dj_context.module_name,
+							'project_name':dj.project_name,
+							'module_name':dj.module_name,
 						});
 					})
 	}
