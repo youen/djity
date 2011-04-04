@@ -1,6 +1,6 @@
-***********************
-Write your first module
-***********************
+**********************************
+Write your first Djity application
+**********************************
 
 This tutorial is a mimic of the `django tutorial <http://docs.djangoproject.com/en/dev/intro/tutorial01/>`_.
 If you don't know it, you should read/try it first.
