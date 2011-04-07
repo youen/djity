@@ -17,7 +17,7 @@ good deal of great open source technologies.
 	:maxdepth: 2
 	
 	tutorial/index.rst
-	api
+	api/modules.rst
 
 
 Indices and tables

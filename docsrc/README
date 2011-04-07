@@ -1,0 +1,15 @@
+Djity documentation is based on Sphinx (http://sphinx.pocoo.org/index.html)
+which uses the reStructuredText format (http://docutils.sourceforge.net/rst.html)
+
+To be a powerful contributor you should probably check some documentations
+from the links above. But you can also juste see for yourself by browsing the
+files in the source directory.
+
+Djity uses a script 'generate_modules.py' to generate recursively
+its API documentation files. It comes from here:
+
+https://bitbucket.org/etienned/sphinx-autopackage-script/src
+
+We use it like that in the Makefile:
+
+python generate_modules.py -n Djity -s rst -d ./source/api ../djity
