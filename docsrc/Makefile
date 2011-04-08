@@ -35,6 +35,7 @@ help:
 
 clean:
 	-rm -rf $(BUILDDIR)/*
+	-rm -rf ./source/api/*
 
 api:
 	-python generate_modules.py -f -n Djity -s rst -d ./source/api ../djity

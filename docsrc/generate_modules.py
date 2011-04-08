@@ -117,7 +117,7 @@ def create_modules_toc_file(master_package, modules, opts, name='modules'):
     """
     Create the module's index.
     """
-    text = format_heading(1, '%s Modules' % opts.header)
+    text = format_heading(1, 'Code documentation')
     text += '.. toctree::\n'
     text += '   :maxdepth: %s\n\n' % opts.maxdepth
 
