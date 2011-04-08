@@ -17,14 +17,15 @@ import sys, os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
+# for autodoc API generation, find djity sources
+sys.path.insert(0, os.path.abspath('../../'))
 # prepare a fake django environment so that imports work
 sys.path.insert(0,os.path.abspath('./'))
+print sys.path
 import settings
 from django.core.management import setup_environ
 setup_environ(settings)
 
-# for autodoc API generation, find djity sources
-sys.path.insert(0, os.path.abspath('../../'))
 
 
 # -- General configuration -----------------------------------------------------
