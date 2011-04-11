@@ -5,6 +5,10 @@ function init_themeroller(){
 	edited_timer_id = setInterval("check_edited_project_style()",1000);
 };
 
+function open_project_css(){
+	window.open(project_css);
+};
+
 function check_edited_project_style(){
 	if(edited_project_style){
 		$(".editable_css",top.document).each(function(){
@@ -23,6 +27,7 @@ function get_edited_project_style(as_uri){
 	$('input').each(function(i){
 		style_values[this.id] = $(this).val();	
 	});
+	style_values['extra'] = $("#style_code_extra").val()
 	if(as_uri){
 		var style_text = ""
 		for(style in style_values){
@@ -37,12 +42,14 @@ function themeroller_widgetify(){
 	/*
 	 * Prepare the whole theme rolling dialog widget
 	 */
+	$("#style_tabs").tabs({});
 
 	$("#style_accordion").accordion({});
 
 	$("input").change(function(){
 		edited_project_style = true;
 	});
+
 	$(".color_picker").each(function(){
 			var colorpicker = $(this);
 			var colorpicker_ref = $(this).text();
@@ -166,6 +173,13 @@ function themeroller_widgetify(){
 		.removeClass('ui-helper-hidden')
 		.click(function(){
 		save_project_theme();	
+		});
+
+	$("#apply_extra")
+		.button()
+		.removeClass('ui-helper-hidden')
+		.click(function(){
+			edited_project_style = true;
 		});
 };
 
