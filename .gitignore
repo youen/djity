@@ -6,6 +6,10 @@ dist/
 *.swp
 *.db
 
+docsrc/source/api/*
+
+djity.egg-info/*
+
 media/images/textures/cache/*
 media/images/icons/cache/*
 

@@ -1,16 +1,14 @@
 Development environement
 =========================
 
-
-
 Virtualenv
-----------
+++++++++++
 A virtual environment is mostly useful for a developer's working environment and more generally to put djity in a box separated from the rest of your system. You are free to skip this part if it is not relevant to your needs.
 See `<http://virtualenv.openplans.org/>`_, and `<http://www.doughellmann.com/projects/virtualenvwrapper/>`_ to learn more about the tools we recommend.
 You will need to have virtualenvwrapper installed, you can find installation instructions here: `<http://www.doughellmann.com/docs/virtualenvwrapper/install.html#basic-installation>`_.
 
 Install Virtualenv
-++++++++++++++++++
+------------------
 
 you can install virtualenv and virtualenvwrapper with pip::
 
@@ -51,15 +49,43 @@ Djity embeded JS projects :
  * `JQuery UI <jqueryui.com>`_
  * `ElRTE <http://elrte.org/>`_
 
-System dependences
-------------------
+Required dependences
+--------------------
 You have to install :
 
- * `Django <www.djangoproject.com/>`_
- * `Dajax <www.dajaxproject.com/>`_
+ * `Django <http://www.djangoproject.com/>`_::
+   
+	$ pip install django
+
+ * `Skeleton <http://pypi.python.org/pypi/skeleton>`_::
+
+	$ pip install skeleton
+
+ * `Dajax & Dajaxice <http://www.dajaxproject.com/>`_::
+	
+	$ pip install django-dajaxice
+	$ pip install django-dajax
+
+ * `django-localeurl <https://bitbucket.org/carljm/django-localeurl/>`_::
+    
+    $ pip install django-url 
+
+ * `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/>`_::
+
+	$ install beautifulsoup
+
+
+Optional dependences
+--------------------
+
+ * `Django Debug Toolbar <http://robhudson.github.com/django-debug-toolbar/>`_::
+
+   $ pip install django-debug-toolbar
+
+
 
 Repository
-----------
+++++++++++
 
 Djity use github as sources repository. Get the code source with::
 
@@ -71,7 +97,7 @@ You will be able to work on source code without repeating the installation.
 
 
 Setup of a new project
-----------------------
+++++++++++++++++++++++
 
 Now that djity and all its required packages are installed you can create a new development project::
 

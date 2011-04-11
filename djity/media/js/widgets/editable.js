@@ -143,7 +143,7 @@ $.widget("ui.editable",{
 				editorBox = self.editorBox;
 			self.element.hide();
 
-			self.element.elrte({lang:dj_context.LANGUAGES_CODE,toolbar:'maxi'});
+			self.element.elrte({lang:dj.LANGUAGES_CODE,toolbar:'maxi'});
 			self.element.elrte('val',self.element.html());
 			self.element.elrte('open');
 			self.close();

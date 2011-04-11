@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.contenttypes import generic
-from tinymce.models import HTMLField
 from djity.utils import djreverse
 from djity.project.models import Module
 from djity.portlet.models import TemplatePortlet
@@ -18,7 +17,7 @@ class SimplePage(Module):
     """
     objects = SuperManager()
 
-    content = HTMLField()
+    content = models.TextField()
 
     __metaclass__ = TransMeta
 

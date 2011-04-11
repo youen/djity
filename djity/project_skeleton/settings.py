@@ -102,8 +102,6 @@ INSTALLED_APPS = [
     'django.contrib.comments',
 
     #extensions
-    'django_extensions',
-    'tagging',
 
     # Dajax
     'dajaxice',
