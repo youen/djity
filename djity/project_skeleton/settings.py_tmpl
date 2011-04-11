@@ -134,21 +134,21 @@ PUBLIC = 2
 
 # permissions are associated with the minimal value
 # or role needed to grant them
-PERMISSION_MIN_ROLE = {
+PERMISSION_MIN_ROLE = {{
     'view_public':ANONYMOUS,
     'view_private':USER,
     'edit':CONTRIBUTOR,
     'upload':CONTRIBUTOR,
     'manage':MANAGER,
-}
+}}
 
 # generic permission names can lead to different actual
 # permissions according on the status of the current module
-STATUS_PERMISSIONS = {
-    DRAFT:{'view':'edit'},
-    PRIVATE:{'view':'view_private'},
-    PUBLIC:{'view':'view_public'}
-}
+STATUS_PERMISSIONS = {{
+    DRAFT:{{'view':'edit'}},
+    PRIVATE:{{'view':'view_private'}},
+    PUBLIC:{{'view':'view_public'}}
+}}
 
 # list of permissions to check when updating djity's context
 PERMISSIONS = ['view','edit','upload','manage']

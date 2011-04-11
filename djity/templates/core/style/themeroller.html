@@ -17,39 +17,56 @@
 		<script type="text/javascript">
 			window.onload=function(){
 				textures = {{ textures|safe}};
+				project_css = "{% url project_css project_name=project_name %}"
 				init_themeroller();
 		     };
 		</script>
 	</head>
-<body>
-	<div id="style_accordion">
-	{% for group in edit_style_content %}
-		<h3><a href="#">{{ group.0 }}</a></h3>
-		<div>
-		{% for item in group.1 %}
-			<label for="{{ item.1 }}">{{ item.0 }}:</label>
-			<input id="{{ item.1 }}" name="{{ item.1 }}" value="{{ item.2 }}" type="text" size="10">
-			{% if item.3 == 'color' %}
-				<div class="color_picker ui-helper-hidden ui-widget-content">#{{ item.1 }}</div>
-			{% endif %}
-			{% if item.3 == 'radius' %}
-				<div class="radius_slider">#{{ item.1 }}</div>
-			{% endif %}
-			{% if item.3 == 'size' %}
-				<div class="size_slider">#{{ item.1 }}</div>
-			{% endif %}
-			{% if item.3 == 'percent' %}
-				<div class="percent_slider">#{{ item.1 }}</div>
-			{% endif %}
-			{% if item.3 == 'texture' %}
-				<div class="texture_picker ui-helper-hidden ui-widget-content">#{{ item.1 }}</div>
-			{% endif %}
-			<br />
-		{% endfor %}
-		<br/><br/><br/><br/>
-		<br/><br/><br/><br/>
+	<body>
+		<div id="style_tabs">
+			<ul>
+				<li><a href="#style_accordion">Parameters</a></li>
+				<li><a href="#style_code">Code</a></li>
+			</ul>
+			<div id="style_accordion">
+			{% for group in edit_style_content %}
+				<h3><a href="#">{{ group.0 }}</a></h3>
+				<div>
+					{% for item in group.1 %}
+					<label for="{{ item.1 }}">{{ item.0 }}:</label>
+					<input id="{{ item.1 }}" name="{{ item.1 }}" value="{{ item.2 }}" type="text" size="10">
+					{% if item.3 == 'color' %}
+						<div class="color_picker ui-helper-hidden ui-widget-content">#{{ item.1 }}</div>
+					{% endif %}
+					{% if item.3 == 'radius' %}
+						<div class="radius_slider">#{{ item.1 }}</div>
+					{% endif %}
+					{% if item.3 == 'size' %}
+						<div class="size_slider">#{{ item.1 }}</div>
+					{% endif %}
+					{% if item.3 == 'percent' %}
+						<div class="percent_slider">#{{ item.1 }}</div>
+					{% endif %}
+					{% if item.3 == 'texture' %}
+						<div class="texture_picker ui-helper-hidden ui-widget-content">#{{ item.1 }}</div>
+					{% endif %}
+					<br />
+					{% endfor %}
+					<br/><br/><br/><br/>
+					<br/><br/><br/><br/>
+				</div>
+				{% endfor %}
+			</div>
+			<div id="style_code">
+				<a href="javascript:open_project_css()">
+					Link to the current CSS file for this project.
+				</a>
+				<textarea id="style_code_extra" cols="50">
+					{{ extra }}
+				</textarea>
+				<input type="submit" id="apply_extra" class="ui-helper-hidden" value="Apply">
+			</div>
 		</div>
-	{% endfor %}
-	</div>
-	<input type="submit" id="save_button" class="ui-helper-hidden" value="Save">
-</body>
+		<input type="submit" id="save_button" class="ui-helper-hidden" value="Save">
+	</body>
+</html>

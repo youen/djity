@@ -423,3 +423,8 @@ ul.errorlist {
 .ui-notify-cross:hover { color:#ffffab }
 .ui-notify-cross:active { position:relative; top:1px }
 
+/*
+ * user defined extra code
+ */
+
+{{ extra }}

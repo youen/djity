@@ -8,6 +8,15 @@ body{
 	height:95%;
 }
 
+#style_tabs ul{
+	line-height:0.5em;
+}
+
+#style_tabs div{
+	padding:0px;
+	padding-top:8px;
+}
+
 #style_accordion .ui-accordion-content{
 	padding:5px;
 }
