@@ -167,8 +167,8 @@ def manage_users(request,target,users=None,context=None):
     context['members'] = Member.objects.filter(project=project)
     context['users'] = [m.user for m in context['members']] 
     render = render_to_string("core/projects/manage_user.html",context)
-    dajax.assign(target,'innerHTML',render)
     dajax.script('manage_users_dialog_widgetify()')
+    dajax.script(target+'.role_manager("create_table","%s")'%render)
 
     return dajax.json()
 register('manage_users')

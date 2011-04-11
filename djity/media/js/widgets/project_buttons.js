@@ -21,7 +21,7 @@ function project_manage_buttons () {
 			text: false
 		})
 		.click(function(){
-				$('#manage_users_dialog').dialog('open');
+				manage_users.role_manager('open');
 				return false;
 		});
 

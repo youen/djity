@@ -7,7 +7,10 @@ $.widget("ui.role_manager",{
 
 	options : {
 		inherit_permissions:true, //inherit permissions
-		errors:[],// error messages
+		users_role:{youen:"admin"},// users
+		roles:[('admin',1)],// permission
+		error_messages:[],
+		var_name:'role_manager', //name for callback function (no DOM access optimisation)
 		},
 
 	_create : function()
@@ -15,6 +18,7 @@ $.widget("ui.role_manager",{
 		var self=this,
 		options =self.options,
 		id = self.element.id;
+		
 	},
 
 	_init : function()
@@ -23,7 +27,58 @@ $.widget("ui.role_manager",{
 		options = self.options;
 
 		self._inherit_permissions = options.inherit_permissions;
+		self._users_roles = options.users_roles;
+		self._roles = options.roles;
+		self._id =  self.element.attr('id');
+		self._var_name = options.var_name;
 
+		self.element.dialog(
+		{
+			autoOpen:false,
+			modal: true,
+			show:'blind',
+		});
+
+
+	},
+
+	create_table : function()
+	{
+		alert(options.users_roles);
+		var self = this,
+		options = self.options;
+		
+		self.table =  $("<table></table>");
+		$.each(self._users_roles,function(username,role)
+			{
+			row_str = "<tr><th>" + username + "</th>"
+			$.each(self._role,function(i,role)
+				{
+					row_str += '<td><input type="radio" ';
+					row_str += 'name="'+ username + '"';
+				    row_str += 'value="' + role + '"';
+				    row_str += 'id="' + username + '-' + role + '"';
+				    if( users_roles[user] = role)
+					{	
+						row_str += "checked"
+					}
+					row_str += "/>";
+					row_str += "<label	for=" + user_name + "-" + role + " class='role'>";
+					row_str += role + "</label></td>";
+
+				});
+			row_str += "</tr>";
+			self.table.append($(row_str));
+			});
+		self.element.append(self.table);
+	},
+
+	open : function()
+	{
+		var self = this,
+		options = self.options;
+		dj.remote('djity.project.manage_users',{target:self._var_name})
+		self.element.dialog('open');
 	},
 
 	inherit_toggle : function()
@@ -51,15 +106,16 @@ $.widget("ui.role_manager",{
 
 });
 
+var manage_users;
 
 function manage_users_dialog(){
 	/*
 	 * Create users management dialog
 	 */
-	$('#manage_users_dialog').dialog({
-		autoOpen:false,
-		modal: true,
-		show:'blind',
+	manage_users = $('#manage_users_dialog').role_manager({
+		var_name:'manage_users',
+	});
+	/*
 		buttons : {
 			OK : function(){
 				
@@ -92,6 +148,7 @@ function manage_users_dialog(){
 				});
 		},
 	});
+	*/
 };
 
 function manage_users_dialog_widgetify(){
