@@ -1,5 +1,3 @@
-
-
 $.widget("ui.role_manager",{
 		/*
 		 *  Djity user's role manager
@@ -42,42 +40,49 @@ $.widget("ui.role_manager",{
 
 	},
 
-	create_table : function()
+	create_table : function(table)
 	{
-		alert(options.users_roles);
 		var self = this,
 		options = self.options;
 		
-		self.table =  $("<table></table>");
-		$.each(self._users_roles,function(username,role)
-			{
-			row_str = "<tr><th>" + username + "</th>"
-			$.each(self._role,function(i,role)
-				{
-					row_str += '<td><input type="radio" ';
-					row_str += 'name="'+ username + '"';
-				    row_str += 'value="' + role + '"';
-				    row_str += 'id="' + username + '-' + role + '"';
-				    if( users_roles[user] = role)
-					{	
-						row_str += "checked"
-					}
-					row_str += "/>";
-					row_str += "<label	for=" + user_name + "-" + role + " class='role'>";
-					row_str += role + "</label></td>";
+		self.table =  $(table);
+		self.element.html(self.table);
+		self.table.find('label')
+		.css('width','100%')
+		.addClass('ui-corner-all');
 
-				});
-			row_str += "</tr>";
-			self.table.append($(row_str));
+		self.table.find('.role').button({'disabled':true});
+
+		$('#inherit-permissions-label').click(function(){
+			$('#manage_users_dialog_table .role').button('option','disable',false);
 			});
-		self.element.append(self.table);
+
+		self.table.buttonset();
+		self.table.find('th')
+			.addClass('ui-widget-header');
+
+		self.element
+			.dialog("option","width",'auto')
+			.dialog("option","height",'auto')
+			.dialog("option","position",'center')
+
+
+	},
+
+	error function (message)
+   	{
+		var self = this,
+		options = self.options;
+		self.errorbox
+			.text(message)
+			.addClass('ui-state-error');
 	},
 
 	open : function()
 	{
 		var self = this,
 		options = self.options;
-		dj.remote('djity.project.manage_users',{target:self._var_name})
+		dj.remote('djity.project.manage_users',{JS_target:self._var_name})
 		self.element.dialog('open');
 	},
 
@@ -99,6 +104,10 @@ $.widget("ui.role_manager",{
 
 	close : function ()
 	{
+		var self = this,
+		options = self.options,
+		inherit = self._inherit;
+		self.element.dialog('close');
 
 	}
 	
@@ -139,48 +148,13 @@ function manage_users_dialog(){
 				$(this).dialog('close');
 			}
 		},
-		open: function(event,ui){
-			Dajaxice.djity.project.manage_users(
-				'Dajax.process',{
-					'project_name':dj.project_name,
-					'module_name':dj.module_name,
-					'target':'#manage_users_dialog_table'
-				});
-		},
 	});
 	*/
 };
 
-function manage_users_dialog_widgetify(){
-	$('#manage_users_dialog_table label')
-	.css('width','100%')
-	.addClass('ui-corner-all');
 
-	$('#manage_users_dialog_table .role').button({'disabled':true});
-
-	$('#inherit-permissions-label').click(function(){
-		$('#manage_users_dialog_table .role').button('option','disable',false);
-			});
-
-	$('#manage_users_dialog_table').buttonset();
-	$('#manage_users_dialog_table th')
-		.addClass('ui-widget-header');
-
-	$('#manage_users_dialog')
-		.dialog("option","width",'auto')
-	    .dialog("option","height",'auto')
-	    .dialog("option","position",'center')
-
-
-}
 function manage_users_dialog_close(){
-	$('#manage_users_dialog').dialog('close');
 };
 
-function manage_users_dialog_error(message) {
-	$('#manage_users_dialog_error')
-	.text(message)
-	.addClass('ui-state-error');
-};
 
 

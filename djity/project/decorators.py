@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 
 from django.template import RequestContext
-from djity.utils.context import DjityContext
+from djity.utils.context import DjityContext, JSTarget
 
 from djity.project.models import Project
 from djity.portlet.models import update_portlets_context
@@ -63,6 +63,12 @@ def check_perm_and_update_context(
                 project = Project.objects.get(name=project_name)
             except Project.DoesNotExist:
                 raise Http404
+
+            # Check if a JS target is present
+            JS_target = kwargs.get('JS_target',None)
+            if JS_target :
+                del kwargs['JS_target']
+                context['JS_target'] = JSTarget(JS_target)
 
             # set user, path and laguange values in context
             user = request.user
@@ -122,6 +128,10 @@ def check_perm_and_update_context(
                     context['info_message'] = request.GET['info_message']
 
             kwargs['context'] = context
+            if JS_target :
+                func(*args,**kwargs)
+                return context['JS_target'].json()
+
             return func(*args,**kwargs)
         return _new_func
 

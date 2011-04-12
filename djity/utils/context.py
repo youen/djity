@@ -1,4 +1,5 @@
 from django.template import RequestContext
+from dajax.core.Dajax import Dajax
 import json
 
 class DjityJSONEncoder(json.JSONEncoder):
@@ -29,5 +30,30 @@ class DjityContext(RequestContext):
     def mark_as_json(self,attr_name):
         self._marked_as_json.add(attr_name)
 
+
+
+class JSTarget(Dajax):
+    """
+    Interface to call javascript function on a target JS object from python
+    """
+
+    def __init__(self,target):
+        Dajax.__init__(self)
+        self._target = target
+
+    def __getattr__(self,name):
+        """
+        if `name` is a standard dajax function return that function or create and return  a stumb function.
+        """
+        print 'get attr', name
+        try:
+            return self.__dict__[name]
+        except KeyError:
+            def stumb(*args):
+                jsargs = map(json.dumps,args)
+                code = '%s.%s(%s)'%(self._target,name,','.join(jsargs))
+                self.script(code)
+
+            return stumb
 
 

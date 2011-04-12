@@ -120,9 +120,9 @@ def module_visibility(request,visibility,context=None):
 
 
 @check_perm_and_update_context(perm='manage')
-def manage_users(request,target,users=None,context=None):
+def manage_users(request,users=None,context=None):
     project = context['project']
-    dajax = Dajax()
+    dajax = context['JS_target']
     if users:
         has_manager = False
         members = []
@@ -167,10 +167,8 @@ def manage_users(request,target,users=None,context=None):
     context['members'] = Member.objects.filter(project=project)
     context['users'] = [m.user for m in context['members']] 
     render = render_to_string("core/projects/manage_user.html",context)
-    dajax.script('manage_users_dialog_widgetify()')
-    dajax.script(target+'.role_manager("create_table","%s")'%render)
+    dajax.role_manager("create_table",render)
 
-    return dajax.json()
 register('manage_users')
 
 @check_perm_and_update_context()
