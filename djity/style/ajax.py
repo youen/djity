@@ -35,7 +35,6 @@ def edit_project_style(request,target,context=None):
 
 @check_perm_and_update_context(perm='manage')
 def save_project_style(request,style_values,context=None):
-    print style_values
     dajax = Dajax()
     project = context['project']
     css = project.css

@@ -186,8 +186,8 @@ function themeroller_widgetify(){
 function save_project_theme(){
 	Dajaxice.djity.style.save_project_style(
 		'Dajax.process',{
-		'project_name':top.project_name,
+		'project_name':top.dj.project_name,
 		'style_values':get_edited_project_style(false),
 	});
-	top.location.reload();
+	//top.location.reload();
 }

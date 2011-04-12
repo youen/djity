@@ -59,14 +59,12 @@
 			</div>
 			<div id="style_code">
 				<a href="javascript:open_project_css()">
-					Link to the current CSS file for this project.
+					{% trans "Link to the current CSS." %}
 				</a>
-				<textarea id="style_code_extra" cols="50">
-					{{ extra }}
-				</textarea>
-				<input type="submit" id="apply_extra" class="ui-helper-hidden" value="Apply">
+				<textarea id="style_code_extra">{{ extra }}</textarea>
 			</div>
 		</div>
+		<input type="submit" id="apply_extra" class="ui-helper-hidden" value="Apply">
 		<input type="submit" id="save_button" class="ui-helper-hidden" value="Save">
 	</body>
 </html>
