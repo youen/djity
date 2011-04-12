@@ -50,7 +50,7 @@ def themeroller(request,context=None):
     context['edit_style_content'] = edit_style_content
     context['textures'] = css_context['textures']
 
-    return render_to_response("core/style/themeroller.html",context)
+    return render_to_response("djity/style/themeroller.html",context)
 
 def texture(request,project_name): 
     try:

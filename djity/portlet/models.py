@@ -75,7 +75,7 @@ class TextPortlet(Portlet):
         context["portlet_content"] = self.content
         context["portlet_div_class"] = self.div_class
         context["portlet_div_id"] = self.div_id
-        return render_to_string("core/portlet/text_portlet.html",context)
+        return render_to_string("djity/portlet/text_portlet.html",context)
 
     def __unicode__(self):
         return _(u"TextPortlet: %s")% self.content

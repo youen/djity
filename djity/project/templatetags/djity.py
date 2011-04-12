@@ -22,7 +22,7 @@ class TabNode(template.Node):
         }
         context.update(tab_context)
 
-        return render_to_string("core/projects/tab.html",context)
+        return render_to_string("djity/project/tab.html",context)
 
 @register.tag(name='instance_url')
 def do_djiurl(parser,token):

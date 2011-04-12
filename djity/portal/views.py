@@ -22,7 +22,7 @@ def register(request):
     else:
         form = RegistrationForm() # An unbound form
     
-    return render_to_response('core/portal/registration_page.html',{'form':form}, context_instance=RequestContext(request))
+    return render_to_response('djity/portal/registration_page.html',{'form':form}, context_instance=RequestContext(request))
 
 def profile(request):
 
@@ -40,7 +40,7 @@ def profile(request):
         form = ProfileForm()
 
 
-    return render_to_response('core/portal/profile_page.html', {'form':form},context_instance=RequestContext(request))
+    return render_to_response('djity/portal/profile_page.html', {'form':form},context_instance=RequestContext(request))
 
 
 
