@@ -12,7 +12,7 @@ def overview(request,project='root',context=None):
     """
 
     # Return project overview template
-    return render_to_response('core/projects/overview.html',context)
+    return render_to_response('djity/project/overview.html',context)
 
 def logout(request):
     next_page = '/'

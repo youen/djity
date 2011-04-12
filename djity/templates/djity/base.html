@@ -13,12 +13,12 @@
 
 		<link id="ui_css" class="editable_css" rel="stylesheet" type="text/css" href="{% url ui_css project_name=project_name%}"/>
 		<link id="project_css" class="editable_css" rel="stylesheet" type="text/css" href="{% url project_css project_name=project_name %}"/>
-		<link rel="stylesheet" href="{{MEDIA_URL}}/css/elrte.min.css"                         type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="{{MEDIA_URL}}/djity/css/elrte.min.css"                         type="text/css" media="screen" charset="utf-8">
 
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/elrte.min.js" charset="utf-8" ></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/i18n/elrte.{{LANGUAGE_CODE}}.js" charset="utf-8"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/jquery.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/jquery-ui.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/elrte.min.js" charset="utf-8" ></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/i18n/elrte.{{LANGUAGE_CODE}}.js" charset="utf-8"></script>
 
         {% if perm.manage %}
 		<link id="themeroller_url" type="text/html" href="{% url themeroller project_name=project_name %}" />
@@ -32,17 +32,17 @@
 			dj = {{ json_context|safe }};
         </script>
 
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/box.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/editable.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/leftabs.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/notify.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/role_manager.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/project_buttons.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/project_subscribe.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/projects_hierarchy.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/portal_parameters.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/widgets/right_tabs.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/djity.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/box.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/editable.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/leftabs.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/notify.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/role_manager.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/project_buttons.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/project_subscribe.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/projects_hierarchy.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/portal_parameters.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/right_tabs.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/djity.js"></script>
 	    {% block project_head %}{% endblock %}
 		{% block module_head %}{% endblock %}
 		<script type="text/javascript">
@@ -75,7 +75,7 @@
 					</span>
                 {% else %}
 	                <div id="project_logo" dir="ltr">
-						{% block logo_link_image %}<a href="/{{LANGUAGE_CODE}}"><img src="{{ MEDIA_URL }}images/djity_large_green.png" alt="{{ site_name }}"/></a>{% endblock %}
+						{% block logo_link_image %}<a href="/{{LANGUAGE_CODE}}"><img src="{{ MEDIA_URL }}/djity/images/djity_large_green.png" alt="{{ site_name }}"/></a>{% endblock %}
 					</div>
                 {% endifnotequal %}
                 </div>
@@ -257,7 +257,7 @@
 
                     {% block body %}{% endblock %}    
 					</section>
-				{% include "core/projects/paginator.html" %}
+				{% include "djity/project/paginator.html" %}
 				</div>
             </div>
             

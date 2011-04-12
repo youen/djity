@@ -42,8 +42,8 @@ MEDIA_ROOT = "%s/media" % PROJECT_ROOT
 DATA_DIR = "%s/data" % PROJECT_ROOT
 
 # Djity's themeroller textures and icons directories
-TEXTURES_DIR = "%s/images/textures/" % MEDIA_ROOT
-ICONS_DIR = "%s/images/icons/" % MEDIA_ROOT
+TEXTURES_DIR = "%s/djity/images/textures/" % MEDIA_ROOT
+ICONS_DIR = "%s/djity/images/icons/" % MEDIA_ROOT
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -222,10 +222,9 @@ def create_link(media_path,media_link):
         os.symlink(media_path,media_link)
         print("create link to %s in %s" % (media_path, media_link))
 
-# create links for all directories in djity-core media dir
+# create link for djity media dir
 djity_media = DJITY_ROOT+"/media"
-for d in os.listdir(djity_media):
-    create_link(djity_media+"/"+d,MEDIA_ROOT+"/"+d)
+create_link(djity_media,MEDIA_ROOT+"/djity")
 
 # import djity apps separate settings
 # add their templates to the list

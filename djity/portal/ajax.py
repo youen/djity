@@ -44,7 +44,7 @@ def register(request,username,email,password1,password2):
             dajax.script('location.reload()')
             return dajax.json()
 
-    render = render_to_string('core/portal/registration_form.html',{'form':form})
+    render = render_to_string('djity/portal/registration_form.html',{'form':form})
     dajax.assign('#register_dialog','innerHTML',render)
     dajax.script('register_dialog_post_assign()')
     return dajax.json()
@@ -70,7 +70,7 @@ def profile(request,password1,password2,context=None):
         dajax.script(u'message("%s")'%msg)
         return dajax.json()
 
-    render = render_to_string('core/portal/profile_form.html',{'form':form})
+    render = render_to_string('djity/portal/profile_form.html',{'form':form})
     dajax.assign('#profile_dialog','innerHTML',render)
     dajax.script('profile_dialog_post_assign()')
     return dajax.json()   

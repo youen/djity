@@ -32,6 +32,6 @@ def page(request,context=None):
         page.content = _("The current page is empty, you can write some content.")
 
     context.update({'view':'page','page_content' : page.content,'advertising_context' : ['page_content']})
-    return render_to_response('core/simplepage/page.html',context)
+    return render_to_response('djity/simplepage/page.html',context)
 
 
