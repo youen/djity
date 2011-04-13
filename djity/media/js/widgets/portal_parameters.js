@@ -126,6 +126,11 @@ $.widget("ui.user_profile",
 		dj.widgets.user_profile = self.element;
 		
 		self.element
+			.keyup(function(e)
+			{
+				
+				if( e.keyCode == 13){ self.element.user_profile('validate')};
+			})
 			.dialog(
 			{
 				autoOpen:false,
@@ -140,6 +145,14 @@ $.widget("ui.user_profile",
 					}
 				},
 			});
+
+	},
+
+	keyup:function(e)
+	{
+		var self=this,
+	    element = self.element;
+
 
 	},
 

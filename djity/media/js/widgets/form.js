@@ -12,7 +12,7 @@ $.widget("ui.form",{
 
 	 $.each(inputs,function(){
 		$(this).addClass('ui-state-default ui-corner-all');
-		$(this).wrap(<label />");
+		$(this).wrap("<label />");
 
 		if($(this).is(":reset ,:submit"))
 		object.buttons(this);
@@ -42,7 +42,7 @@ $.widget("ui.form",{
 					 width:100,height:100,float:'right',fontWeight:'bold'}
 					  }).addClass('ui-state-default');
 	  $(form).find("fieldset").append(holder);
-	  for(var i=1;i&lt;5;i++)
+	  for(var i=1;i<5;i++)
 		{
 		$(form).find("fieldset").append(div.clone().html(i).attr("id",i));
 		}
