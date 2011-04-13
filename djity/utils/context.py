@@ -41,6 +41,14 @@ class JSTarget(Dajax):
         Dajax.__init__(self)
         self._target = target
 
+    def message(self,message):
+        """
+        send a message to djity notification
+        """
+        code = u"message(%s);"%json.dumps(message)
+        self.script(code)
+
+
     def __getattr__(self,name):
         """
         if `name` is a standard dajax function return that function or create and return  a stumb function.

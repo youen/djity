@@ -1,8 +1,244 @@
+var AnonymousUser = 'AnonymousUser';
+
+var login_dialog_html = 
+		'<div id="login_dialog" class="ui-helper-hidden" title="' +gettext('Login') +'">' + 
+			'<p id="login_dialog_error"></p>' +
+			'<form method="post" action="." class="">' +
+				'<label for="login_username">' + gettext("user")  + ' </label>' + 
+				'<input id="login_username" name="username" type="text">' +
+				'<label for="login_password">' + gettext("password") + ' </label>' + 
+				'<input id="login_password" name="password" type="password">' +
+			'</form>'+
+		'</div>';
+
+
+$.widget("ui.portal_parameters",
+{
+	/*
+	 * Djty portal's parameter
+	 */
+
+	
+	_create : function()
+	{
+		var self=this,
+	    element = self.element;
+
+		self.JS_target = dj.widgets.portal_parameters;
+		dj.widgets.portal_parameters = self.element;
+
+		if( dj.context.user != AnonymousUser)
+		{
+			self.logout_button = $('<a id="logout_button" >' + gettext("Sign out") + ' </a>')
+				.addClass('dj-mini-button')
+				.click(function()
+				{
+					dj.remote('djity.portal.logout',{});
+				})
+				.appendTo(self.element);
+
+			self.profile_dialog = $('<div id="profile_dialog" class="ui-helper-hidden" title="' + gettext('Your profile') +'"></div>')
+				.user_profile();
+
+			self.profile_button = $('<a id="profile_button">' + dj.context.user  + '</a>')
+				.addClass('dj-mini-button')
+				.click(function()
+				{
+					self.profile_dialog.user_profile('open');
+				})
+				.appendTo(self.element);
+
+		}
+		else
+		{
+			
+			self.login_dialog = $(login_dialog_html)
+				.dialog(
+				{
+					autoOpen:false,
+					modal:true,
+					show:'blind',
+					buttons:
+					{
+						'Login': function() 
+						{
+							dj.remote('djity.portal.login',
+							{
+									'path':dj.context.path,
+									'username':$('#login_username').val(),
+									'password':$('#login_password').val(),
+							})
+
+						}
+					}
+					
+				});
+
+
+			self.login_button = $('<a id="login_button" >' + gettext("Sign in") + '</a>')
+				.click(function()
+				{
+					self.login_dialog.dialog('open');
+				})
+				.addClass('dj-mini-button')
+				.appendTo(self.element);
+
+			self.signup_button = $('<a id="signup_button" >' + gettext("Create an account") + '</a>')
+				.addClass('dj-mini-button')
+				.appendTo(self.element);
+
+
+		}
+
+		self.choose_language_button = $('<a id="choose_language_button" class="dj-mini-button">' +gettext("Language") + '</a>')
+			.appendTo(self.element);
+
+	},
+
+	_init : function()
+	{
+		var self=this;
+
+		self.element
+			.buttonset()
+			.show();
+	}
+
+
+});
+
+$.widget("ui.user_profile",
+{
+	/*
+	 * Djty user's profile
+	 */
+
+	
+	_create : function()
+	{
+	/*
+	 * Profile Dialog
+	 */
+		var self=this,
+	    element = self.element;
+		
+		self.JS_target = 'dj.widgets.user_profile';
+		dj.widgets.user_profile = self.element;
+		
+		self.element
+			.dialog(
+			{
+				autoOpen:false,
+				modal: true,
+				show:'blind',
+				buttons : {
+					OK : self.validate,
+
+					Cancel : function()
+					{
+						$(this).dialog('close');
+					}
+				},
+			});
+
+	},
+
+	validate : function()
+	{
+		var self=this,
+	    element = self.element;
+		dj.remote('djity.portal.save_profile',
+			{
+				'JS_target':'dj.widgets.user_profile',
+				'password1': $('#id_password1').val(),
+				'password2': $('#id_password2').val(),
+			});
+
+	},
+
+	open : function()
+	{
+
+		var self=this,
+	    element = self.element;
+		dj.remote('djity.portal.get_profile',{'JS_target':self.JS_target});
+	
+		self.element.dialog('open');
+		
+	},
+
+	set_profile : function(profile_html)
+	{
+
+		var self=this,
+	    element = self.element;
+
+		self.element
+			.html(profile_html)
+			.dialog("option","width","auto")
+			.dialog("option","height","auto")
+			.dialog("option","position","center");
+	},
+
+	close : function(){
+			
+		var self=this,
+	    element = self.element;
+
+		self.element.dialog('close');
+	},
+
+	error : function(id,errors)
+	{
+		
+		var self=this,
+	    element = self.element;
+
+		self.element.find(' .errorlist').remove();
+		$('#'+id).before($(errors));
+	}
+
+});
+
+$.widget("ui.register",
+{
+	/*
+	 * Djty user's register
+	 */
+
+	
+	_create : function()
+	{
+	/*
+	 * Register Dialog
+	 */
+
+	}
+
+});
+
+$.widget("ui.login",
+{
+	/*
+	 * Djty user's login
+	 */
+
+	
+	_create : function()
+	{
+	/*
+	 * Login Dialog
+	 */
+
+	}
+
+});
+/*
+ *  UGLY CODE
+ */
+
 function portal_parameters() {
-	$('#logout_button').click(
-		function(){
-			Dajaxice.djity.portal.logout('Dajax.process',{});	
-		});
+
 
 	$('#login_dialog').dialog({
 		autoOpen:false,
@@ -21,9 +257,6 @@ function portal_parameters() {
 			}
 		}
 	})
-	$('#login_button').click(function(){
-		$('#login_dialog').dialog('open');
-	});
 
 	register_dialog();
 	profile_dialog();
@@ -32,8 +265,6 @@ function portal_parameters() {
 		.addClass('dj-mini-button');
 
 	choose_language_button();
-	$('#portal_parameters').buttonset();
-	$('#portal_parameters').removeClass('ui-helper-hidden');
 };
 
 function login_dialog_close(){
@@ -45,6 +276,7 @@ function login_dialog_error(message) {
 	.text(message)
 	.addClass('ui-state-error');
 };
+
 
 function register_dialog(){
 	/*
@@ -97,46 +329,6 @@ function register_dialog_post_assign(){
 }
 
 
-function profile_dialog(){
-	/*
-	 * Profile Dialog
-	 */
-	$('#profile_dialog').dialog({
-		autoOpen:false,
-		modal: true,
-		show:'blind',
-		buttons : {
-			OK : function(){
-
-				Dajaxice.djity.project.profile(
-					'Dajax.process',{
-						'project_name':dj.project_name,
-						'password1': $('#id_password1').val(),
-						'password2': $('#id_password2').val(),
-						
-					});
-
-			},
-			Cancel : function(){
-				$(this).dialog('close');
-			}
-		},
-		open: function(event,ui){
-			Dajaxice.djity.portal.profile(
-				'Dajax.process',{
-					'project_name':dj.project_name,
-					'password1': '',
-					'password2': '',
-				});
-		},
-	});
-
-	$('#profile_button').click(function(){
-			$('#profile_dialog').dialog('open');
-			return false;
-		});
-
-};
 
 function profile_dialog_post_assign(){
 	$('#profile_dialog')

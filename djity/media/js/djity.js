@@ -1,16 +1,17 @@
 
+
 dj.remote = function(func,params){
 	/*
-	 * this function defines a standard way for all djity functions and widgets
+	 * this function defines a standard way for all dj.context.ty functions and widgets
 	 * to interact with the remote server.
 	 * 
 	 * Today only ajax calls through the dajax framework are supported.
 	 */
 
-	/* add standard djity context parameters */
-	params.project_name = this.project_name;
-	params.module_name = this.module_name;
-	params.LANGUAGE_CODE = this.LANGUAGE_CODE;
+	/* add standard dj.context.ty context parameters */
+	params.project_name = this.context.project_name;
+	params.module_name = this.context.module_name;
+	params.LANGUAGE_CODE = this.context.LANGUAGE_CODE;
 
 	/* call the function using dajax */
 	eval("Dajaxice."+func+"('Dajax.process',params);");	
@@ -20,29 +21,29 @@ function initHeader(){
 	/*
 	 * encapsulate all header initialization function
 	 */
-	widgetify();
 	init_right_tabs();
-	if (dj.perm.manage){
+	if (dj.context.perm.manage){
 		project_manage_buttons();
 	}
 	else {
 		project_subscribe_button();
 	}
-	portal_parameters();
+	dj.portal_parameters = $('#portal_parameters').portal_parameters();
 	parent_projects(); 
 	children_projects();
 	toolbar();
 	paginator();
 	init_tag();
    
-	elRTE.prototype.options.lang = dj.LANGUAGE_CODE;
+	widgetify();
+	elRTE.prototype.options.lang = dj.context.LANGUAGE_CODE;
    //change elRTE save function	
 
 	elRTE.prototype.save = function (){
 		this.editor.prev().editable('close_editor');
 	}	
    //after all send notification
-	$(dj.django_messages).each(function(item,msg){
+	$(dj.context.ngo_messages).each(function(item,msg){
 		$('#messages').notify('create',{text:msg});
 		});
 };
@@ -68,8 +69,8 @@ function widgetify() {
 
 	$('#messages').notify();
 
-	if(dj.perm.edit){
-		$(".dj-editable").each(function(i,e){$(e).editable({save_function:eval(e.id +'_callback')});});
+	if(dj.context.perm.edit){
+		$(".dj.context.editable").each(function(i,e){$(e).editable({save_function:eval(e.id +'_callback')});});
 	}
 }
 
@@ -82,7 +83,7 @@ function initAmazonGroups() {
 	$(function() {
 		$("#amazon_groups").accordion();
 		$("#amazon_groups h3").each(function(i,head){
-			$(head).addClass('dj-mini-button');
+			$(head).addClass('dj.context.mini-button');
 		});
 	});
 };
@@ -91,13 +92,13 @@ function toolbar() {
 	$("#toolbar").buttonset();
 	$("#toolbar a")
 		.button()
-		.addClass('dj-mini-button');
+		.addClass('dj.context.mini-button');
 };
 
 function paginator() {
 	$('#paginator a')
 		.button()
-		.addClass('dj-mini-button');
+		.addClass('dj.context.mini-button');
 	
 	$('#paginator .off')
 		.button('option','disabled','true');
@@ -116,7 +117,7 @@ function paginator() {
 
 function init_tag(){
 	$('.tag').box({
-			closeable:dj.perm.manage,
+			closeable:dj.context.perm.manage,
 			icon: 'ui-icon-tag',
 			state: 'ui-state-default',
 			close: function (){
@@ -129,7 +130,7 @@ function init_tag(){
 			select:function(event,ui){
 			$('<span class="tag"><p><a>' + ui.item.value + '</a></p></span>')
 				.box({
-					closeable:dj.perm.manage,
+					closeable:dj.context.perm.manage,
 					icon: 'ui-icon-tag',
 					state: '',
 					effect:'',
@@ -161,7 +162,7 @@ function save_text_portlet(id,html) {
 	 * save change for a text portlet 
 	 *
 	 */
-	dj.remote('djity.portlet.save_text_portlet',{
+	dj.remote('dj.context.ty.portlet.save_text_portlet',{
 			'div_id':id,
 			'html':html,
 			}
@@ -169,7 +170,7 @@ function save_text_portlet(id,html) {
 };
 
 function project_title_callback(id,html){
-	dj.remote('djity.portlet.save_project_title',{
+	dj.remote('dj.context.ty.portlet.save_project_title',{
 			'div_id':id,
 			'html':html,
 		}

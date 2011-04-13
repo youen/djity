@@ -69,7 +69,7 @@ $.widget("ui.role_manager",{
 
 	},
 
-	error function (message)
+	error : function (message)
    	{
 		var self = this,
 		options = self.options;
@@ -121,8 +121,8 @@ function manage_users_dialog(){
 	/*
 	 * Create users management dialog
 	 */
-	manage_users = $('#manage_users_dialog').role_manager({
-		var_name:'manage_users',
+	dj.manage_users = $('#manage_users_dialog').role_manager({
+		var_name:'dj.manage_users',
 	});
 	/*
 		buttons : {
@@ -153,8 +153,6 @@ function manage_users_dialog(){
 };
 
 
-function manage_users_dialog_close(){
-};
 
 
 
