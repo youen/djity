@@ -7,15 +7,15 @@ function init_right_tabs() {
 	 *
 	 */
 		
-	if (dj.perm.manage){
+	if (dj.context.perm.manage){
 		$("#right_tabs_list").disableSelection();
 		$('#right_tabs_list').sortable({
 
-			placeholder: 'dj-sorting-tab ui-state-highlight dj-mini-button',
+			placeholder: 'dj.context.sorting-tab ui-state-highlight dj.context.mini-button',
 			update: function(event, ui) { 
 				Dajaxice.djity.project.save_tab_order(
 					'Dajax.process',{
-						'project_name':dj.project_name,
+						'project_name':dj.context.project_name,
 						'array':$('#right_tabs_list').sortable('toArray')
 				
 					});	
@@ -27,7 +27,7 @@ function init_right_tabs() {
 	 * Create delete tab dialog 
 	 */
 
-	$('#' + dj.module_name + '-delete')
+	$('#' + dj.context.module_name + '-delete')
 		.dialog({
 			autoOpen:false,
 			modal: true,
@@ -38,8 +38,8 @@ function init_right_tabs() {
 					$(this).dialog('close');
 					Dajaxice.djity.project.delete_tab(
 						'Dajax.process',{
-						'project_name':dj.project_name,
-						'module_name':dj.module_name,
+						'project_name':dj.context.project_name,
+						'module_name':dj.context.module_name,
 				
 					});	
 				},
@@ -50,9 +50,9 @@ function init_right_tabs() {
 		});
 
 	//bind delete tab dialog
-	$('#' + dj.module_name + ' .ui-icon-close')
+	$('#' + dj.context.module_name + ' .ui-icon-close')
 		.click(function(){
-				$('#' + dj.module_name + '-delete').dialog('open');
+				$('#' + dj.context.module_name + '-delete').dialog('open');
 				return false;
 		});
 
@@ -60,29 +60,29 @@ function init_right_tabs() {
 	 * Create a edit dialog 
 	 */
 
-	$('#' + dj.module_name + '-edit')
+	$('#' + dj.context.module_name + '-edit')
 		.dialog({
 			autoOpen:false,
 			modal: true,
 			resizable:false,
 			show:'blind',
 			open: function(event,ui){ 
-				$('#' + dj.module_name + '-title').val(
-					$('#' + dj.module_name ).find('a')[0].textContent
+				$('#' + dj.context.module_name + '-title').val(
+					$('#' + dj.context.module_name ).find('a')[0].textContent
 					);
 				
 			},
 			buttons: {
 				Ok : function() {
 					$(this).dialog('close');
-					$('#' + dj.module_name ).find('a')[0].textContent = $('#' + dj.module_name + '-title').val();
+					$('#' + dj.context.module_name ).find('a')[0].textContent = $('#' + dj.context.module_name + '-title').val();
 					Dajaxice.djity.project.edit_tab(
 						'Dajax.process',{
-						'project_name':dj.project_name,
-						'module_name':dj.module_name,
-						'LANGUAGE_CODE':dj.LANGUAGE_CODE,
-						'label': $('#' + dj.module_name + '-title').val(),
-						'status': $('#' + dj.module_name + '-status').val(),
+						'project_name':dj.context.project_name,
+						'module_name':dj.context.module_name,
+						'LANGUAGE_CODE':dj.context.LANGUAGE_CODE,
+						'label': $('#' + dj.context.module_name + '-title').val(),
+						'status': $('#' + dj.context.module_name + '-status').val(),
 					});	
 					
 				},
@@ -93,9 +93,9 @@ function init_right_tabs() {
 		});
 
 	//bind edit name dialog
-	$('#' + dj.module_name + ' .ui-icon-wrench')
+	$('#' + dj.context.module_name + ' .ui-icon-wrench')
 		.click(function(){
-				$('#' + dj.module_name + '-edit').dialog('open');
+				$('#' + dj.context.module_name + '-edit').dialog('open');
 				return false;
 		});
 
@@ -125,7 +125,7 @@ function init_right_tabs() {
 			open: function(event,ui){
 				Dajaxice.djity.project.get_module(
 					'Dajax.process',{
-					'project_name' : dj.project_name,
+					'project_name' : dj.context.project_name,
 					}
 				
 				);
@@ -141,7 +141,7 @@ function init_right_tabs() {
 					$(this).dialog('close');
 					Dajaxice.djity.project.add_module(
 						'Dajax.process',{
-							'project_name':dj.project_name,
+							'project_name':dj.context.project_name,
 							'tab_name':$('#new_tab_name').val(),
 							'module_type':$("#module_list option:selected").val(),
 						}

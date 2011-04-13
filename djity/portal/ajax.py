@@ -12,7 +12,8 @@ from djity.project.decorators import check_perm_and_update_context
 from dajaxice.core import dajaxice_functions
 dajax_register = lambda name:dajaxice_functions.register_function('djity.portal.ajax',name)
 
-def logout(request):
+@check_perm_and_update_context()
+def logout(request,context=None):
     django_logout(request)
     dajax = Dajax()
     msg = _(u'You are now disconected')
@@ -51,12 +52,19 @@ def register(request,username,email,password1,password2):
 dajax_register('register')
 
 @check_perm_and_update_context()
-def profile(request,password1,password2,context=None):
-    dajax = Dajax()
-    if password1 == "":
-        form =  ProfileForm()
-    else:
-        form = ProfileForm({
+def get_profile(request,context=None):
+    target = context['JS_target']
+    form =  ProfileForm()
+    render = render_to_string('djity/portal/profile_form.html',{'form':form})
+    target.user_profile('set_profile',render)
+
+dajax_register('get_profile')
+
+
+@check_perm_and_update_context()
+def save_profile(request,password1,password2,context=None):
+    target = context['JS_target']
+    form = ProfileForm({
                     'password1':password1,
                     'password2':password2
                     })
@@ -66,18 +74,15 @@ def profile(request,password1,password2,context=None):
         user.set_password(password1) 
         user.save()
         msg = unicode(_('Your password is changed'))
-        dajax.script("$('#profile_dialog').dialog('close')")
-        dajax.script(u'message("%s")'%msg)
-        return dajax.json()
+        target.message(msg)
+        target.user_profile('close')
 
-    render = render_to_string('djity/portal/profile_form.html',{'form':form})
-    dajax.assign('#profile_dialog','innerHTML',render)
-    dajax.script('profile_dialog_post_assign()')
-    return dajax.json()   
+    for field in form.visible_fields():
+        error = str(field.errors)
+        if error != '':
+            target.user_profile('error',field.auto_id,str(field.errors))
         
-dajax_register('profile')
-
-
+dajax_register('save_profile')
 
 
 @check_perm_and_update_context()

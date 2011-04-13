@@ -25,13 +25,19 @@
 		{% endif %}
 
         {% dajaxice_js_import %}
-        <script src="{{ MEDIA_URL }}js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{ MEDIA_URL }}/djity/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
 
-        <script type="text/javascript">
-			/* javascript context for ajax */
-			dj = {{ json_context|safe }};
+		<script type="text/javascript">
+			/*Djity object*/
+			dj = {};
+			/* javascript context for ajax */			
+			dj.context = {{ json_context|safe }};
+			/* widgets container */
+			dj.widgets = {};
+
         </script>
 
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/i18n.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/box.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/editable.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/leftabs.js"></script>
@@ -104,14 +110,6 @@
             </div>
 
             <nav id="portal_parameters" class="ui-helper-hidden">
-                {% if user.is_authenticated %}
-				<a id="logout_button" class="dj-mini-button">{% trans "Sign out" %}</a>
-				<a id="profile_button">{{ user }}</a>
-                {% else %}
-				<a id="login_button" class="dj-mini-button">{% trans "Sign in" %}</a>
-				<a id="signup_button" >{% trans "Create an account" %}</a>
-                {% endif %}
-				<a id="choose_language_button" class="dj-mini-button">{% trans "Language" %}</a>
             </nav>
 
             <nav id="right_tabs" class="ui-helper-hidden" >
