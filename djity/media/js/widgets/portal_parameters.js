@@ -177,7 +177,8 @@ $.widget("ui.user_profile",
 			.html(profile_html)
 			.dialog("option","width","auto")
 			.dialog("option","height","auto")
-			.dialog("option","position","center");
+			.dialog("option","position","center")
+			.find("form").form();
 	},
 
 	close : function(){
