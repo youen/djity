@@ -9,7 +9,7 @@ This guide is write for programers wishing improve Djity itself.
 	:maxdepth: 2
 
 	documention.rst	
-	environement.rst
+	environment.rst
 	communication.rst
 	role.rst
 	conventions.rst
