@@ -47,7 +47,11 @@ body {
 	top:0px;
 }
 #main{
-	min-height:70%;
+	height: 5em;
+}
+html>body #main {
+	height: auto;
+	min-height: 5em;
 }
 
 #sap-content {
@@ -361,12 +365,12 @@ body {
 /* LANG FLAG */
 
 .ui-widget .dj-icon-fr {
-	background-image : url('{{ MEDIA_URL }}/images/flag/fr.png');
+	background-image : url('{{ MEDIA_URL }}/djity/images/flag/fr.png');
 	margin-top:-5px;
 }
 
 .ui-widget .dj-icon-en {
-	background-image : url('{{ MEDIA_URL }}/images/flag/en.png');
+	background-image : url('{{ MEDIA_URL }}/djity/images/flag/en.png');
 	margin-top:-5px;
 }
 /* HTML5 */

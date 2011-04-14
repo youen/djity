@@ -28,6 +28,7 @@ function initHeader(){
 	else {
 		project_subscribe_button();
 	}
+	widgetify();
 	dj.portal_parameters = $('#portal_parameters').portal_parameters();
 	parent_projects(); 
 	children_projects();
@@ -35,7 +36,6 @@ function initHeader(){
 	paginator();
 	init_tag();
    
-	widgetify();
 	elRTE.prototype.options.lang = dj.context.LANGUAGE_CODE;
    //change elRTE save function	
 
@@ -43,7 +43,7 @@ function initHeader(){
 		this.editor.prev().editable('close_editor');
 	}	
    //after all send notification
-	$(dj.context.ngo_messages).each(function(item,msg){
+	$(dj.context.django_messages).each(function(item,msg){
 		$('#messages').notify('create',{text:msg});
 		});
 };
@@ -70,7 +70,7 @@ function widgetify() {
 	$('#messages').notify();
 
 	if(dj.context.perm.edit){
-		$(".dj.context.editable").each(function(i,e){$(e).editable({save_function:eval(e.id +'_callback')});});
+		$(".dj-editable").each(function(i,e){$(e).editable({save_function:eval(e.id +'_callback')});});
 	}
 }
 

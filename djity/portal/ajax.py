@@ -22,48 +22,57 @@ def logout(request,context=None):
     return dajax.json()
 dajax_register('logout')
 
-def register(request,username,email,password1,password2):
-    dajax = Dajax()
-    if username == "":
-        form =  RegistrationForm()
-    else:
-        form = RegistrationForm({
+@check_perm_and_update_context()
+def register(request,js_target,username,email,password1,password2,context=None):
+    form = RegistrationForm({
                     'username':username,
                     'email':email,
                     'password1':password1,
                     'password2':password2
-                    })
+                })
+
 
     if form.is_valid():
         form.save()
         user = authenticate(username=username, password=password1)
-
+        
         if user is not None:
             django_login(request,user)
-            msg = _(u'Your account is created !')
+            msg = unicode(_(u'Your account is created !'))
             messages.add_message(request, messages.INFO, unicode(msg) )
-            dajax.script('location.reload()')
-            return dajax.json()
+            msg = unicode(_(u'We are creating your account... please wait'))
+            js_target.message(msg)
+            js_target.register('close')
+            js_target.reload()
 
-    render = render_to_string('djity/portal/registration_form.html',{'form':form})
-    dajax.assign('#register_dialog','innerHTML',render)
-    dajax.script('register_dialog_post_assign()')
-    return dajax.json()
+    else:
+        for field in form.visible_fields():
+            error = str(field.errors)
+            if error != '':
+                js_target.register('error',field.auto_id,str(field.errors))
+        
 dajax_register('register')
 
+
 @check_perm_and_update_context()
-def get_profile(request,context=None):
-    target = context['JS_target']
+def get_register(request,js_target,context=None):
+    form =  RegistrationForm()
+    render = render_to_string('djity/portal/registration_form.html',{'form':form})
+    js_target.register('set_form',render)
+
+dajax_register('get_register')
+
+@check_perm_and_update_context()
+def get_profile(request,js_target,context=None):
     form =  ProfileForm()
     render = render_to_string('djity/portal/profile_form.html',{'form':form})
-    target.user_profile('set_profile',render)
+    js_target.user_profile('set_profile',render)
 
 dajax_register('get_profile')
 
 
 @check_perm_and_update_context()
-def save_profile(request,password1,password2,context=None):
-    target = context['JS_target']
+def save_profile(request,js_target,password1,password2,context=None):
     form = ProfileForm({
                     'password1':password1,
                     'password2':password2
@@ -74,32 +83,32 @@ def save_profile(request,password1,password2,context=None):
         user.set_password(password1) 
         user.save()
         msg = unicode(_('Your password is changed'))
-        target.message(msg)
-        target.user_profile('close')
+        js_target.message(msg)
+        js_target.user_profile('close')
 
     for field in form.visible_fields():
         error = str(field.errors)
         if error != '':
-            target.user_profile('error',field.auto_id,str(field.errors))
+            js_target.user_profile('error',field.auto_id,str(field.errors))
         
 dajax_register('save_profile')
 
 
 @check_perm_and_update_context()
-def login(request, username, password, context):
-    dajax = Dajax()
+def login(request,js_target, username, password, context):
     user = authenticate(username=username,password=password)
     if user is None:
-        dajax.script(u"login_dialog_error('%s')" % _("Authentication failed"))
-        return dajax.json()
+        js_target.login('error',unicode(_("Authentication failed")))
+        return 
     if not user.is_active:
-        dajax.script(u"login_dialog_error('%s')" % _("This account is disabled"))
-        return dajax.json()
+        js_target.login('error', unicode(_("This account is disabled")))
+        return 
     django_login(request, user)
     msg = _(u'successfully connected')
     messages.add_message(request, messages.INFO, unicode(msg) )
-    dajax.script("login_dialog_close()")
-    dajax.script('location.reload()')
-    return dajax.json()
+    msg = _(u'connecting... please wait')
+    js_target.message(unicode(msg))
+    js_target.login('close')
+    js_target.reload()
 
 dajax_register('login')

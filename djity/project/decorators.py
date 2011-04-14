@@ -65,10 +65,10 @@ def check_perm_and_update_context(
                 raise Http404
 
             # Check if a JS target is present
-            JS_target = kwargs.get('JS_target',None)
-            if JS_target :
-                del kwargs['JS_target']
-                context['JS_target'] = JSTarget(JS_target)
+            js_target = kwargs.get('js_target',None)
+            if js_target :
+                context['js_target'] = JSTarget(js_target)
+                kwargs['js_target'] = context['js_target']
 
             # set user, path and laguange values in context
             user = request.user
@@ -128,9 +128,9 @@ def check_perm_and_update_context(
                     context['info_message'] = request.GET['info_message']
 
             kwargs['context'] = context
-            if JS_target :
+            if 'js_target' in context:
                 func(*args,**kwargs)
-                return context['JS_target'].json()
+                return context['js_target'].json()
 
             return func(*args,**kwargs)
         return _new_func

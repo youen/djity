@@ -49,11 +49,16 @@ class JSTarget(Dajax):
         self.script(code)
 
 
+    def reload(self):
+        """
+        reload the current page.
+        """
+        self.script("location.reload();")
+
     def __getattr__(self,name):
         """
         if `name` is a standard dajax function return that function or create and return  a stumb function.
         """
-        print 'get attr', name
         try:
             return self.__dict__[name]
         except KeyError:

@@ -46,6 +46,10 @@
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/project_buttons.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/project_subscribe.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/projects_hierarchy.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/register.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/login.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/choose_language.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/user_profile.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/portal_parameters.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/right_tabs.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/form.js"></script>
@@ -196,25 +200,8 @@
 			{% endif %}
 		</div>
 
-		<!-- login to djity -->
-		<div id="login_dialog" class="ui-helper-hidden" title="{% trans 'Login' %}"> 
-			<p id="login_dialog_error">
-			</p>  
-			<form method="post" action="." class="">
-				<label for="login_username">{% trans "user" %}</label>
-				<input id="login_username" name="username" type="text">
-				<label for="login_password">{% trans "password" %}</label>
-				<input id="login_password" name="password" type="password">
-			</form>
-		</div>
 
-		<!-- sign up to djity -->
-		<div id="register_dialog" class="ui-helper-hidden" title="{% trans 'Sign up !' %}"> 
-		</div>
 
-		<!-- sign up to djity -->
-		<div id="profile_dialog" class="ui-helper-hidden" title="{% trans 'Your profile' %}"> 
-		</div>
     <!-- end header -->
 	</header>
 
