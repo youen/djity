@@ -1,4 +1,4 @@
-Development environement
+Development environment
 =========================
 
 Virtualenv
@@ -36,11 +36,11 @@ You can exit this environement with the deactivate command::
 
 	$ deactivate
 
-Install dependences
+Install dependencies
 +++++++++++++++++++
 
 
-Embed Dependences
+Embed Dependencies
 -----------------
 
 Djity embeded JS projects :
@@ -49,7 +49,7 @@ Djity embeded JS projects :
  * `JQuery UI <jqueryui.com>`_
  * `ElRTE <http://elrte.org/>`_
 
-Required dependences
+Required dependencies
 --------------------
 You have to install :
 
@@ -68,11 +68,11 @@ You have to install :
 
  * `django-localeurl <https://bitbucket.org/carljm/django-localeurl/>`_::
     
-    $ pip install django-url 
+    $ pip install django-localeurl
 
  * `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/>`_::
 
-	$ install beautifulsoup
+	$ pip install beautifulsoup
 
 
 Optional dependences
@@ -87,13 +87,21 @@ Optional dependences
 Repository
 ++++++++++
 
-Djity use github as sources repository. Get the code source with::
+Djity uses github as sources repository. Get the code source with::
 
 	$ git clone git@github.com:djity/djity.git
 	$ cd djity
-	$ ./setup.py develop
 
-You will be able to work on source code without repeating the installation.
+You can now install Djity, to do so you can choose one of two different commands.
+
+The command 'develop' is useful for contributors to Djity, it will create links so that you will be able to work on the source code
+without repeating the installation::
+
+	$ python setup.py develop
+
+Non-contributors Web admins or application developpers should probably use the 'install' command::
+
+	$ python setup.py install
 
 
 Setup of a new project
