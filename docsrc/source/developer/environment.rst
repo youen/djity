@@ -40,8 +40,8 @@ Install dependencies
 +++++++++++++++++++
 
 
-Embed Dependencies
------------------
+Embed dependencies
+------------------
 
 Djity embeded JS projects :
 
@@ -50,7 +50,7 @@ Djity embeded JS projects :
  * `ElRTE <http://elrte.org/>`_
 
 Required dependencies
---------------------
+---------------------
 You have to install :
 
  * `Django <http://www.djangoproject.com/>`_::

@@ -29,7 +29,7 @@ function initHeader(){
 		project_subscribe_button();
 	}
 	widgetify();
-	dj.portal_parameters = $('#portal_parameters').portal_parameters();
+	dj.functions.portal_parameters();
 	parent_projects(); 
 	children_projects();
 	toolbar();

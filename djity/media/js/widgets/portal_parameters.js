@@ -2,21 +2,14 @@ var AnonymousUser = 'AnonymousUser';
 
 
 
+dj.functions.portal_parameters = function (){
+	dj.widgets.portal_parameters = $('#portal_parameters')
 
-$.widget("ui.portal_parameters",
-{
-	/*
-	 * Djty portal's parameter
-	 */
-
-	
-	_create : function()
-	{
 		var self=this,
-	    element = self.element;
+	    element = dj.widgets.portal_parameters;
 
 		self.JS_target = dj.widgets.portal_parameters;
-		dj.widgets.portal_parameters = self.element;
+		dj.widgets.portal_parameters = dj.widgets.portal_parameters;
 
 		if( dj.context.user != AnonymousUser)
 		{
@@ -26,7 +19,7 @@ $.widget("ui.portal_parameters",
 				{
 					dj.remote('djity.portal.logout',{});
 				})
-				.appendTo(self.element);
+				.appendTo(dj.widgets.portal_parameters);
 
 			self.profile_dialog = $('<div id="profile_dialog" class="ui-helper-hidden" title="' + gettext('Your profile') +'"></div>')
 				.user_profile();
@@ -37,7 +30,7 @@ $.widget("ui.portal_parameters",
 				{
 					self.profile_dialog.user_profile('open');
 				})
-				.appendTo(self.element);
+				.appendTo(dj.widgets.portal_parameters);
 
 		}
 		else
@@ -54,7 +47,7 @@ $.widget("ui.portal_parameters",
 					self.login_dialog.login('open');
 				})
 				.addClass('dj-mini-button')
-				.appendTo(self.element);
+				.appendTo(dj.widgets.portal_parameters);
 
 			self.register_dialog = $('<div id="register_dialog" class="ui-helper-hidden" title="' + gettext('Create an account') +'"></div>')
 				.register();
@@ -65,7 +58,7 @@ $.widget("ui.portal_parameters",
 					self.register_dialog.register('open');
 				})
 				.addClass('dj-mini-button')
-				.appendTo(self.element);
+				.appendTo(dj.widgets.portal_parameters);
 
 
 		}
@@ -76,7 +69,8 @@ $.widget("ui.portal_parameters",
 			autoOpen:false,
 			modal:true,
 			show:'blind',
-		});
+		})
+		.buttonset();
 
 		$("#choose_language_dialog a")
 		.each(function(i,head){
@@ -97,21 +91,16 @@ $.widget("ui.portal_parameters",
 			.click(function(){
 				$('#choose_language_dialog').dialog('open');
 			})
-			.appendTo(self.element);
+			.appendTo(dj.widgets.portal_parameters);
 
-	},
-
-	_init : function()
-	{
 		var self=this;
 
-		self.element
+		dj.widgets.portal_parameters
 			.buttonset()
 			.show();
-	}
 
 
-});
+};
 
 
 
