@@ -9,5 +9,8 @@ setup(name='djity-{module_name}',
     author_email='{author_email}',
     url='{url}',
     packages=['{package_name}'],
-    package_data={{'{package_name}':['templates/*','templatetags/*','media/*']}},
+    package_data={{'{package_name}':[
+		'templates/{package_name}/*.html',
+		'media/*/*']
+		}},
 )

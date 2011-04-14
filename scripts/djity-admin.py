@@ -77,18 +77,18 @@ class ProjectSkeleton(Skeleton):
         # use Skeleton to create destinatrion directory 
         self.write(dst_dir, run_dry=run_dry)
         Skeleton.run(self, dst_dir, run_dry)
-        if self['admin_name']:
+        if self['develop']:
             print "setup a default developement project..."
-            p = Popen("./manage.py syncdb",stdin=PIPE,stdout=PIPE,stderr=PIPE,shell=True,cwd=dst_dir)
+            p = Popen("python manage.py syncdb",stdin=PIPE,stdout=PIPE,stderr=PIPE,shell=True,cwd=dst_dir)
             print "create links for media directories in %s/media" % dst_dir
             print "create tables"
             print "define superuser '%s'" % self['admin_name']
             p.communicate("yes\n%s\n%s\n" % (self['admin_name'],self['admin_email']))
             print "install indexes"
             print "run 'manage.py create_portal'"
-            call("./manage.py create_portal",shell=True,cwd=dst_dir)
+            call("python manage.py create_portal",shell=True,cwd=dst_dir)
             print "run 'manage.py runserver'"
-            call("./manage.py runserver",shell=True,cwd=dst_dir)
+            call("python manage.py runserver",shell=True,cwd=dst_dir)
 
 
 class ApplicationSkeleton(Skeleton):

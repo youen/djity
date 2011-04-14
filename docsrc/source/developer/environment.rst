@@ -57,9 +57,12 @@ You have to install :
    
 	$ pip install django
 
- * `Skeleton <http://pypi.python.org/pypi/skeleton>`_::
+ * `Skeleton <http://pypi.python.org/pypi/skeleton>`_ (through our fork on
+   github because of a small feature added)::
 
-	$ pip install skeleton
+	$ git clone https://github.com/albanm/skeleton skeleton
+	$ cd skeleton
+	$ python setup.py install skeleton
 
  * `Dajax & Dajaxice <http://www.dajaxproject.com/>`_::
 	
