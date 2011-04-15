@@ -4,14 +4,20 @@ import djity,shutil,os,sys
 from optparse import OptionParser
 from skeleton import Skeleton, Var, Bool
 from subprocess import Popen,call,PIPE
+from django.utils.importlib import import_module
 
-commands = ['create_project','create_app']
+commands = ['create_project','create_app','ls_apps']
+commands_help = {
+        'create_project':"Create a new Djity project in the specified directory",
+        'ls_apps':"List all Djity applications installed on this machine",
+        'create_app':"Create a new almost empty Djity application for developpers",
+        }
 
 # if no valid command was specified, display help accordingly
 if len(sys.argv)<=1 or not sys.argv[1] in commands:
     usage = "Usage: %prog subcommand [options] [args]\nAvailable subcommands:"
     for command in commands:
-        usage += "\n\t%s" % command
+        usage += "\n\t%s - %s" % (command,commands_help[command])
 
     parser = OptionParser(usage)
     (options, args) = parser.parse_args()
@@ -68,19 +74,20 @@ class ProjectSkeleton(Skeleton):
         # use Skeleton to ask user's input
         self.get_missing_variables()
         
-        # derive apps.txt content from the user's input
-        self['apps'] = ""
-        for app in apps:
-            if self[app]:
-                self['apps'] += "%s\n" % app
+        # derive apps list from the user's input
+        apps = filter(lambda a:self[a],apps)
 
         # use Skeleton to create destinatrion directory 
         self.write(dst_dir, run_dry=run_dry)
         Skeleton.run(self, dst_dir, run_dry)
+
+        for app in apps:
+            print "run 'manage.py install_app %s'" % app
+            call("python manage.py install_app %s" % app,shell=True,cwd=dst_dir)
+
         if self['develop']:
             print "setup a default developement project..."
             p = Popen("python manage.py syncdb",stdin=PIPE,stdout=PIPE,stderr=PIPE,shell=True,cwd=dst_dir)
-            print "create links for media directories in %s/media" % dst_dir
             print "create tables"
             print "define superuser '%s'" % self['admin_name']
             p.communicate("yes\n%s\n%s\n" % (self['admin_name'],self['admin_email']))
@@ -89,7 +96,6 @@ class ProjectSkeleton(Skeleton):
             call("python manage.py create_portal",shell=True,cwd=dst_dir)
             print "run 'manage.py runserver'"
             call("python manage.py runserver",shell=True,cwd=dst_dir)
-
 
 class ApplicationSkeleton(Skeleton):
     src = djity.__path__[0]+'/application_skeleton'
@@ -130,3 +136,11 @@ if command == 'create_app':
     sys.argv[0] += ' create_app'
     sys.argv.remove('create_app')
     ApplicationSkeleton.cmd()
+
+# display the list of Djity applications currently installed on this machine
+if command == 'ls_apps':
+    for app in ls_apps():
+        app_path = import_module(app).__path__
+        app_path = app_path[0]
+        print "%s - Check %s" % (app,app_path+'/README.rst')
+

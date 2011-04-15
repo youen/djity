@@ -38,7 +38,7 @@ clean:
 	-rm -rf ./source/api/*
 
 api:
-	-python generate_modules.py -f -n Djity -s rst -d ./source/api ../djity
+	-python generate_modules.py -f -n {package_name} -s rst -d ./source/api ../{package_name}
 
 html: api
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

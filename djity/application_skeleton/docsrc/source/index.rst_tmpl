@@ -1,0 +1,20 @@
+.. {package_name} documentation master file.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to {package_name}'s documentation!
+=======================================
+
+{description}
+
+.. toctree::
+	:maxdepth: 2
+	api/modules.rst
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

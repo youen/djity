@@ -1,3 +1,5 @@
+import logging,os
+
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils.importlib import import_module
@@ -55,4 +57,13 @@ def has_perm(permission,role,status):
     # update permission according to the current status if appropriate
     perm = settings.STATUS_PERMISSIONS[status].get(permission,permission)
     return role >= settings.PERMISSION_MIN_ROLE[perm]
+
+def create_link(media_path,media_link):
+    """
+    create links to build a virtually unified media directory.
+    Used by 'create_portal' and 'install_app' management commands.
+    """
+    if os.path.isdir(media_path) and not os.path.exists(media_link):
+        os.symlink(media_path,media_link)
+        logging.info("create link to %s in %s" % (media_path, media_link))
 

@@ -3,13 +3,20 @@ import logging
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 
+from django.conf import settings
+
 from djity.portal.models import SiteRoot
 from djity.project.models import Project
+from djity.utils import create_link
 
 class Command(BaseCommand):
-    help = "Populate the root of a new djity portal."
+    help = """Populate the root of a new djity portal and create a link to
+    djity's main media directory."""
 
     def handle(self, *args, **options):
+
+        create_link(settings.DJITY_ROOT+'/media',settings.MEDIA_ROOT+"/djity")
+
         # Is there a SiteRoot instance
         site_roots = SiteRoot.objects.all()
         if len(site_roots) > 0:
