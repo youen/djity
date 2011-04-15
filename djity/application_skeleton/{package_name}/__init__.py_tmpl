@@ -1,1 +1,10 @@
+# Application metadata to be used by setup.py and displayed by 'djity-admin.py ls_apps'
+pip_name = "djity-{module_name}"
+version = '0.1'
+description = "{description}"
+author = "{author_name}"
+author_email = "{author_email}"
+url = "{url}"
+
+# Class to be used by Djity when creating a tab of this application
 djity_module = '{class_name}'

@@ -2,12 +2,14 @@
 
 from setuptools import setup,find_packages
 
-setup(name='djity-{module_name}',
-    version='0.1',
-    description='{description}',
-    author='{author_name}',
-    author_email='{author_email}',
-    url='{url}',
+import {package_name}
+
+setup(name={package_name}.pip_name,
+    version={package_name}.version,
+    description={package_name}.description,
+    author={package_name}.author,
+    author_email={package_name}.author_email,
+    url={package_name}.url,
     packages=['{package_name}'],
     package_data={{'{package_name}':[
 		'templates/{package_name}/*.html',

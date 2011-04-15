@@ -136,7 +136,19 @@ if command == 'create_app':
 # display the list of Djity applications currently installed on this machine
 if command == 'ls_apps':
     for app in ls_apps():
-        app_path = import_module(app).__path__
-        app_path = app_path[0]
-        print "%s - Check %s" % (app,app_path+'/README.rst')
+        app_module = import_module(app)
+        line = app
+        if app_module.__dict__.get('pip_name','') != '':
+            line += " - on pip: %s" % app_module.pip_name
+        if app_module.__dict__.get('version','') != '':
+            line += " v%s" % app_module.version
+        if app_module.__dict__.get('author','') != '':
+            line += " - %s" % app_module.author
+        if app_module.__dict__.get('author_email','') != '':
+            line += " <%s>" % app_module.author_email
+        if app_module.__dict__.get('url','') != '':
+            line += "\n\t%s" % app_module.url
+        if app_module.__dict__.get('description','') != '':
+            line += "\n\t%s" % app_module.description
+        print line
 
