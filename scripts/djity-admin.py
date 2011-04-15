@@ -71,16 +71,12 @@ class ProjectSkeleton(Skeleton):
         for app in apps:
             self.variables.append(Bool(app, description="Install this application",default=True))
 
-        # use Skeleton to ask user's input
-        self.get_missing_variables()
-        
+        # use Skeleton to ask user's input and create destination directory 
+        Skeleton.run(self, dst_dir, run_dry=run_dry, ignore=['setup_trap'])
+
         # derive apps list from the user's input
         apps = filter(lambda a:self[a],apps)
-
-        # use Skeleton to create destinatrion directory 
-        self.write(dst_dir, run_dry=run_dry)
-        Skeleton.run(self, dst_dir, run_dry)
-
+        
         for app in apps:
             print "run 'manage.py install_app %s'" % app
             call("python manage.py install_app %s" % app,shell=True,cwd=dst_dir)
@@ -123,7 +119,7 @@ class ApplicationSkeleton(Skeleton):
         self['package_name'] = "djity_%s" % self['module_name']
         print 'Package Name -> %s' % self['package_name']
 
-        self.write(dst_dir, run_dry=run_dry)
+        self.write(dst_dir, run_dry=run_dry, ignore=['setup_trap'])
 
 # execute command create_project
 if command == 'create_project':
