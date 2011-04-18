@@ -9,7 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-        <title>{% if SITE_NAME %}{{ SITE_NAME }} : {% endif %}{% block head_title %}{% endblock %}</title>
+		<title>{% block head_title %}{{module.label|capfirst}} - {{project.label|capfirst}}{% endblock %}</title>
 
 		{# Links to needed CSS files, ui_css and project_css are dynamic and depend on the current project  #}
 		<link id="ui_css" class="editable_css" rel="stylesheet" type="text/css" href="{% url ui_css project_name=project_name%}"/>
