@@ -106,6 +106,16 @@ class Project(models.Model):
             parents = []
         return parents
 
+    def get_members(self):
+        """
+        Return the members of this project.
+        If this project inherit permissions return the members for the parent project.
+        """
+        if self.inherit_members: 
+            return self.parent.get_members()
+        else:
+            return  Member.objects.filter(project=self)     
+
     def get_role(self,user):
         """
         Return the role for the user `user` of this project.

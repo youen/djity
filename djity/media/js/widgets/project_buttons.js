@@ -14,6 +14,7 @@ function project_manage_buttons () {
 		});
 
 		manage_users_dialog();
+		dj.widgets.manage_users = $('#manage_users_dialog').manage_users();
 		$('#manage_users_button').button({
 			icons: {
 				primary: 'ui-icon-person'
@@ -21,7 +22,7 @@ function project_manage_buttons () {
 			text: false
 		})
 		.click(function(){
-				dj.manage_users.role_manager('open');
+				dj.widgets.manage_users.manage_users('open');
 				return false;
 		});
 

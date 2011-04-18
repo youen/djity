@@ -1,14 +1,10 @@
-$.widget("ui.role_manager",{
+$.widget("ui.manage_users",{
 		/*
-		 *  Djity user's role manager
+		 *  Djity user's manager
 		 */
 
 	options : {
 		inherit_permissions:true, //inherit permissions
-		users_role:{youen:"admin"},// users
-		roles:[('admin',1)],// permission
-		error_messages:[],
-		var_name:'role_manager', //name for callback function (no DOM access optimisation)
 		},
 
 	_create : function()
@@ -16,7 +12,7 @@ $.widget("ui.role_manager",{
 		var self=this,
 		options =self.options,
 		id = self.element.id;
-		
+	
 	},
 
 	_init : function()
@@ -28,13 +24,35 @@ $.widget("ui.role_manager",{
 		self._users_roles = options.users_roles;
 		self._roles = options.roles;
 		self._id =  self.element.attr('id');
-		self._var_name = options.var_name;
 
 		self.element.dialog(
 		{
 			autoOpen:false,
 			modal: true,
 			show:'blind',
+			buttons : 
+			{
+				OK : function()
+				{
+					users = {};
+					$(this).find('input:radio:checked')
+						.each(function(i){
+							users[this.name] = parseInt($(this).val());
+						});
+
+					dj.remote('djity.project.save_manage_users',
+						{
+						'inherit': self.options.inherit_permissions,
+						'users': users,
+						'js_target':'dj.widgets.manage_users',
+						});
+				},
+		
+				Cancel : function()
+				{
+					$(this).dialog('close');
+				}
+			},
 		});
 
 
@@ -45,24 +63,25 @@ $.widget("ui.role_manager",{
 		var self = this,
 		options = self.options;
 		
-		self.table =  $(table);
+		self.table =  $(table)
 		self.element.html(self.table);
-		self.table.find('label')
+		self.element.buttonset();
+		self.element.find('label')
 		.css('width','100%')
 		.addClass('ui-corner-all');
 
-		self.table.find('.role').button({'disabled':true});
 
-		$('#inherit-permissions-label').click(function(){
-			$('#manage_users_dialog_table .role').button('option','disable',false);
+		self.element.find('#inherit-permissions')
+			.change(function()
+			{
+				dj.widgets.manage_users.manage_users('inherit_toggle');
 			});
 
-		self.table.buttonset();
 		self.table.find('th')
 			.addClass('ui-widget-header');
 
 		self.element
-			.dialog("option","width",'auto')
+			.dialog("option","width",'500px')
 			.dialog("option","height",'auto')
 			.dialog("option","position",'center')
 
@@ -73,7 +92,7 @@ $.widget("ui.role_manager",{
    	{
 		var self = this,
 		options = self.options;
-		self.errorbox
+		self.element.find('.error')
 			.text(message)
 			.addClass('ui-state-error');
 	},
@@ -82,22 +101,28 @@ $.widget("ui.role_manager",{
 	{
 		var self = this,
 		options = self.options;
-		dj.remote('djity.project.manage_users',{JS_target:self._var_name})
+		dj.remote('djity.project.get_manage_users',
+			{
+				js_target:'dj.widgets.manage_users',
+			})
 		self.element.dialog('open');
 	},
 
-	inherit_toggle : function()
+	inherit_toggle : function(inherit)
 	{
 		var self = this,
-		options = self.options,
-		inherit = self._inherit;
-		if( inherit)
+		options = self.options;
+		if(inherit === undefined) { inherit = !self.options.inherit_permissions}
+		else{ if(inherit == self.options.inherit_permissions){return}}
+		if(inherit)
 		{
-			self._inherit = false;
+			self.element.find('table').hide('blind');
+			self.options.inherit_permissions = true;
 		}
 		else
 		{
-			self._inherit = true;
+			self.element.find('table').show('blind');
+			self.options.inherit_permissions = false;
 		}
 
 	},
@@ -115,15 +140,11 @@ $.widget("ui.role_manager",{
 
 });
 
-var manage_users;
 
 function manage_users_dialog(){
 	/*
 	 * Create users management dialog
 	 */
-	dj.manage_users = $('#manage_users_dialog').role_manager({
-		var_name:'dj.manage_users',
-	});
 	/*
 		buttons : {
 			OK : function(){
