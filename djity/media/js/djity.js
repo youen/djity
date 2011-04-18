@@ -1,14 +1,20 @@
 
+/*
+ * Define empty Djity base datastructure in a 'dj' dictionary when this file is loaded
+ */
+dj = {}
+dj.functions = {}
+dj.widgets = {}
 
 dj.remote = function(func,params){
 	/*
-	 * this function defines a standard way for all dj.context.ty functions and widgets
+	 * this function defines a standard way for all dj.context functions and widgets
 	 * to interact with the remote server.
 	 * 
 	 * Today only ajax calls through the dajax framework are supported.
 	 */
 
-	/* add standard dj.context.ty context parameters */
+	/* add standard dj.context context parameters */
 	params.project_name = this.context.project_name;
 	params.module_name = this.context.module_name;
 	params.LANGUAGE_CODE = this.context.LANGUAGE_CODE;
@@ -17,9 +23,9 @@ dj.remote = function(func,params){
 	eval("Dajaxice."+func+"('Dajax.process',params);");	
 };
 
-function initHeader(){
+dj.init = function(){
 	/*
-	 * encapsulate all header initialization function
+	 * encapsulate all Djity initialization functions and widgets
 	 */
 	init_right_tabs();
 	if (dj.context.perm.manage){
@@ -74,19 +80,6 @@ function widgetify() {
 	}
 }
 
-function initAmazonGroups() {
-	 /*
-	 * Function called by amazon publicity porlet
-	 * Create an accordion style menu from the list of groups of products
-	 *
-	*/
-	$(function() {
-		$("#amazon_groups").accordion();
-		$("#amazon_groups h3").each(function(i,head){
-			$(head).addClass('dj.context.mini-button');
-		});
-	});
-};
 
 function toolbar() {
 	$("#toolbar").buttonset();
@@ -154,7 +147,6 @@ function init_tag(){
 
 function message(msg) {
 	$('#messages').notify('create',{text:msg});
-
 };
 
 function save_text_portlet(id,html) {

@@ -11,35 +11,28 @@
 
         <title>{% if SITE_NAME %}{{ SITE_NAME }} : {% endif %}{% block head_title %}{% endblock %}</title>
 
+		{# Links to needed CSS files, ui_css and project_css are dynamic and depend on the current project  #}
 		<link id="ui_css" class="editable_css" rel="stylesheet" type="text/css" href="{% url ui_css project_name=project_name%}"/>
 		<link id="project_css" class="editable_css" rel="stylesheet" type="text/css" href="{% url project_css project_name=project_name %}"/>
-		<link rel="stylesheet" href="{{MEDIA_URL}}/djity/css/elrte.min.css"                         type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="{{MEDIA_URL}}/djity/css/elrte.min.css" type="text/css" media="screen" charset="utf-8">
 
-        <script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/jquery.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/jquery-ui.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/elrte.min.js" charset="utf-8" ></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/i18n/elrte.{{LANGUAGE_CODE}}.js" charset="utf-8"></script>
-
+		{# A pre-prepared link to use Djity's themeroller. It will only be used	if the current user is manager of the project#}
         {% if perm.manage %}
 		<link id="themeroller_url" type="text/html" href="{% url themeroller project_name=project_name %}" />
 		{% endif %}
 
+		{# Links to needed Javascript files. This should be replaced by a single file containing the minified equivalent #}
+		{# 3rd party Javascript libraries that Djity relies on #}
+        <script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/jquery.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/jquery-ui.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/i18n.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/elrte.min.js" charset="utf-8" ></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/i18n/elrte.{{LANGUAGE_CODE}}.js" charset="utf-8"></script>
         {% dajaxice_js_import %}
         <script src="{{ MEDIA_URL }}/djity/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
-
-		<script type="text/javascript">
-			/*Djity object*/
-			dj = {};
-			/* javascript context for ajax */			
-			dj.context = {{ json_context|safe }};
-			/* widgets container */
-			dj.widgets = {};
-			/* functions container */
-			dj.functions = {};
-
-        </script>
-
-		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/i18n.js"></script>
+		{# Djity core javascript file. It builds the 'dj' variable that contains all Djity shortcuts.#}
+		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/djity.js"></script>
+		{# All base Djity widgets #}
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/box.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/editable.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/leftabs.js"></script>
@@ -55,13 +48,19 @@
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/portal_parameters.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/right_tabs.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/widgets/form.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/js/djity.js"></script>
+
+		{# Include project and application level header code #}
 	    {% block project_head %}{% endblock %}
 		{% block module_head %}{% endblock %}
+
 		<script type="text/javascript">
 			window.onload=function(){
-		        {{ onload|safe }}
-				initHeader();
+				/* dj.init(context) is defined in djity.js, it will initialize all Djity Javascript and widgets environment*/
+				dj.context = {{ json_context|safe }}
+				dj.init()
+				/* Execute javascript code passed in the context. Mostly used by portlets */
+				{{ onload|safe }}
+				/* Execute Javascript code passed by a template overriding base.html */
 				{% block module_onload %}{% endblock %}
 		     };
 		</script>
@@ -211,8 +210,6 @@
 	<div id="body_active" class="ui-helper-clearfix ui-state-active ui-corner-bottom">
 		<div id="body_default" class="ui-helper-clearfix ui-corner-all ui-content">
 			<div id="top" class="line">
-				
-
             {% for portlet in portlets_top %}
                 {% portlet %}{{ portlet }}{% endportlet %}
             {% endfor %}
