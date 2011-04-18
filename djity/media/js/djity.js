@@ -162,7 +162,7 @@ function save_text_portlet(id,html) {
 	 * save change for a text portlet 
 	 *
 	 */
-	dj.remote('dj.context.ty.portlet.save_text_portlet',{
+	dj.remote('djity.portlet.save_text_portlet',{
 			'div_id':id,
 			'html':html,
 			}
@@ -170,7 +170,7 @@ function save_text_portlet(id,html) {
 };
 
 function project_title_callback(id,html){
-	dj.remote('dj.context.ty.portlet.save_project_title',{
+	dj.remote('djity.portlet.save_project_title',{
 			'div_id':id,
 			'html':html,
 		}
