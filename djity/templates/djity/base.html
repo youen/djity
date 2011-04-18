@@ -55,7 +55,7 @@
 
 		<script type="text/javascript">
 			window.onload=function(){
-				/* dj.init(context) is defined in djity.js, it will initialize all Djity Javascript and widgets environment*/
+				/* Build Djity Javascript and widgets environment*/
 				dj.context = {{ json_context|safe }}
 				dj.init()
 				/* Execute javascript code passed in the context. Mostly used by portlets */

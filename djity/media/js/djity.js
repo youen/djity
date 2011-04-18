@@ -12,6 +12,8 @@ dj.remote = function(func,params){
 	 * to interact with the remote server.
 	 * 
 	 * Today only ajax calls through the dajax framework are supported.
+	 *
+	 * dj.context must have been set before calling this function
 	 */
 
 	/* add standard dj.context context parameters */
@@ -26,6 +28,8 @@ dj.remote = function(func,params){
 dj.init = function(){
 	/*
 	 * encapsulate all Djity initialization functions and widgets
+	 *
+	 * dj.context must have been set before calling this function
 	 */
 	init_right_tabs();
 	if (dj.context.perm.manage){
@@ -80,6 +84,13 @@ function widgetify() {
 	}
 }
 
+/*
+ * ###########################################################################
+ * WARNING:
+ * All functions below should be taken out of this file and into
+ * separate widgets.
+ * ###########################################################################
+ */
 
 function toolbar() {
 	$("#toolbar").buttonset();
