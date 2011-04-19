@@ -13,7 +13,7 @@ dj.functions.portal_parameters = function (){
 
 		if( dj.context.user != AnonymousUser)
 		{
-			self.logout_button = $('<a id="logout_button" >' + gettext("Sign out") + ' </a>')
+			logout_button = $('<a id="logout_button" >' + gettext("Sign out") + ' </a>')
 				.addClass('dj-mini-button')
 				.click(function()
 				{
@@ -21,45 +21,26 @@ dj.functions.portal_parameters = function (){
 				})
 				.appendTo(dj.widgets.portal_parameters);
 
-			self.profile_dialog = $('<div id="profile_dialog" class="ui-helper-hidden" title="' + gettext('Your profile') +'"></div>')
-				.user_profile();
 
-			self.profile_button = $('<a id="profile_button">' + dj.context.user  + '</a>')
-				.addClass('dj-mini-button')
-				.click(function()
-				{
-					self.profile_dialog.user_profile('open');
-				})
+			profile_button = $('<a id="profile_button">' + dj.context.user  + '</a>')
 				.appendTo(dj.widgets.portal_parameters);
 
+			dj.widgets.user_profile.init(profile_button);
 		}
 		else
 		{
 			
-			self.login_dialog = $(login_dialog_html)
-				.login();
 
-
-
-			self.login_button = $('<a id="login_button" >' + gettext("Sign in") + '</a>')
-				.click(function()
-				{
-					self.login_dialog.login('open');
-				})
-				.addClass('dj-mini-button')
+			login_button = $('<a id="login_button" >' + gettext("Sign in") + '</a>')
 				.appendTo(dj.widgets.portal_parameters);
 
-			self.register_dialog = $('<div id="register_dialog" class="ui-helper-hidden" title="' + gettext('Create an account') +'"></div>')
-				.register();
+			dj.widgets.login.init(login_button);
 			
-			self.register_button = $('<a id="register_button" >' + gettext("Create an account") + '</a>')
-				.click(function()
-				{
-					self.register_dialog.register('open');
-				})
+			register_button = $('<a id="register_button" >' + gettext("Create an account") + '</a>')
 				.addClass('dj-mini-button')
 				.appendTo(dj.widgets.portal_parameters);
 
+			dj.widgets.register.init(register_button)
 
 		}
 
@@ -82,7 +63,7 @@ dj.functions.portal_parameters = function (){
 			});
 		});
 
-		self.choose_language_button = $('<a id="choose_language_button" class="dj-mini-button">' +gettext("Language") + '</a>')
+		choose_language_button = $('<a id="choose_language_button" class="dj-mini-button">' +gettext("Language") + '</a>')
 			.button(
 			{
 				icons: {primary: 'dj-icon-'+dj.context.LANGUAGE_CODE},
@@ -93,7 +74,6 @@ dj.functions.portal_parameters = function (){
 			})
 			.appendTo(dj.widgets.portal_parameters);
 
-		var self=this;
 
 		dj.widgets.portal_parameters
 			.buttonset()

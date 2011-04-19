@@ -1,6 +1,5 @@
 var login_dialog_html = 
 		'<div id="login_dialog" class="ui-helper-hidden" title="' +gettext('Login') +'">' + 
-			'<p id="login_dialog_error"></p>' +
 			'<form method="post" action="." class="">' +
 				'<label for="login_username">' + gettext("user")  + ' </label><br/>' + 
 				'<input id="login_username" name="username" type="text"><br/>' +
@@ -10,44 +9,47 @@ var login_dialog_html =
 		'</div>';
 
 
-$.widget("ui.login",
+dj.widgets.login = 
 {
 	/*
 	 * Djty user's login
 	 */
 
 	
-	_create : function()
+	init : function(button)
 	{
 	/*
 	 * Login Dialog
 	 */
-		var self=this,
-	    element = self.element;
 
-		dj.widgets.login =  self.element;
-
-		self.element.dialog(
-		{
-			autoOpen:false,
-			modal:true,
-			show:'blind',
-			buttons:
+		this.button = button
+			.click(function()
 			{
-				'Login':self.login,
-			}
+				dj.widgets.login.open();
+			})
+			.addClass('dj-mini-button');
+
+		this.dialog = $(login_dialog_html)
+			.dialog(
+			{
+				autoOpen:false,
+				modal:true,
+				show:'blind',
+				buttons:
+				{
+					'Login':function(){dj.widgets.login.login();},
+				}
 					
-		})
-		.find('form').form();
+			});
+		this.dialog
+			.find('form').form();
 
 	},
 
 	open : function()
 	{
-		var self=this,
-	    element = self.element;
 
-		self.element.dialog('open');
+		this.dialog.dialog('open');
 		
 	},
 
@@ -64,21 +66,13 @@ $.widget("ui.login",
 
 	close : function()
 	{
-		var self=this,
-	    element = self.element;
 
-		self.element.dialog('close');
+		this.dialog.dialog('close');
 		
 	},
 
-	error : function(message) {
-		$('#login_dialog_error')
-		.text(message)
-		.addClass('ui-state-error');
-	
-	}
 
 	
 
-});
+};
 

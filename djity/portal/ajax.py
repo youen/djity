@@ -38,18 +38,16 @@ def register(request,js_target,username,email,password1,password2,context=None):
         
         if user is not None:
             django_login(request,user)
-            msg = unicode(_(u'Your account is created !'))
+            msg = unicode(_(u'Your account is created ! your are connected as %s'%username))
             messages.add_message(request, messages.INFO, unicode(msg) )
             msg = unicode(_(u'We are creating your account... please wait'))
             js_target.message(msg)
-            js_target.register('close')
+            js_target.close()
             js_target.reload()
 
     else:
-        for field in form.visible_fields():
-            error = str(field.errors)
-            if error != '':
-                js_target.register('error',field.auto_id,str(field.errors))
+        render = render_to_string('djity/portal/registration_form.html',{'form':form})
+        js_target.set_form(render)
         
 dajax_register('register')
 
@@ -58,7 +56,7 @@ dajax_register('register')
 def get_register(request,js_target,context=None):
     form =  RegistrationForm()
     render = render_to_string('djity/portal/registration_form.html',{'form':form})
-    js_target.register('set_form',render)
+    js_target.set_form(render)
 
 dajax_register('get_register')
 
@@ -66,7 +64,7 @@ dajax_register('get_register')
 def get_profile(request,js_target,context=None):
     form =  ProfileForm()
     render = render_to_string('djity/portal/profile_form.html',{'form':form})
-    js_target.user_profile('set_profile',render)
+    js_target.set_profile(render)
 
 dajax_register('get_profile')
 
@@ -84,12 +82,12 @@ def save_profile(request,js_target,password1,password2,context=None):
         user.save()
         msg = unicode(_('Your password is changed'))
         js_target.message(msg)
-        js_target.user_profile('close')
+        js_target.close()
+    
+    else:
+        render = render_to_string('djity/portal/profile_form.html',{'form':form})
+        js_target.set_profile(render)
 
-    for field in form.visible_fields():
-        error = str(field.errors)
-        if error != '':
-            js_target.user_profile('error',field.auto_id,str(field.errors))
         
 dajax_register('save_profile')
 
@@ -98,17 +96,17 @@ dajax_register('save_profile')
 def login(request,js_target, username, password, context):
     user = authenticate(username=username,password=password)
     if user is None:
-        js_target.login('error',unicode(_("Authentication failed")))
+        js_target.message(unicode(_("Authentication failed")))
         return 
     if not user.is_active:
-        js_target.login('error', unicode(_("This account is disabled")))
+        js_target.message(unicode(_("This account is disabled")))
         return 
     django_login(request, user)
     msg = _(u'successfully connected')
     messages.add_message(request, messages.INFO, unicode(msg) )
     msg = _(u'connecting... please wait')
     js_target.message(unicode(msg))
-    js_target.login('close')
+    js_target.close()
     js_target.reload()
 
 dajax_register('login')
