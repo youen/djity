@@ -59,7 +59,14 @@
 				dj.context = {{ json_context|safe }}
 				dj.init()
 				/* Execute javascript code passed in the context. Mostly used by portlets */
-				{{ onload|safe }}
+				try
+				{
+					{{ onload|safe }}
+				}
+				catch(e)
+				{
+					message("error in  JS onload : {{ onload }}");
+				}
 				/* Execute Javascript code passed by a template overriding base.html */
 				{% block module_onload %}{% endblock %}
 		     };

@@ -132,7 +132,7 @@ def save_manage_users(request, js_target, inherit,users=None,context=None):
         project.save()
         msg = unicode(_(u'This project inherit members of %s project.'%project.parent.label))
         js_target.message(msg)
-        js_target.manage_users('close')
+        js_target.close()
         return
 
     else :
@@ -163,15 +163,15 @@ def save_manage_users(request, js_target, inherit,users=None,context=None):
             project.save()
             msg = unicode(_(u"Members of this project updated"))
             js_target.message(msg)
-            js_target.manage_users('close')
+            js_target.close()
         
         elif context['user'].username == user and role != settings.MANAGER:
             msg = unicode(_(u"You can't change yourself your manager role."))
-            js_target.manage_users('error',msg)
+            js_target.message(msg)
         
         else:
             msg = unicode(_('At least one manager is required'))
-            js_target.manage_users('error',msg)
+            js_target.message(msg)
 
 
 register('save_manage_users')
@@ -183,8 +183,8 @@ def get_manage_users(request, js_target,context=None):
     context['members'] = project.get_members()
     context['users'] = [m.user for m in context['members']] 
     render = render_to_string("djity/project/manage_users.html",context)
-    js_target.manage_users("create_table",render)
-    js_target.manage_users("inherit_toggle",project.inherit_members)
+    js_target.create_table(render)
+    js_target.inherit_toggle(project.inherit_members)
 
 register('get_manage_users')
 
