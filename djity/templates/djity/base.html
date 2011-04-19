@@ -57,7 +57,6 @@
 			window.onload=function(){
 				/* Build Djity Javascript and widgets environment*/
 				dj.context = {{ json_context|safe }}
-				dj.init()
 				/* Execute javascript code passed in the context. Mostly used by portlets */
 				try
 				{
@@ -67,6 +66,7 @@
 				{
 					message("error in  JS onload : {{ onload }}");
 				}
+				dj.init()
 				/* Execute Javascript code passed by a template overriding base.html */
 				{% block module_onload %}{% endblock %}
 		     };
