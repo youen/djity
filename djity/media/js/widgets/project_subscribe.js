@@ -14,11 +14,11 @@ function project_subscribe_button(){
 
 	})
 
-	switch(dj.role){
+	switch(dj.context.role == 0){
 		case 'awaiting':
 			button_label = "Cancel subscription";
 			break;
-		case 'anonymous':
+		case 0:
 			button_label = "Subscribe";
 			break;
 		default:
@@ -35,7 +35,7 @@ function project_subscribe_button(){
 			label:button_label,
 		});
 	
-	if(dj.user == "anonymous"){
+	if(dj.context.user == "anonymous"){
 		$("#project_subscribe_button")
 			.click(function(){
 					$('#project_subscribe_dialog').dialog('open');
@@ -44,13 +44,10 @@ function project_subscribe_button(){
 	}
 	else{
 		$("#project_subscribe_button")
-			.click(function(){
-					Dajaxice.djity.project.project_subscribe(
-						'Dajax.process',{				
-							'project_name':dj.project_name,
-							'module_name':dj.module_name,
-						});
-					})
+			.click(function()
+			{
+					dj.remote('djity.project.project_subscribe',{});
+			});
 	}
 	$('#project_buttons').removeClass('ui-helper-hidden');
 };

@@ -1,3 +1,4 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _ 
 from django.contrib import messages
@@ -120,24 +121,34 @@ def module_visibility(request,visibility,context=None):
 
 
 @check_perm_and_update_context(perm='manage')
-def manage_users(request,users=None,context=None):
+def save_manage_users(request, js_target, inherit,users=None,context=None):
     project = context['project']
-    dajax = context['JS_target']
-    if users:
+    if inherit:
+        if project.name == "root":
+            msg = unicode(_(u"Root project can't inherit members"))
+            js_target.message(msg)
+            return 
+        project.inherit_members = True
+        project.save()
+        msg = unicode(_(u'This project inherit members of %s project.'%project.parent.label))
+        js_target.message(msg)
+        js_target.close()
+        return
+
+    else :
         has_manager = False
         members = []
         deleted_members = []
         for user,role in users.items():
-            if role == 'manager':
+            if role == settings.MANAGER:
                 has_manager = True
 
             member = Member.objects.get(project=project,user__username=user)
-            if role == 'deleted':
+            if role == -1: #pseudo role for deleted user
                 deleted_members.append(member)
 
 
             else:
-                role = project.role_set.get(name=role)
                 member.role = role
                 members.append(member)
             
@@ -145,31 +156,37 @@ def manage_users(request,users=None,context=None):
             for deleted_member in deleted_members:
                 deleted_member.delete()
                 msg = unicode(_(u'Member %s is no longer a member of this project.'%user))
-                dajax.script('message("%s")'%msg)
+                js_target.message(msg)
 
             for member in members: member.save()
+            project.inherit_members = False
+            project.save()
             msg = unicode(_(u"Members of this project updated"))
-            dajax.script('message("%s")'%msg)
-            dajax.script('manage_users_dialog_close()')
-            return dajax.json()
+            js_target.message(msg)
+            js_target.close()
         
-        elif context['user'].username == user and role != 'manager':
+        elif context['user'].username == user and role != settings.MANAGER:
             msg = unicode(_(u"You can't change yourself your manager role."))
-            dajax.script(u'manage_users_dialog_error("%s")'%msg)
-            return dajax.json()
+            js_target.message(msg)
         
         else:
-            message = _('At least one manager is required')
-            return dajax.json()
+            msg = unicode(_('At least one manager is required'))
+            js_target.message(msg)
 
 
+register('save_manage_users')
+
+@check_perm_and_update_context(perm='manage')
+def get_manage_users(request, js_target,context=None):
+    project = context['project']
     context['roles'] = filter(lambda r:r[0] != 0 ,settings.ROLES_DISPLAY)
-    context['members'] = Member.objects.filter(project=project)
+    context['members'] = project.get_members()
     context['users'] = [m.user for m in context['members']] 
-    render = render_to_string("djity/project/manage_user.html",context)
-    dajax.role_manager("create_table",render)
+    render = render_to_string("djity/project/manage_users.html",context)
+    js_target.create_table(render)
+    js_target.inherit_toggle(project.inherit_members)
 
-register('manage_users')
+register('get_manage_users')
 
 @check_perm_and_update_context()
 def project_subscribe(request,context=None):

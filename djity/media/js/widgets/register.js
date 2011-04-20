@@ -1,22 +1,27 @@
-$.widget("ui.register",
+dj.widgets.register = 
 {
 	/*
 	 * Djty user's register
 	 */
 
 	
-	_create : function()
+	init : function(register_button)
 	{
 	/*
 	 * Register Dialog
 	 */
-		var self=this,
-	    element = self.element;
+	    
+		this.js_target = 'dj.widgets.register';
+		//init button
+		this.button = register_button
+				.click(function()
+				{
+					dj.widgets.register.open();
+				});
 		
-		self.JS_target = 'dj.widgets.register';
-		dj.widgets.register = self.element;
 		
-		self.element
+		//init dialog
+		this.dialog = $('<div id="register_dialog" class="ui-helper-hidden" title="' + gettext('Create an account') +'"></div>')
 			.keyup(function(e)
 			{
 				
@@ -28,12 +33,14 @@ $.widget("ui.register",
 				modal: true,
 				show:'blind',
 				buttons : {
-					OK : self.validate,
-
+					OK : function()
+						{
+							dj.widgets.register.validate();
+						},
 					Cancel : function()
-					{
-						$(this).register('close');
-					}
+						{
+							dj.widgets.register.close();
+						},
 				},
 			});
 
@@ -42,8 +49,6 @@ $.widget("ui.register",
 
 	validate : function()
 	{
-		var self=this,
-	    element = self.element;
 		dj.remote('djity.portal.register',
 			{
 				'js_target':'dj.widgets.register',
@@ -58,21 +63,17 @@ $.widget("ui.register",
 	open : function()
 	{
 
-		var self=this,
-	    element = self.element;
 		dj.remote('djity.portal.get_register',{'js_target':'dj.widgets.register'});
 	
-		self.element.dialog('open');
+		this.dialog.dialog('open');
 		
 	},
 
 	set_form : function(form_html)
 	{
 
-		var self=this,
-	    element = self.element;
 
-		self.element
+		this.dialog
 			.html(form_html)
 			.dialog("option","width","auto")
 			.dialog("option","height","auto")
@@ -82,22 +83,10 @@ $.widget("ui.register",
 
 	close : function(){
 			
-		var self=this,
-	    element = self.element;
 
-		self.element.dialog('close');
+		this.dialog.dialog('close');
 	},
 
-	error : function(id,errors)
-	{
-		
-		var self=this,
-	    element = self.element;
 
-		self.element.find(' .errorlist').remove();
-		$('#'+id).before($(errors));
-	}
-
-
-});
+};
 

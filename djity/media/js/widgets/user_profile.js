@@ -1,26 +1,27 @@
-$.widget("ui.user_profile",
+dj.widgets.user_profile = 
 {
 	/*
 	 * Djty user's profile
 	 */
 
 	
-	_create : function()
+	init : function(button)
 	{
 	/*
 	 * Profile Dialog
 	 */
-		var self=this,
-	    element = self.element;
+		this.button= button	
+				.addClass('dj-mini-button')
+				.click(function()
+				{
+					dj.widgets.user_profile.open();
+				});
 		
-		self.js_target = 'dj.widgets.user_profile';
-		dj.widgets.user_profile = self.element;
-		
-		self.element
+		this.dialog = $('<div id="profile_dialog" class="ui-helper-hidden" title="' + gettext('Your profile') +'"></div>')
 			.keyup(function(e)
 			{
 				
-				if( e.keyCode == 13){ self.element.user_profile('validate')};
+				if( e.keyCode == 13){ dj.widgets.user_profile.validate()};
 			})
 			.dialog(
 			{
@@ -28,11 +29,14 @@ $.widget("ui.user_profile",
 				modal: true,
 				show:'blind',
 				buttons : {
-					OK : self.validate,
+					OK : function()
+					{
+						dj.widgets.user_profile.validate();
+					},
 
 					Cancel : function()
 					{
-						$(this).dialog('close');
+						dj.widgets.user_profile.close();
 					}
 				},
 			});
@@ -42,8 +46,6 @@ $.widget("ui.user_profile",
 
 	validate : function()
 	{
-		var self=this,
-	    element = self.element;
 		dj.remote('djity.portal.save_profile',
 			{
 				'js_target':'dj.widgets.user_profile',
@@ -56,21 +58,17 @@ $.widget("ui.user_profile",
 	open : function()
 	{
 
-		var self=this,
-	    element = self.element;
 		dj.remote('djity.portal.get_profile',{'js_target':'dj.widgets.user_profile'});
 	
-		self.element.dialog('open');
+		this.dialog.dialog('open');
 		
 	},
 
 	set_profile : function(profile_html)
 	{
 
-		var self=this,
-	    element = self.element;
 
-		self.element
+		this.dialog
 			.html(profile_html)
 			.dialog("option","width","auto")
 			.dialog("option","height","auto")
@@ -80,21 +78,10 @@ $.widget("ui.user_profile",
 
 	close : function(){
 			
-		var self=this,
-	    element = self.element;
 
-		self.element.dialog('close');
+		this.dialog.dialog('close');
 	},
 
-	error : function(id,errors)
-	{
-		
-		var self=this,
-	    element = self.element;
 
-		self.element.find(' .errorlist').remove();
-		$('#'+id).before($(errors));
-	}
-
-});
+};
 

@@ -1,21 +1,22 @@
 {% load i18n %}
+<span class="error"/>
 <table>
 	{% for member in members %}
 	<tr><th>{{ member.user }}</th>
-		{% for role in roles %}
+		{% for roleid,role in roles %}
 		<td><input type="radio"
 			name="{{member.user}}"
-			value="{{role}}"
-			id="{{member.user}}-{{role}}"
-			{% ifequal member.role role %}checked{% endifequal %}/>
-			<label	for="{{member.user}}-{{role}}" class='role'> 
+			value="{{roleid}}"
+			id="{{member.user}}-{{roleid}}"
+			{% ifequal member.role roleid %}checked{% endifequal %}/>
+			<label	for="{{member.user}}-{{roleid}}" class='role'> 
 				{{role}}
 			</label>
 		</td>
 		{% endfor %}
 		<td><input type="radio"
 			name="{{member.user}}"
-			value="deleted"
+			value="-1"
 			id="{{member.user}}-deleted"
 			/>
 			<label	for="{{member.user}}-deleted" class='role'>
@@ -26,7 +27,7 @@
 	</tr>
 	{% endfor %}
 
-	<input type="checkbox" id="inherit-permissions"/>
-	<label id="inherit-perimissions-label" for="inherit-permissions">{% trans "Inherit Permissions" %}</label>
-
 </table>
+	<input type="checkbox" id="inherit-permissions"/>
+	<label id="inherit-permissions-label" for="inherit-permissions">{% trans "Inherit Permissions" %}</label>
+

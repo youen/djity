@@ -2,24 +2,41 @@
 {% load i18n %}
 
 <form>
+  {% if form.errors %}
+  <p class="ui-widget-error">{% trans "Please correct the errors below:"%} {{ form.non_field_errors }}</p>
+  {% endif %}
+
+
   
     <p>
-	<label for="id_username">{% trans "Username:" %}</label><br/>
+      {% if form.username.errors %}
+        <p class="ui-state-error">{{ form.username.errors.as_text }}</p>
+      {% endif %}
+	  <label for="id_username">{% trans "Username:" %}</label><br/>
       {{ form.username }}
     </p>
     <p>
-	<label for="id_email">{% trans "Email address:" %}</label><br/>
+      {% if form.email.errors %}
+        <p class="ui-state-error">{{ form.email.errors.as_text }}</p>
+      {% endif %}
+	  <label for="id_email">{% trans "Email address:" %}</label><br/>
       {{ form.email }}
     </p>
     <p>
-	<label for="id_password1">{% trans "Password:" %}</label><br/>
+      {% if form.password1.errors %}
+        <p class="ui-state-error">{{ form.password1.errors.as_text }}</p>
+      {% endif %}
+	  <label for="id_password1">{% trans "Password:" %}</label><br/>
       {{ form.password1 }}
     </p>
     <p>
-	<label for="id_password2">{% trans "Password (type again to catch typos):" %}</label><br/>
+      {% if form.password2.errors %}
+        <p class="ui-state-error">{{ form.password2.errors.as_text }}</p>
+      {% endif %}
+	  <label for="id_password2">{% trans "Password (type again to catch typos):" %}</label><br/>
       {{ form.password2 }}
     </p>
 	
-  
-
 </form>
+
+
