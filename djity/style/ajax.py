@@ -45,3 +45,9 @@ def save_project_style(request,style_values,context=None):
     return dajax.json()
 
 register('save_project_style')
+
+@check_perm_and_update_context(perm='manage')
+def download_params(request,js_target,context=None):
+    js_target.value(context['project'].css.serialize())
+
+register('download_params')

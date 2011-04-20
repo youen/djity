@@ -25,8 +25,9 @@
 	<body>
 		<div id="style_tabs">
 			<ul>
-				<li><a href="#style_accordion">Parameters</a></li>
-				<li><a href="#style_code">Code</a></li>
+				<li><a href="#style_accordion">{% trans 'Parameters' %}</a></li>
+				<li><a href="#style_code">{% trans 'Code' %}</a></li>
+				<li><a href="#style_updown">{% trans 'Up/Down' %}</a></li>
 			</ul>
 			<div id="style_accordion">
 			{% for group in edit_style_content %}
@@ -63,8 +64,15 @@
 				</a>
 				<textarea id="style_code_extra">{{ extra }}</textarea>
 			</div>
+			<div id="style_updown">
+				<input type="submit" id="inherit_style" class="inside-button" value="{% trans 'Inherit style from the parent project' %}"><br/>
+				<input type="submit" id="download_params" class="inside-button" value="{% trans 'Download active set of parameters' %}"><br/>
+				<input type="submit" id="set_params" class="inside-button" value="{% trans 'Set multiple params' %}"><br/>
+				<textarea id="params_list"></textarea>
+			</div>
+
 		</div>
-		<input type="submit" id="apply_extra" class="ui-helper-hidden" value="Apply">
-		<input type="submit" id="save_button" class="ui-helper-hidden" value="Save">
+		<input type="submit" id="apply_extra" class="ui-helper-hidden" value="{% trans 'Apply' %}">
+		<input type="submit" id="save_button" class="ui-helper-hidden" value="{% trans 'Save' %}">
 	</body>
 </html>

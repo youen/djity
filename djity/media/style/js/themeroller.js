@@ -181,6 +181,27 @@ function themeroller_widgetify(){
 		.click(function(){
 			edited_project_style = true;
 		});
+	
+	$("#inherit_style")
+		.button()
+		.click(function(){
+			top.dj.remote('djity.style.inherit_style',{});
+		});
+
+	params_textarea = $("#params_list")
+
+	$("#download_params")
+		.button()
+		.click(function(){
+			top.dj.remote('djity.style.download_params',{'js_target':params_textarea});
+		});
+
+	$("#set_params")
+		.button()
+		.click(function(){
+			top.dj.remote('djity.style.set_params',{});
+		});
+
 };
 
 function save_project_theme(){

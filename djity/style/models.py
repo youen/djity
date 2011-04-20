@@ -32,7 +32,17 @@ class CSS(models.Model):
         """
         Set default values from settings
         """
-        for name,value in self._default_style:
+        self.set_all_values(self._default_style)
+
+    def set_all_values(self,style):
+        """
+        Set all values using those found in a format compatible with the one
+        used in style_settings.py
+
+        Used by set_to_default, to inherit the style of another project or to
+        allow the user to apply a full theme at once
+        """
+        for name,value in style:
             self.__dict__[name] = value
 
     def save(self,*args,**kwargs):

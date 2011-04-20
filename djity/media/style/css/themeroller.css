@@ -37,6 +37,11 @@ body{
 	float:right;
 }
 
+.inside-button{
+	clear:both;
+	float:none;
+}
+
 .texture_picker{
 }
 
