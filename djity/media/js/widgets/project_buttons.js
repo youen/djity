@@ -1,17 +1,6 @@
 function project_manage_buttons () {
 
-		create_project_dialog();
-		$('#create_project_button').button({
-			icons: {
-				primary: 'ui-icon-circle-plus'
-			},
-			text: false
-		})
-		.addClass('ui-corner-tl ui-corner-tr')
-		.click(function(){
-				$('#create_project_dialog').dialog('open');
-				return false;
-		});
+		dj.widgets.create_project.init();
 
 		dj.widgets.manage_users.init();
 	
@@ -37,33 +26,6 @@ function project_manage_buttons () {
 
 
 
-function create_project_dialog(){
-	/*
-	 * Create project creation dialog 
-	 */
-	$("#create_project_dialog").dialog({
-			autoOpen:false,
-			modal: true,
-			resizable:false,
-			show:'blind',
-			buttons: {
-				Ok : function() {
-					$(this).dialog('close');
-					Dajaxice.djity.project.create_project(
-						'Dajax.process',{
-						'project_name':dj.project_name,
-						'module_name':dj.module_name,
-						'path':dj.path,
-						'name': $('#new_project_name').val(),
-					});	
-					
-				},
-				Cancel: function() {
-					$(this).dialog('close');
-				}
-			}
-		});
-};
 
 
 function themeroller_frame(){

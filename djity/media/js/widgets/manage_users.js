@@ -64,6 +64,7 @@ dj.widgets.manage_users =
 	create_table : function(table)
 	{
 		
+	
 		this.inherit_toggle(false);
 		this.dialog.html($(table));
 		this.dialog.buttonset();
