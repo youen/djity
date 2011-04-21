@@ -48,6 +48,22 @@ register('save_project_style')
 
 @check_perm_and_update_context(perm='manage')
 def download_params(request,js_target,context=None):
-    js_target.value(context['project'].css.serialize())
+    js_target.val(context['project'].css.serialize())
 
 register('download_params')
+
+
+@check_perm_and_update_context(perm='manage')
+def inherit_style(request,js_target,context=None):
+
+    project = context['project']
+
+    if project.parent:
+        project.css.set_all_values(project.parent.css.get_context())
+        project.css.save()
+        js_target.message(unicode(_("Style of the current project has been overwritten by the style of its parent \"%s\"" % project.parent.name)),post=True)
+        js_target.reload()
+    else:
+        js_target.message(unicode(_("The current project is root and cannot inherit its style")))
+
+register('inherit_style')

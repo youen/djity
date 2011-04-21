@@ -77,7 +77,7 @@ def check_perm_and_update_context(
             # Check if a JS target is present
             js_target = kwargs.get('js_target',None)
             if js_target :
-                context['js_target'] = JSTarget(js_target)
+                context['js_target'] = JSTarget(js_target,request)
                 kwargs['js_target'] = context['js_target']
 
             # set user, path and laguange values in context

@@ -185,7 +185,7 @@ function themeroller_widgetify(){
 	$("#inherit_style")
 		.button()
 		.click(function(){
-			top.dj.remote('djity.style.inherit_style',{});
+			top.dj.remote('djity.style.inherit_style',{js_target:top.location});
 		});
 
 	params_textarea = $("#params_list")
@@ -193,7 +193,7 @@ function themeroller_widgetify(){
 	$("#download_params")
 		.button()
 		.click(function(){
-			top.dj.remote('djity.style.download_params',{'js_target':params_textarea});
+			top.dj.remote('djity.style.download_params',{js_target:params_textarea});
 		});
 
 	$("#set_params")

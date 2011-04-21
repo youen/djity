@@ -42,8 +42,17 @@ class CSS(models.Model):
         Used by set_to_default, to inherit the style of another project or to
         allow the user to apply a full theme at once
         """
-        for name,value in style:
-            self.__dict__[name] = value
+
+        if style.__class__.__name__ == 'list':
+            # style is either given as a list of tuples...
+            for name,value in style:
+                self.__dict__[name] = value
+        else:
+            #... or as a dictionary
+            for name,value in style.iteritems():
+                self.__dict__[name] = value
+
+
 
     def save(self,*args,**kwargs):
         """
@@ -90,7 +99,7 @@ class CSS(models.Model):
         for name,value in self._default_style:
             value = self.__dict__[name]
             value = value.replace("\"","\\\"")
-            ret += "\t(\"%s\",r\"%s\"),\n" % (name,value)
+            ret += "(\"%s\", \"%s\"),\n" % (name,value)
         ret += "]"
 
         return ret

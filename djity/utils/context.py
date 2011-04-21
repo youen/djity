@@ -1,6 +1,7 @@
 from django.template import RequestContext
 from dajax.core.Dajax import Dajax
 import json
+from django.contrib import messages
 
 class DjityJSONEncoder(json.JSONEncoder):
     def default(self,obj):
@@ -37,16 +38,23 @@ class JSTarget(Dajax):
     Interface to call javascript function on a target JS object from python
     """
 
-    def __init__(self,target):
+    def __init__(self,target,request):
         Dajax.__init__(self)
         self._target = target
+        self._request = request
 
-    def message(self,message):
+    def message(self,message,post=False):
         """
         send a message to djity notification
         """
-        code = u"message(%s);"%json.dumps(message)
-        self.script(code)
+        if post:
+            # use django to send message in response to the next request of
+            # this session
+            messages.add_message(self._request, messages.INFO, unicode(message))
+        else:
+            # Use ajax to display message on current page
+            code = u"message(%s);"%json.dumps(message)
+            self.script(code)
 
 
     def reload(self):

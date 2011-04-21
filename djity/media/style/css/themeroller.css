@@ -60,3 +60,13 @@ body{
 .size_slider, .radius_slider, .percent_slider{
 	width: 80%;
 }
+
+#params_list, #style_code_extra{
+	margin:5px;
+	width:95%;
+}
+
+#style_updown input{
+	margin:5px;
+	width:95%;
+}
