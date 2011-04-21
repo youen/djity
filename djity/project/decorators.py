@@ -1,4 +1,6 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 import urllib
+import logging
 
 from django.http import HttpResponse,HttpResponseNotFound,HttpResponseForbidden,HttpResponseRedirect, Http404
 from django.conf import settings
@@ -13,6 +15,9 @@ from djity.utils.context import DjityContext, JSTarget
 
 from djity.project.models import Project
 from djity.portlet.models import update_portlets_context
+
+
+log = logging.getLogger('djity')
 
 def check_perm_and_update_context(
         perm='view',
@@ -58,6 +63,11 @@ def check_perm_and_update_context(
                 context['origin_path'] = path.split('?')[0]
                 del kwargs['path']
 
+            path = urlquote(request.get_full_path())
+            context['path'] = path
+            
+            
+            
             # Fetch project, or 404
             try:
                 project = Project.objects.get(name=project_name)
@@ -73,8 +83,6 @@ def check_perm_and_update_context(
             # set user, path and laguange values in context
             user = request.user
             context['user'] = request.user
-            path = urlquote(request.get_full_path())
-            context['path'] = path
             LANGUAGE_CODE = kwargs.get('LANGUAGE_CODE',None)
             if LANGUAGE_CODE :
                 del kwargs['LANGUAGE_CODE']
@@ -128,6 +136,7 @@ def check_perm_and_update_context(
                     context['info_message'] = request.GET['info_message']
 
             kwargs['context'] = context
+            
             if 'js_target' in context:
                 func(*args,**kwargs)
                 return context['js_target'].json()
