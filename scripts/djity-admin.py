@@ -54,8 +54,7 @@ class ProjectSkeleton(Skeleton):
             Var('project_label', description="The label of the root project of this instance of Djity", default="Djity"),
             Var('admin_name', description="Your name", default="admin"),
             Var('admin_email', description="Your email address", default="admin@example.com"),
-            Bool('debug_toolbar', description="Activate Django debug toolbar ?", default=False),
-            Bool('develop', description="Build and run a default development project server", default=False),
+            Bool('develop', description="Build and run a default development project server and activate debug options (logging, templates and debug toolbar) ", default=False),
             ]
        
     def run(self, dst_dir, run_dry=False):

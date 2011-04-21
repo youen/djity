@@ -21,9 +21,95 @@ dj.remote = function(func,params){
 	params.module_name = this.context.module_name;
 	params.LANGUAGE_CODE = this.context.LANGUAGE_CODE;
 
+
+	/* check if js_target is present and register object (if not already registered) */
+	if(params.js_target != undefined && typeof params.js_target != 'string' )
+	{
+		params.js_target = dj.namespace.register(params.js_target);
+	}
 	/* call the function using dajax */
 	eval("Dajaxice."+func+"('Dajax.process',params);");	
 };
+
+dj.namespace = 
+/*
+ * DEVELOPER NOTE
+ * --------------
+ *
+ * this implementation use a list instead of a JS object because JS object doesn't compute the hash of 
+ * an object (JS call silentlty the 'toString' propertie). JS hastable implementation exist [1] but is another
+ * 1.4 KB script to add in the core of djity... The set and get method's complexity is O(n).
+ * 
+ * [1] http://code.google.com/p/jshashtable/downloads/detail?name=jshashset.js
+ *
+ */
+{
+	init : function ()
+	{
+		this.object2name = [];
+		this.objects = {};
+		this.abc = "abcdefghijklmnopqrstuvwxyz";
+	},
+
+
+
+	get_name : function(object)
+	{
+		$.each(this.object2name,function(i,o_n)
+		{
+			if(o_n[0] === object)
+			{
+				return o_n[1];
+			}
+		});
+		return undefined;
+	},
+
+
+	generate_name : function(seed)
+	{
+		var name = '';
+		if(seed === undefined)
+		{
+			seed = this.object2name.length;
+			name = 'dj.namespace.objects.';
+		}
+		name += this.abc[seed % 26 ];
+		rest = parseInt(seed/26);
+		if(rest != 0)
+		{
+			name += this.generate_name(rest);
+		}
+		return name;
+	},
+
+	register : function(object, object_name)
+	/* 
+	 * Save the name of the object in an index. 
+	 * If the name is not given, a generated name is saved except if the object is already registered.
+	 * If the object is already registered and a new object_name is given, the new_name is saved.
+	 * return the given or generated obect_name.
+	 */
+	{
+
+		if( object_name === undefined)
+		{
+			object_name = this.get_name(object);
+			if(object_name != undefined)
+			{
+				return object_name;
+			}
+			object_name = this.generate_name();
+			eval( object_name + ' = object;'); 
+		}
+		else
+		{
+			eval( object_name + ' = object;'); 
+		}
+		this.object2name.push([object,object_name]);
+		return object_name;
+	}
+}
 
 dj.init = function(){
 	/*
@@ -31,6 +117,7 @@ dj.init = function(){
 	 *
 	 * dj.context must have been set before calling this function
 	 */
+	dj.namespace.init();
 	init_right_tabs();
 	if (dj.context.perm.manage){
 		project_manage_buttons();
