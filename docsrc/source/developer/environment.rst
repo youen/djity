@@ -62,7 +62,7 @@ You have to install :
 
 	$ git clone https://github.com/albanm/skeleton skeleton
 	$ cd skeleton
-	$ python setup.py install skeleton
+	$ python setup.py install
 
  * `Dajax & Dajaxice <http://www.dajaxproject.com/>`_::
 	
@@ -77,7 +77,10 @@ You have to install :
 
 	$ pip install beautifulsoup
 
+ * PIL::
 
+   $ sudo apt-get install python-imaging
+   
 Optional dependences
 --------------------
 
