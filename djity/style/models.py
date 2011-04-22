@@ -1,4 +1,4 @@
-import os
+import os, json
 from django.db import models
 from django.conf import settings
 
@@ -36,23 +36,13 @@ class CSS(models.Model):
 
     def set_all_values(self,style):
         """
-        Set all values using those found in a format compatible with the one
-        used in style_settings.py
+        Set all values using a dictionary
 
         Used by set_to_default, to inherit the style of another project or to
         allow the user to apply a full theme at once
         """
-
-        if style.__class__.__name__ == 'list':
-            # style is either given as a list of tuples...
-            for name,value in style:
-                self.__dict__[name] = value
-        else:
-            #... or as a dictionary
-            for name,value in style.iteritems():
-                self.__dict__[name] = value
-
-
+        self.__dict__.update(style)
+        self.save()
 
     def save(self,*args,**kwargs):
         """
@@ -79,30 +69,19 @@ class CSS(models.Model):
         textures = sorted(textures, key=lambda t:int(t.split('_')[0]))
         return textures
 
+    def get_values(self):
+        values = []
+        for name,value in self._default_style + [('extra','')]:
+            values.append((name,self.__dict__[name]))
+        return values
+
     def get_context(self):
         """
         Return all fields for the stylesheet template
         """
-        context = {}
-        for name,value in self._default_style + [('extra','')]:
-            context[name] = self.__dict__[name]
-
+        context = dict(self.get_values())
         context['textures'] = self.get_textures()
-
         return context
-
-    def serialize(self):
-        """
-        Return a list of attributes compatible with the one in settings.py
-        """
-        ret = "[\n"
-        for name,value in self._default_style:
-            value = self.__dict__[name]
-            value = value.replace("\"","\\\"")
-            ret += "(\"%s\", \"%s\"),\n" % (name,value)
-        ret += "]"
-
-        return ret
 
 """
 class ProjectCSS(CSS,models.Model):
