@@ -187,6 +187,12 @@ function themeroller_widgetify(){
 		.click(function(){
 			top.dj.remote('djity.style.inherit_style',{js_target:top.location});
 		});
+	
+	$("#set_default")
+		.button()
+		.click(function(){
+			top.dj.remote('djity.style.set_default',{js_target:top.location});
+		});
 
 	params_textarea = $("#params_list")
 
@@ -199,14 +205,14 @@ function themeroller_widgetify(){
 	$("#set_params")
 		.button()
 		.click(function(){
-			top.dj.remote('djity.style.set_params',{});
+			top.dj.remote('djity.style.save_project_style',{js_target:top.location,style_values:params_textarea.val()});
 		});
 
 };
 
 function save_project_theme(){
 	top.dj.remote('djity.style.save_project_style',
-		{style_values:get_edited_project_style(false)}
+		{js_target:top.location,style_values:get_edited_project_style(false)}
 	);
-	top.location.reload();
+	//top.location.reload();
 }
