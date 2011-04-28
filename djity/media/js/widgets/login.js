@@ -38,6 +38,12 @@ dj.widgets.login =
 				buttons:
 				{
 					'Login':function(){dj.widgets.login.login();},
+					'Create an account':function()
+						{
+							dj.widgets.login.close();
+							dj.widgets.register.open();
+						
+						},
 				}
 					
 			});
@@ -70,6 +76,19 @@ dj.widgets.login =
 		this.dialog.dialog('close');
 		
 	},
+
+	next : function()
+	{
+		if(dj.context.next_page != undefined)
+		{
+			location.href = dj.context.next_page;
+		}
+		else
+		{
+			location.reload();
+		}
+	},
+
 
 
 	

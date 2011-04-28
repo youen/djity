@@ -107,6 +107,6 @@ def login(request,js_target, username, password, context):
     msg = _(u'connecting... please wait')
     js_target.message(unicode(msg))
     js_target.close()
-    js_target.reload()
+    js_target.next()
 
 dajax_register('login')

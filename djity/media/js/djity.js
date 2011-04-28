@@ -1,3 +1,6 @@
+// Hack while editable don't use js_target
+footer_callback = function () {}
+
 
 /*
  * Define empty Djity base datastructure in a 'dj' dictionary when this file is loaded

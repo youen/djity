@@ -1,3 +1,4 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 from django.http import HttpResponse,HttpResponseNotFound,HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout as logout_response
@@ -24,3 +25,11 @@ def logout(request):
     response = logout_response(request, next_page=nex_page)
     response.delete_cookie('user_location')
     return response
+
+
+@check_perm_and_update_context()
+def login(request,context):
+    context['next_page'] = request.GET['next']
+    context['onload'] = "dj.widgets.login.open();"
+    context['no_right_tabs'] = True
+    return render_to_response('djity/project/account.html',context)

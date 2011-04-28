@@ -15,7 +15,7 @@ from djity.utils.context import DjityContext, JSTarget
 
 from djity.project.models import Project
 from djity.portlet.models import update_portlets_context
-
+from djity.utils import djreverse
 
 log = logging.getLogger('djity')
 
@@ -53,7 +53,7 @@ def check_perm_and_update_context(
 
             module_name = kwargs.get('module_name',None)
             context['module_name'] = module_name
-            if module_name: del kwargs['module_name']
+            if 'module_name' in kwargs: del kwargs['module_name']
 
             context['required_perm'] = perm
 
@@ -102,28 +102,18 @@ def check_perm_and_update_context(
 
             # if module was not found by projet.update_context() raise 404
             if module_name and not 'module' in context:
-                raise Http404
+                return HttpResponseRedirect(djreverse('page_not_found',context))
 
             # if the user is not allowed to use this view, redirect or ask for
             # authentication of return error
             if not perm in context['perm']:
-                if redirect_url:
-                    redirect_kwargs = {'project_name':project_name}
-                    if redirect_args:
-                        for arg in redirect_args:
-                            if arg == 'module_name':
-                                redirect_kwargs[arg] = module_name
-                            else:
-                                redirect_kwargs[arg] = kwargs[arg]
-
-                    r_url = reverse(redirect_url,kwargs=redirect_kwargs)
-                    messages.add_message(request, messages.INFO,unicode(_("You were redirected because you lacked a permission: "))+unicode(perm))
-                    return HttpResponseRedirect(r_url)
                 if not user.is_authenticated():
-                    tup =  login_url, redirect_field_name, path
+                    tup =  djreverse('login',context), redirect_field_name, path
+                    messages.add_message(request, messages.INFO,unicode(_("You were redirected because you lacked a permission: "))+unicode(perm))
                     return HttpResponseRedirect('%s?%s=%s' % tup)
                 else:
-                    return HttpResponseForbidden()
+                    messages.add_message(request, messages.INFO,unicode(_("You were redirected because you lacked a permission: "))+unicode(perm))
+                    return HttpResponseRedirect(djreverse('forbidden',context))
 
             # Add context of project and module level portlets
             update_portlets_context(context['project'],context)

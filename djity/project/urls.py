@@ -9,8 +9,12 @@ from django.conf import settings
 
 from django.db.models.loading import get_models
 
-redirected_url = patterns('django.views.generic.simple',
-        (r'^(?P<path>.*)','redirect_to',{'url':'/%(path)s'}),
+redirected_url = patterns('',
+        url(r'^(?P<path>.*)','djity.portal.views.redirect_root',name='redirect_root'),
+)
+
+account_urls = patterns('',
+        url(r'^','djity.project.views.login',name='login'),
 )
 
 urlpatterns = patterns('',
@@ -20,12 +24,13 @@ urlpatterns = patterns('',
 	(r'^root/',include(redirected_url),{'project_name':'root'}),
 	(r'^root',include(redirected_url),{'project_name':'root'}),
     (r'^css/',include(css_urls),{'project_name':'root'}),
+	(r'^login/',include(account_urls),{'project_name':'root'}),
 )
 
 for app in settings.DJITY_APPS:
-    url = import_module('%s.urls'%app)
+    app_url = import_module('%s.urls'%app)
     urlpatterns += patterns('',
-            (r'^%s/'%url.prefix,include(url),{'project_name':'root'}),
+            (r'^%s/'%app_url.prefix,include(app_url),{'project_name':'root'}),
     )
 
 urlpatterns += patterns('',
@@ -33,12 +38,13 @@ urlpatterns += patterns('',
     (r'^',include(simplepage_urls),{'project_name':'root'}),
 	# etc...
     (r'^(?P<project_name>[-\w]+)/css/',include(css_urls)),
+    (r'^(?P<project_name>[-\w]+)/login/',include(account_urls)),
 )
 
 for app in settings.DJITY_APPS:
-    url = import_module('%s.urls'%app)
+    app_url = import_module('%s.urls'%app)
     urlpatterns += patterns('',
-                (r'^(?P<project_name>[-\w]+)/%s/'%url.prefix,include(url)),
+                (r'^(?P<project_name>[-\w]+)/%s/'%app_url.prefix,include(app_url)),
     )
 
 # all other urls are handled by djity.modules.simple_page
