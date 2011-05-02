@@ -103,7 +103,7 @@
 					<nav id="project_buttons" class="ui-helper-hidden">
                         {% if perm.manage %}
 							<a id="create_project_button" class="dj-mini-button">{% trans "New project" %}</a>
-							<a id="manage_users_button" class="dj-mini-button">{% trans "Manage users" %}</a>
+							<a id="manage_users_button" class="dj-mini-button">{% trans "Manage users" %}{% if awaiting_members > 0 %} ({{awaiting_members}} {% trans "awaiting members" %}){% endif %}</a>
 							<a id="project_style_button" class="dj-mini-button">{% trans "Manage style" %}</a>
 						{% else %}
 							<a id="project_subscribe_button" class="dj-mini-button"></a>

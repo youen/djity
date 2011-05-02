@@ -185,6 +185,9 @@ class Project(models.Model):
         context['parent_projects'] = filter(lambda p:p.can_view(context['user']) ,self.get_parents())
         context['children_projects'] = filter(lambda p:p.can_view(context['user']) ,self.children.all())
     
+        # get the awaiting memebea
+        context['awaiting_members'] = self.members.filter(role=settings.AWAITING).count()
+
     def get_available_modules(self):
         """
         get the list of modules avaible for this project
@@ -214,9 +217,9 @@ class Project(models.Model):
 
 class Member(models.Model):
     """
-    A member of a project in Djity's forge
+    A member of a project in Djity
     """
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, related_name='members')
     user = models.ForeignKey(User,related_name="project_memberships")
     role = models.IntegerField()
 

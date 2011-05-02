@@ -17,7 +17,8 @@ dj.widgets.manage_users =
 			.button(
 			{
 				icons: {primary: 'ui-icon-person'},
-				text: false
+				text: false,
+				
 			})
 			.click(function()
 			{
@@ -25,6 +26,11 @@ dj.widgets.manage_users =
 				return false;
 			});
 
+		//subscription notification
+		if(dj.context.awaiting_members > 0)
+		{
+			this.element.addClass('ui-state-error');
+		}
 
 		//init dialog
 		this.dialog = $('<div/>')

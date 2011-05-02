@@ -9,8 +9,8 @@ def redirect_root(request,path,*args,**kwargs):
     """
     if request.method == 'GET':
         params = urllib.urlencode(request.GET)
-        return HttpResponseRedirect('../../' + path +"?%s"%params)
-    return HttpResponseRedirect('../../' + path)
+        return HttpResponseRedirect('/root/' + path +"?%s"%params)
+    return HttpResponseRedirect('/root/' + path)
 
 
         
