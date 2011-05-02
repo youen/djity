@@ -4,14 +4,14 @@ from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 
 from dajax.core import Dajax
-from djity.project.decorators import check_perm_and_update_context
+from djity.utils.decorators import djity_view
 from djity.utils.security import sanitize
 from dajaxice.core import dajaxice_functions
 register = lambda name:dajaxice_functions.register_function('djity.portlet.ajax',name)
 
 from .models import TextPortlet
 
-@check_perm_and_update_context(perm='edit')
+@djity_view(perm='edit')
 def save_text_portlet(request,div_id,html,context=None):
     project = context['project']
     result =  Dajax()

@@ -7,12 +7,12 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 
 from djity.portal.forms import RegistrationForm, ProfileForm
-from djity.project.decorators import check_perm_and_update_context
+from djity.utils.decorators import djity_view
 
 from dajaxice.core import dajaxice_functions
 dajax_register = lambda name:dajaxice_functions.register_function('djity.portal.ajax',name)
 
-@check_perm_and_update_context()
+@djity_view()
 def logout(request,context=None):
     django_logout(request)
     dajax = Dajax()
@@ -22,7 +22,7 @@ def logout(request,context=None):
     return dajax.json()
 dajax_register('logout')
 
-@check_perm_and_update_context()
+@djity_view()
 def register(request,js_target,username,email,password1,password2,context=None):
     form = RegistrationForm({
                     'username':username,
@@ -52,7 +52,7 @@ def register(request,js_target,username,email,password1,password2,context=None):
 dajax_register('register')
 
 
-@check_perm_and_update_context()
+@djity_view()
 def get_register(request,js_target,context=None):
     form =  RegistrationForm()
     render = render_to_string('djity/portal/registration_form.html',{'form':form})
@@ -60,7 +60,7 @@ def get_register(request,js_target,context=None):
 
 dajax_register('get_register')
 
-@check_perm_and_update_context()
+@djity_view()
 def get_profile(request,js_target,context=None):
     form =  ProfileForm()
     render = render_to_string('djity/portal/profile_form.html',{'form':form})
@@ -69,7 +69,7 @@ def get_profile(request,js_target,context=None):
 dajax_register('get_profile')
 
 
-@check_perm_and_update_context()
+@djity_view()
 def save_profile(request,js_target,password1,password2,context=None):
     form = ProfileForm({
                     'password1':password1,
@@ -92,7 +92,7 @@ def save_profile(request,js_target,password1,password2,context=None):
 dajax_register('save_profile')
 
 
-@check_perm_and_update_context()
+@djity_view()
 def login(request,js_target, username, password, context):
     user = authenticate(username=username,password=password)
     if user is None:

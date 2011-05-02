@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 
 from djity.portal.models import SiteRoot
 from djity.project.models import Project
-from djity.project.decorators import check_perm_and_update_context
+from djity.utils.decorators import djity_view
 from djity.style.models import CSS
 
 def update_css_context(css_context,get):
@@ -14,7 +14,7 @@ def update_css_context(css_context,get):
         if style in get:
             css_context[style] = get[style]
 
-@check_perm_and_update_context()
+@djity_view()
 def css(request,template,context=None):
     """
     #Render the CSS stylesheet for a project
@@ -33,7 +33,7 @@ def css(request,template,context=None):
     httpresponse['Content-Type']="text/css"
     return httpresponse
 
-@check_perm_and_update_context()
+@djity_view()
 def themeroller(request,context=None):
     project = context['project']
     css = project.css
@@ -114,7 +114,7 @@ def icons(request,project_name):
     return response
 
 """
-@check_perm_and_update_context()
+@djity_view()
 def project_css(request,context=None):
     #Render the CSS stylesheet for a project
 
@@ -132,7 +132,7 @@ def project_css(request,context=None):
     httpresponse['Content-Type']="text/css"
     return httpresponse
 
-@check_perm_and_update_context()
+@djity_view()
 def ui_css(request,context=None):
     #Render the CSS stylesheet for a project
     

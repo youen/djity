@@ -2,7 +2,7 @@ import json
 from django.conf import settings
 from django.template.loader import render_to_string
 from dajax.core import Dajax
-from djity.project.decorators import check_perm_and_update_context
+from djity.utils.decorators import djity_view
 from django.utils.translation import ugettext_lazy as _ 
 from django.contrib import messages
 
@@ -10,7 +10,7 @@ from django.contrib import messages
 from dajaxice.core import dajaxice_functions
 register = lambda name:dajaxice_functions.register_function('djity.style.ajax',name)
 
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def save_project_style(request,style_values,js_target,context=None):
     if style_values.__class__.__name__ in ['unicode','str']:
         # style can be given as string in json
@@ -30,13 +30,13 @@ def save_project_style(request,style_values,js_target,context=None):
 
 register('save_project_style')
 
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def download_params(request,js_target,context=None):
     js_target.val(json.dumps(context['project'].css.get_values()))
 
 register('download_params')
 
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def set_default(request,js_target,context=None):
     context['project'].css.set_to_default()
     message = _("The style of the project has been set to default")
@@ -45,7 +45,7 @@ def set_default(request,js_target,context=None):
 
 register('set_default')
 
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def inherit_style(request,js_target,context=None):
     project = context['project']
     if project.parent:
