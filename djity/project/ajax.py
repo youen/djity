@@ -5,12 +5,12 @@ from django.contrib import messages
 from django.conf import settings
 
 from dajax.core import Dajax
-from djity.project.decorators import check_perm_and_update_context
+from djity.utils.decorators import djity_view
 from dajaxice.core import dajaxice_functions
 from .models import Project, Member
 
 register = lambda name:dajaxice_functions.register_function('djity.project.ajax',name)
-@check_perm_and_update_context(perm='edit')
+@djity_view(perm='edit')
 def save_tab_order(request,array,context=None):
     project = context['project']
     for module in  project.modules.all():
@@ -20,7 +20,7 @@ def save_tab_order(request,array,context=None):
     return result.json()
 register('save_tab_order')
 
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def edit_tab(request,label,status,context=None):
     module = context['module']
     module.label = label
@@ -30,7 +30,7 @@ def edit_tab(request,label,status,context=None):
     return result.json()
 register('edit_tab')
 
-@check_perm_and_update_context(perm='edit')
+@djity_view(perm='edit')
 def save_project_title(request,div_id,html,context=None):
     result =  Dajax()
     project = context['project']
@@ -42,7 +42,7 @@ def save_project_title(request,div_id,html,context=None):
     return result.json()
 register('save_project_title')
 
-@check_perm_and_update_context(perm='edit')
+@djity_view(perm='edit')
 def delete_tab(request,context=None):
     name = context['project_name']
     module = context['module']
@@ -52,7 +52,7 @@ def delete_tab(request,context=None):
     return dajax.json()
 register('delete_tab')
     
-@check_perm_and_update_context(perm='edit')
+@djity_view(perm='edit')
 def get_module(request, context=None):
     dajax= Dajax()
     out = ""
@@ -70,7 +70,7 @@ def get_module(request, context=None):
 register('get_module')
 
 
-@check_perm_and_update_context(perm='edit')
+@djity_view(perm='edit')
 def add_module(request, tab_name, module_type, context=None):
     # build dictionary of classes available for modules
     from django.db.models import Max
@@ -101,7 +101,7 @@ def add_module(request, tab_name, module_type, context=None):
 register('add_module')
 
 
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def create_project(request,name,context=None):
     parent = context['project']
     child = Project(label=name,parent=parent)
@@ -114,13 +114,13 @@ def create_project(request,name,context=None):
 register('create_project')
 
 """
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def module_visibility(request,visibility,context=None):
     module = context['module']
 """
 
 
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def save_manage_users(request, js_target, inherit,users=None,context=None):
     project = context['project']
     if inherit:
@@ -176,7 +176,7 @@ def save_manage_users(request, js_target, inherit,users=None,context=None):
 
 register('save_manage_users')
 
-@check_perm_and_update_context(perm='manage')
+@djity_view(perm='manage')
 def get_manage_users(request, js_target,context=None):
     project = context['project']
     context['roles'] = filter(lambda r:r[0] != 0 ,settings.ROLES_DISPLAY)
@@ -188,7 +188,7 @@ def get_manage_users(request, js_target,context=None):
 
 register('get_manage_users')
 
-@check_perm_and_update_context()
+@djity_view()
 def project_subscribe(request,context=None):
     dajax = Dajax()
     if context['project'].add_awaiting_user(context['user']):

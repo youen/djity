@@ -3,10 +3,10 @@ from django.http import HttpResponse,HttpResponseNotFound,HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout as logout_response
 
-from djity.project.decorators import check_perm_and_update_context 
+from djity.utils.decorators import djity_view 
 
 
-@check_perm_and_update_context()
+@djity_view()
 def overview(request,project='root',context=None):
     """
     Render the Homepage of a Djity site
@@ -27,7 +27,7 @@ def logout(request):
     return response
 
 
-@check_perm_and_update_context()
+@djity_view()
 def login(request,context):
     context['next_page'] = request.GET['next']
     context['onload'] = "dj.widgets.login.open();"
@@ -35,7 +35,7 @@ def login(request,context):
     return render_to_response('djity/project/account.html',context)
 
 
-@check_perm_and_update_context()
+@djity_view()
 def first_tab(request,context):
     """
     Redirect the default view of a project to the first tab's view of the project.

@@ -2,9 +2,9 @@ from django.shortcuts import render_to_response
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
-from djity.project.decorators import check_perm_and_update_context
+from djity.utils.decorators import djity_view
 
-@check_perm_and_update_context()
+@djity_view()
 def {module_name}_view(request,context=None):
     """
     Main view of a bare module after 'djity-admin.py create_module' was called

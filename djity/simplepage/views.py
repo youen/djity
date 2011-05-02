@@ -5,12 +5,12 @@ from django.utils.translation import *
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
-from djity.project.decorators import check_perm_and_update_context
+from djity.utils.decorators import djity_view
 from djity.transmeta import get_lang_version
 
 
 
-@check_perm_and_update_context()
+@djity_view()
 def page(request,context=None):
     """
     Main view of the Wiki: page view

@@ -19,19 +19,20 @@ from djity.utils import djreverse
 
 log = logging.getLogger('djity')
 
-def check_perm_and_update_context(
+def djity_view(
         perm='view',
-        login_url=None,
         redirect_field_name=REDIRECT_FIELD_NAME,
-        redirect_url=None,
-        redirect_args=None,
         ):
     """
-    This decorator update the current context from path and user.
-    """
+    This decorator is used by all views in files views.py and ajax.py
+    that are declared as compatible with Djity.
 
-    if not login_url:
-        login_url = settings.LOGIN_URL
+    Its main task is to build a DjityContext instance depending on the current session,
+     user and views parameters.
+
+    It also checks that the permission required to access to the current view is satisfied
+     by the current user in the current project.
+    """
 
     def _dec(func):
 
