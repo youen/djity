@@ -19,10 +19,7 @@ from djity.utils import djreverse
 
 log = logging.getLogger('djity')
 
-def djity_view(
-        perm='view',
-        redirect_field_name=REDIRECT_FIELD_NAME,
-        ):
+def djity_view(perm='view'):
     """
     This decorator is used by all views in files views.py and ajax.py
     that are declared as compatible with Djity.
@@ -37,11 +34,6 @@ def djity_view(
     def _dec(func):
 
         def _new_func(*args,**kwargs):
-            """
-            Test for a project if module module_name is active 
-            and save the project, instance of this module for this project in the context
-            """
-            
             # init context using request arguments
             request  = args[0]
             context = DjityContext(request)
@@ -66,9 +58,7 @@ def djity_view(
 
             path = urlquote(request.get_full_path())
             context['path'] = path
-            
-            
-            
+
             # Fetch project, or 404
             try:
                 project = Project.objects.get(name=project_name)
@@ -109,7 +99,7 @@ def djity_view(
             # authentication of return error
             if not perm in context['perm']:
                 if not user.is_authenticated():
-                    tup =  djreverse('login',context), redirect_field_name, path
+                    tup =  djreverse('login',context), REDIRECT_FIELD_NAME, path
                     messages.add_message(request, messages.INFO,unicode(_("You were redirected because you lacked a permission: "))+unicode(perm))
                     return HttpResponseRedirect('%s?%s=%s' % tup)
                 else:

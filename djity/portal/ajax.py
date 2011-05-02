@@ -16,7 +16,7 @@ dajax_register = lambda name:dajaxice_functions.register_function('djity.portal.
 def logout(request,context=None):
     django_logout(request)
     dajax = Dajax()
-    msg = _(u'You are now disconected')
+    msg = _(u'You are now disconnected')
     messages.add_message(request, messages.INFO, unicode(msg) )
     dajax.script('location.reload()')
     return dajax.json()
