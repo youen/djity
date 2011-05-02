@@ -207,8 +207,7 @@ class Project(models.Model):
             member.delete()
             return False
         except Member.DoesNotExist:
-            awaiting = Role.objects.get(project=self,name='awaiting')
-            Member(project=self,user=user,role=awaiting).save()
+            Member(project=self,user=user,role=settings.AWAITING).save()
             return True
 
 class Member(models.Model):

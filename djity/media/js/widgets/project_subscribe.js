@@ -1,4 +1,4 @@
-function project_subscribe_button(){
+dj.functions.project_subscribe_button = function (){
 	$("#project_subscribe_dialog").dialog({
 		autoOpen:false,
 		modal:true,
@@ -13,11 +13,12 @@ function project_subscribe_button(){
 		}
 
 	})
-
-	switch(dj.context.role == 0){
-		case 'awaiting':
+	switch(dj.context.role){
+		// Awaiting
+		case 1:
 			button_label = "Cancel subscription";
 			break;
+		// Anonymous
 		case 0:
 			button_label = "Subscribe";
 			break;
@@ -35,7 +36,7 @@ function project_subscribe_button(){
 			label:button_label,
 		});
 	
-	if(dj.context.user == "anonymous"){
+	if(dj.context.user == "AnonymousUser"){
 		$("#project_subscribe_button")
 			.click(function(){
 					$('#project_subscribe_dialog').dialog('open');

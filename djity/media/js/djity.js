@@ -126,7 +126,7 @@ dj.init = function(){
 		project_manage_buttons();
 	}
 	else {
-		project_subscribe_button();
+		dj.functions.project_subscribe_button();
 	}
 	widgetify();
 	dj.functions.portal_parameters();
