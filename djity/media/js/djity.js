@@ -143,7 +143,7 @@ dj.init = function(){
 		this.editor.prev().editable('close_editor');
 	}	
    //after all send notification
-	$(dj.context.django_messages).each(function(item,msg){
+	$(dj.context.messages).each(function(item,msg){
 		$('#messages').notify('create',{text:msg});
 		});
 };

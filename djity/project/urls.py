@@ -30,15 +30,13 @@ urlpatterns = patterns('',
 for app in settings.DJITY_APPS:
     app_url = import_module('%s.urls'%app)
     urlpatterns += patterns('',
-            (r'^%s/'%app_url.prefix,include(app_url),{'project_name':'root'}),
+            (r'^%s/*'%app_url.prefix,include(app_url),{'project_name':'root'}),
     )
 
 urlpatterns += patterns('',
-		(r'^$','djity.project.views.first_tab',{'project_name':'root'}),
-		(r'^/$','djity.project.views.first_tab',{'project_name':'root'}),
+		(r'^/*$','djity.project.views.first_tab',{'project_name':'root'}),
 
-    (r'^/',include(simplepage_urls),{'project_name':'root'}),
-    (r'^',include(simplepage_urls),{'project_name':'root'}),
+    (r'^/*',include(simplepage_urls),{'project_name':'root'}),
 	# etc...
     (r'^(?P<project_name>[-\w]+)/css/',include(css_urls)),
     (r'^(?P<project_name>[-\w]+)/login/',include(account_urls)),
@@ -47,18 +45,16 @@ urlpatterns += patterns('',
 for app in settings.DJITY_APPS:
     app_url = import_module('%s.urls'%app)
     urlpatterns += patterns('',
-                (r'^(?P<project_name>[-\w]+)/%s/'%app_url.prefix,include(app_url)),
+                (r'^(?P<project_name>[-\w]+)/%s/*'%app_url.prefix,include(app_url)),
     )
 
 # project page redirect to the first tab
 urlpatterns += patterns('',
-		(r'^(?P<project_name>[-\w]+)$','djity.project.views.first_tab'),
-		(r'^(?P<project_name>[-\w]+)/$','djity.project.views.first_tab'),
+		(r'^(?P<project_name>[-\w]+)/*$','djity.project.views.first_tab'),
 	)
 
 # all other urls are handled by djity.modules.simple_page
 urlpatterns += patterns('',
-    (r'^(?P<project_name>[-\w]+)',include(simplepage_urls)),
-    (r'^(?P<project_name>[-\w]+)/',include(simplepage_urls)),)
+    (r'^(?P<project_name>[-\w]+)/*',include(simplepage_urls)),)
 
 
