@@ -34,6 +34,9 @@ for app in settings.DJITY_APPS:
     )
 
 urlpatterns += patterns('',
+		(r'^$','djity.project.views.first_tab',{'project_name':'root'}),
+		(r'^/$','djity.project.views.first_tab',{'project_name':'root'}),
+
     (r'^/',include(simplepage_urls),{'project_name':'root'}),
     (r'^',include(simplepage_urls),{'project_name':'root'}),
 	# etc...
@@ -46,6 +49,12 @@ for app in settings.DJITY_APPS:
     urlpatterns += patterns('',
                 (r'^(?P<project_name>[-\w]+)/%s/'%app_url.prefix,include(app_url)),
     )
+
+# project page redirect to the first tab
+urlpatterns += patterns('',
+		(r'^(?P<project_name>[-\w]+)$','djity.project.views.first_tab'),
+		(r'^(?P<project_name>[-\w]+)/$','djity.project.views.first_tab'),
+	)
 
 # all other urls are handled by djity.modules.simple_page
 urlpatterns += patterns('',

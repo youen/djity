@@ -161,6 +161,7 @@ class Project(models.Model):
         # and a list of the module tabs according to the role of the user
         # and check if the required permission is granted on the current module
         context['module_tabs'] = []
+        context['modules'] = []
         for module in self.modules.order_by('tab_position'):
             name = module.name
             if name == context['module_name']:
@@ -169,6 +170,7 @@ class Project(models.Model):
                 context['tab_status'] = module.status
                 context['status_display'] = settings.STATUS_DISPLAY
             if has_perm('view',context['role'],module.status):
+                context['modules'].append(module)
                 context['module_tabs'].append(name)
                 context["%s_tab_display"%name] = module.label.capitalize()
                 context["%s_tab_url"%name] = module.djity_url(context)

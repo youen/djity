@@ -1,5 +1,5 @@
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
-from django.http import HttpResponse,HttpResponseNotFound,HttpResponseNotAllowed
+from django.http import HttpResponse,HttpResponseNotFound,HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout as logout_response
 
@@ -33,3 +33,15 @@ def login(request,context):
     context['onload'] = "dj.widgets.login.open();"
     context['no_right_tabs'] = True
     return render_to_response('djity/project/account.html',context)
+
+
+@check_perm_and_update_context()
+def first_tab(request,context):
+    """
+    Redirect the default view of a project to the first tab's view of the project.
+    """
+    modules = context['modules']
+    if len(modules) > 0:
+        return HttpResponseRedirect(modules[0].djity_url(context))
+
+
