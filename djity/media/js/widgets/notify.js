@@ -39,6 +39,10 @@ if(typeof template === "object"){
 opts = msg;
 msg = template;
 template = null;
+
+//foreground messages
+this.element.zIndex(3);
+
 }
 
 var tpl = this.templates[ template || this.keys[0]];
