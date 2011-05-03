@@ -268,7 +268,7 @@ dj.functions.save_text_portlet = function(id,html) {
 
 dj.functions.save_project_title = function(id,html){
 	dj.remote('djity.project.save_project_title',{
-			'div_id':id,
+			'js_target':document,
 			'html':html,
 		}
 	);

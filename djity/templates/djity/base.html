@@ -149,11 +149,18 @@
 		</div>
         {% if perm.manage %}
         <!-- Delete Tab -->
+		{% if modules|length > 1 %}
+	
         <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab ?' %}" class="ui-helper-hidden" >
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
             Tab {{ module_name }}  will be permanently deleted and cannot be recovered. Are you sure?</p>
         </div>
-        
+		{% else %}
+        <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab ?' %}" class="ui-helper-hidden" >
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			Tab {{ module_name }}  and the project {{ project_name }} will be permanently deleted and cannot be recovered. Are you sure?</p>
+        </div>
+		{% endif %}	
 
         <!-- Edit Tab -->
         <div id="{{ module_name }}-edit" title="{% trans 'Edit tab parameters' %}" class="ui-helper-hidden" >

@@ -20,7 +20,7 @@ msgstr ""
 
 #: portal/ajax.py:19
 msgid "You are now disconnected"
-msgstr ""
+msgstr "Vous êtes déconnecté"
 
 #: portal/ajax.py:41
 #, python-format
@@ -58,7 +58,7 @@ msgstr ""
 #: portal/forms.py:88
 #, python-format
 msgid "Username %s is not valid"
-msgstr ""
+msgstr "Le nom d'utilisateur %s n'est pas valide"
 
 #: portal/forms.py:100
 #, python-format

@@ -30,7 +30,7 @@ for app in settings.DJITY_APPS:
 
 urlpatterns += patterns('',
     # project page redirect to the first tab
-    (r'^(?P<project_name>[-\w]+)/*$','djity.project.views.first_tab'),
+    url(r'^(?P<project_name>[-\w]+)/*$','djity.project.views.first_tab',name='first_tab'),
     # login view as a pseudo application
     (r'^(?P<project_name>[-\w]+)/login/*$',include(account_urls)),
     # all other urls are handled by djity.modules.simple_page

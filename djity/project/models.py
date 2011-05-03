@@ -9,7 +9,7 @@ from django.conf import settings
 from djity.portal.models import SiteRoot
 from djity.portlet.models import TextPortlet
 from djity.transmeta import TransMeta
-from djity.utils import has_perm, granted_perms
+from djity.utils import has_perm, granted_perms, djreverse
 from djity.utils.inherit import SuperManager
 
 
@@ -188,6 +188,12 @@ class Project(models.Model):
         # get the awaiting memebea
         context['awaiting_members'] = self.count_awaiting_members()
 
+    def djity_url(self):
+        """
+        return the url of this project
+        """
+        return djreverse('first_tab',{'project_name':self.name})
+        
     def count_awaiting_members(self):
         """
         Return the number of awaiting members for this project.

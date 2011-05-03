@@ -37,10 +37,16 @@ register('save_project_title')
 
 @djity_view(perm='edit')
 def delete_tab(request,js_target,context=None):
-    name = context['project_name']
+    project = context['project']
     module = context['module']
     module.delete()
-    js_target.redirect("/%s"%name)
+    if project.modules.count() == 0:
+        url = project.parent.djity_url()
+        project.delete()
+    else:
+        url = project.djity_url()
+
+    js_target.redirect(url)
 register('delete_tab')
     
 @djity_view(perm='edit')
