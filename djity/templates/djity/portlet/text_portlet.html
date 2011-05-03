@@ -1,4 +1,6 @@
 {% extends "djity/portlet/portlet.html" %}
+
+{% block class%}dj-text-portlet {{block.super}}{% endblock %}
 {% block content %}
-{{ portlet_content|safe}}
+{{ portlet.content|safe}}
 {% endblock %}

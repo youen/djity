@@ -281,7 +281,7 @@ html>body #main {
 
 /* portlet classes */
 
-#footer {
+.footer {
     margin: 50px auto;
     padding: 10px;
     clear: both;

@@ -89,7 +89,7 @@ class Project(models.Model):
             
             #add a footer portlet
             TextPortlet(content="This is a project footer. Edit me !",
-                    div_id="footer",container=self,position="bottom",
+                    div_class="footer",container=self,position="bottom",
                     rel_position=0).save()
             
     def __unicode__(self):
@@ -186,7 +186,18 @@ class Project(models.Model):
         context['children_projects'] = filter(lambda p:p.can_view(context['user']) ,self.children.all())
     
         # get the awaiting memebea
-        context['awaiting_members'] = self.members.filter(role=settings.AWAITING).count()
+        context['awaiting_members'] = self.count_awaiting_members()
+
+    def count_awaiting_members(self):
+        """
+        Return the number of awaiting members for this project.
+        If this project inherit permissions return the number of awaiting users for the parent project.
+        """
+        if self.inherit_members: 
+            return self.parent.count_awaiting_members()
+        else:
+            return self.members.filter(role=settings.AWAITING).count()
+
 
     def get_available_modules(self):
         """
@@ -206,14 +217,18 @@ class Project(models.Model):
     def add_awaiting_user(self,user,remove_if_exist=True):
         """
         add a user awaiting validation
+        If this project inherit permissions add the awaiting users to the parent project.
         """
-        try:
-            member = Member.objects.get(project=self,user=user)
-            member.delete()
-            return False
-        except Member.DoesNotExist:
-            Member(project=self,user=user,role=settings.AWAITING).save()
-            return True
+        if self.inherit_members: 
+            return self.parent.add_awaiting_user(user,remove_if_exist)
+        else:
+            try:
+                member = Member.objects.get(project=self,user=user)
+                member.delete()
+                return False
+            except Member.DoesNotExist:
+                Member(project=self,user=user,role=settings.AWAITING).save()
+                return True
 
 class Member(models.Model):
     """

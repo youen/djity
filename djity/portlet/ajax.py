@@ -12,17 +12,14 @@ register = lambda name:dajaxice_functions.register_function('djity.portlet.ajax'
 from .models import TextPortlet
 
 @djity_view(perm='edit')
-def save_text_portlet(request,div_id,html,context=None):
-    project = context['project']
-    result =  Dajax()
-    project_type = ContentType.objects.get_for_model(project.__class__)
-    tp = TextPortlet.objects.get(container_id=project.id,container_type=project_type,div_id=div_id)
+def save_text_portlet(request,js_target,div_id,html,context=None):
+    
+    tp = TextPortlet.objects.get(id=div_id)
+
     html = sanitize(html)
     if tp.content != html :
         tp.content = html
         tp.save()
-        msg = unicode(_('Change in portlet saved'))
-        result.script('message("%s")'%msg)
-    return result.json()
+        js_target.message(_('Change in portlet saved'))
 
 register('save_text_portlet')

@@ -56,7 +56,7 @@ class JSTarget(Dajax):
             messages.add_message(self._request, messages.INFO, unicode(message))
         else:
             # Use ajax to display message on current page
-            code = u"message(%s);"%json.dumps(message)
+            code = u"dj.message(%s);"%json.dumps(unicode(message))
             self.script(code)
 
 

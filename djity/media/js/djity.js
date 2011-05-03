@@ -167,10 +167,13 @@ function widgetify() {
 			}
 	);
 
+
 	$('#messages').notify();
 
+	$("#project_title").editable({save_function:dj.functions.save_project_title});
+
 	if(dj.context.perm.edit){
-		$(".dj-editable").each(function(i,e){$(e).editable({save_function:eval(e.id +'_callback')});});
+		$(".dj-text-portlet").each(function(i,e){$(e).editable({save_function:dj.functions.save_text_portlet});});
 	}
 }
 
@@ -246,24 +249,25 @@ function init_tag(){
 
 /* Define tools function  */
 
-function message(msg) {
+dj.message = function(msg) {
 	$('#messages').notify('create',{text:msg});
 };
 
-function save_text_portlet(id,html) {
+dj.functions.save_text_portlet = function(id,html) {
 	/*
 	 * save change for a text portlet 
 	 *
 	 */
 	dj.remote('djity.portlet.save_text_portlet',{
-			'div_id':id,
+			'js_target':document,
+			'div_id':parseInt(id),
 			'html':html,
 			}
 	);
 };
 
-function project_title_callback(id,html){
-	dj.remote('djity.portlet.save_project_title',{
+dj.functions.save_project_title = function(id,html){
+	dj.remote('djity.project.save_project_title',{
 			'div_id':id,
 			'html':html,
 		}

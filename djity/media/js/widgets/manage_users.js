@@ -29,7 +29,7 @@ dj.widgets.manage_users =
 		//subscription notification
 		if(dj.context.awaiting_members > 0)
 		{
-			this.element.addClass('ui-state-error');
+			this.element.addClass('ui-state-highlight');
 		}
 
 		//init dialog
@@ -124,8 +124,21 @@ dj.widgets.manage_users =
 
 	},
 
-	close : function ()
+	close : function (awaiting_members)
 	{
+		if( awaiting_members !== undefined)
+		{
+			if(awaiting_members > 0)
+			{
+				this.element.addClass('ui-state-highlight');
+				this.element.button('option','label',gettext('Manage users') + ' (' + awaiting_members + ' ' + gettext('awaiting members') + ')' );
+			}
+			else
+			{
+				this.element.removeClass('ui-state-highlight');
+				this.element.button('option','label',gettext('Manage users'));
+			}
+		}
 		this.dialog.dialog('close');
 
 	}

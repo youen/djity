@@ -31,15 +31,12 @@ def edit_tab(request,label,status,context=None):
 register('edit_tab')
 
 @djity_view(perm='edit')
-def save_project_title(request,div_id,html,context=None):
-    result =  Dajax()
+def save_project_title(request,js_target,html,context=None):
     project = context['project']
     if html != '':
         project.label = html
         project.save()
-        msg = unicode(_('Project title saved.'))
-        result.script('message("%s")'%msg)
-    return result.json()
+        js_target.message(_('Project title saved.'))
 register('save_project_title')
 
 @djity_view(perm='edit')
@@ -157,13 +154,18 @@ def save_manage_users(request, js_target, inherit,users=None,context=None):
                 deleted_member.delete()
                 msg = unicode(_(u'Member %s is no longer a member of this project.'%user))
                 js_target.message(msg)
-
-            for member in members: member.save()
+            
+            awaiting_members = 0
+            for member in members:
+                member.save()
+                if member.role  == settings.AWAITING :
+                    awaiting_members += 1
+            
             project.inherit_members = False
             project.save()
             msg = unicode(_(u"Members of this project updated"))
             js_target.message(msg)
-            js_target.close()
+            js_target.close(awaiting_members)
         
         elif context['user'].username == user and role != settings.MANAGER:
             msg = unicode(_(u"You can't change yourself your manager role."))

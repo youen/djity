@@ -34,7 +34,6 @@ class Portlet(models.Model):
         help_text=_("if disabled this portlet won't be displayed in the container"))
 
     div_class = models.CharField(_("style"),max_length=200,default="dj-editable ui-widget ui-widget-content ui-corner-all")
-    div_id = models.CharField(_("id"),max_length=200,default="")
     
     onload = ""
     media = set()
@@ -51,8 +50,6 @@ class Portlet(models.Model):
             return self
         return model.objects.get(id=self.id)
     
-    class Meta:
-        unique_together = ('container_id','container_type','div_id')
 
 class TextPortlet(Portlet):
     """
@@ -65,16 +62,9 @@ class TextPortlet(Portlet):
 
     content = models.TextField(_("content"))
 
-    @property
-    def onload(self):
-        return self.div_id + '_callback = save_text_portlet;'
 
     def render(self,context):
-        if not self.content:
-            return ""
-        context["portlet_content"] = self.content
-        context["portlet_div_class"] = self.div_class
-        context["portlet_div_id"] = self.div_id
+        context["portlet"] = self
         return render_to_string("djity/portlet/text_portlet.html",context)
 
     def __unicode__(self):
@@ -95,8 +85,7 @@ class TemplatePortlet(Portlet):
     onload = models.CharField(_("onload"),max_length=200,default="")
 
     def render(self,context):
-        context["portlet_div_class"] = self.div_class
-        context["portlet_div_id"] = self.div_id
+        context["portlet"] = self
         return render_to_string(self.template,context)
     
     def __unicode__(self):
