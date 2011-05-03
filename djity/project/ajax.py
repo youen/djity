@@ -11,23 +11,19 @@ from .models import Project, Member
 
 register = lambda name:dajaxice_functions.register_function('djity.project.ajax',name)
 @djity_view(perm='edit')
-def save_tab_order(request,array,context=None):
+def save_tab_order(request,js_target,array,context=None):
     project = context['project']
     for module in  project.modules.all():
         module.tab_position = array.index(module.name)
         module.save()
-    result =  Dajax()
-    return result.json()
 register('save_tab_order')
 
 @djity_view(perm='manage')
-def edit_tab(request,label,status,context=None):
+def edit_tab(request,js_target,label,status,context=None):
     module = context['module']
     module.label = label
     module.status = int(status)
     module.save()
-    result =  Dajax()
-    return result.json()
 register('edit_tab')
 
 @djity_view(perm='edit')
@@ -40,44 +36,50 @@ def save_project_title(request,js_target,html,context=None):
 register('save_project_title')
 
 @djity_view(perm='edit')
-def delete_tab(request,context=None):
+def delete_tab(request,js_target,context=None):
     name = context['project_name']
     module = context['module']
     module.delete()
-    dajax =  Dajax()
-    dajax.redirect("/%s"%name)
-    return dajax.json()
+    js_target.redirect("/%s"%name)
 register('delete_tab')
     
 @djity_view(perm='edit')
-def get_module(request, context=None):
-    dajax= Dajax()
+def get_module(request,js_target,context=None):
     out = ""
     project = context['project']
     for model in  project.get_available_modules():
         out += "<option value='%s'>%s</option>\n"%(model.__name__,model._meta.verbose_name)
-    dajax.assign('#module_list','innerHTML',out)
-    dajax.script("""
+    js_target.assign('#module_list','innerHTML',out)
+    js_target.script("""
     $('#new_tab_name')
         .val($("#module_list option:selected").text())
         .select();
     """)
 
-    return dajax.json()
 register('get_module')
 
 
 @djity_view(perm='edit')
-def add_module(request, tab_name, module_type, context=None):
-    # build dictionary of classes available for modules
+def add_module(request, js_target, tab_name, module_type, context=None):
+    """
+    Create a new tabulation in a project
+    """
     from django.db.models import Max
     from django.db.models.loading import get_app
+    from djity.utils.security import db_table_exists
+
+    tables = [module_type.lower()+'_'+module_type.lower(),'djity_'+module_type.lower()+'_'+module_type.lower()]
+    if not db_table_exists(tables):
+        js_target.message(_("Tab creation failed. No table for application, contact the administrator." % tables))
+        return
+
     try:
         model  = get_app(module_type.lower()).__getattribute__(module_type)
     except:
         model  = get_app('djity_'+module_type.lower()).__getattribute__(module_type)
-    #bug context return tuple !
-    project,=context['project'],
+
+
+    project=context['project']
     i = project.modules.aggregate(Max('tab_position'))['tab_position__max'] + 1
     if module_type == 'SimplePage':
         name = None
@@ -92,22 +94,18 @@ def add_module(request, tab_name, module_type, context=None):
         )
     module.save()
     
-    dajax= Dajax()
-    dajax.redirect(module.djity_url(context))
-    return dajax.json()
+    js_target.redirect(module.djity_url(context))
 register('add_module')
 
 
 @djity_view(perm='manage')
-def create_project(request,name,context=None):
+def create_project(request,js_target,name,context=None):
     parent = context['project']
     child = Project(label=name,parent=parent)
     child.save(manager=context['user'])
-    dajax = Dajax()
     msg = _(u'Your new project %s is created !'%name)
-    messages.add_message(request, messages.INFO, unicode(msg) )
-    dajax.redirect("/%s"%child.name)
-    return dajax.json()
+    js_target.message(msg, post=True)
+    js_target.redirect("/%s"%child.name)
 register('create_project')
 
 """
@@ -191,16 +189,14 @@ def get_manage_users(request, js_target,context=None):
 register('get_manage_users')
 
 @djity_view()
-def project_subscribe(request,context=None):
-    dajax = Dajax()
+def project_subscribe(request,js_target,context=None):
     if context['project'].add_awaiting_user(context['user']):
         msg = unicode(_("Your subscription is registered. Wait for validation from a manager of this project."))
         messages.add_message(request, messages.INFO,msg)
     else:
         msg = unicode(_("You are no longer a member of this project."))
         messages.add_message(request, messages.INFO,msg)
-    dajax.script('location.reload()')
+    js_target.reload()
 
-    return dajax.json()
 register('project_subscribe')
 

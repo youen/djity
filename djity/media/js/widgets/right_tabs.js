@@ -13,12 +13,7 @@ function init_right_tabs() {
 
 			placeholder: 'dj.context.sorting-tab ui-state-highlight dj.context.mini-button',
 			update: function(event, ui) { 
-				Dajaxice.djity.project.save_tab_order(
-					'Dajax.process',{
-						'project_name':dj.context.project_name,
-						'array':$('#right_tabs_list').sortable('toArray')
-				
-					});	
+				dj.remote('djity.project.save_tab_order',{js_target:Document,'array':$('#right_tabs_list').sortable('toArray')});
 			}
 		});
 	}
@@ -36,12 +31,7 @@ function init_right_tabs() {
 			buttons: {
 				Ok : function() {
 					$(this).dialog('close');
-					Dajaxice.djity.project.delete_tab(
-						'Dajax.process',{
-						'project_name':dj.context.project_name,
-						'module_name':dj.context.module_name,
-				
-					});	
+					dj.remote('djity.project.delete_tab',{js_target:Document});
 				},
 				Cancel: function() {
 					$(this).dialog('close');
@@ -76,15 +66,10 @@ function init_right_tabs() {
 				Ok : function() {
 					$(this).dialog('close');
 					$('#' + dj.context.module_name ).find('a')[0].textContent = $('#' + dj.context.module_name + '-title').val();
-					Dajaxice.djity.project.edit_tab(
-						'Dajax.process',{
-						'project_name':dj.context.project_name,
-						'module_name':dj.context.module_name,
-						'LANGUAGE_CODE':dj.context.LANGUAGE_CODE,
-						'label': $('#' + dj.context.module_name + '-title').val(),
-						'status': $('#' + dj.context.module_name + '-status').val(),
-					});	
-					
+					dj.remote('djity.project.edit_tab',{
+						'label':$('#' + dj.context.module_name + '-title').val(),
+						'status':$('#' + dj.context.module_name + '-status').val(),
+						});
 				},
 				Cancel: function() {
 					$(this).dialog('close');
@@ -123,12 +108,8 @@ function init_right_tabs() {
 			resizable:false,
 			show:'blind',
 			open: function(event,ui){
-				Dajaxice.djity.project.get_module(
-					'Dajax.process',{
-					'project_name' : dj.context.project_name,
-					}
+				dj.remote('djity.project.get_module',{js_target:Document});
 				
-				);
 				$("#module_list").change(function () {
 						$('#new_tab_name')
 							.val($("#module_list option:selected").text())
@@ -139,13 +120,11 @@ function init_right_tabs() {
 			buttons: {
 				Ok : function() {
 					$(this).dialog('close');
-					Dajaxice.djity.project.add_module(
-						'Dajax.process',{
-							'project_name':dj.context.project_name,
+					dj.remote('djity.project.add_module',{
+							js_target:Document,
 							'tab_name':$('#new_tab_name').val(),
 							'module_type':$("#module_list option:selected").val(),
-						}
-					);		
+						});
 				},
 				Cancel: function() {
 					$(this).dialog('close');

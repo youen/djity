@@ -66,3 +66,24 @@ def sanitize(html):
     # TODO - I rather suspect that this is the weakest part of the operation..
     safe_html = re.sub(r'<!--[.\n]*?-->','',safe_html)
     return safe_html
+
+def db_table_exists(tables, cursor=None):
+    """
+    Inspired from here:
+    https://gist.github.com/527113/307c2dec09ceeb647b8fa1d6d49591f3352cb034
+    """
+    try:
+        if not cursor:
+            from django.db import connection
+            cursor = connection.cursor()
+        if not cursor:
+            raise Exception
+        table_names = connection.introspection.get_table_list(cursor)
+    except:
+        raise Exception("unable to determine if the table '%s' exists" % table)
+    else:
+        for table in tables:
+            if table in table_names:
+                return True
+        return False
+

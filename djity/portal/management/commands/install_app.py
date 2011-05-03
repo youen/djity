@@ -9,12 +9,17 @@ from djity.utils import create_link
 
 class Command(BaseCommand):
     args = '<app>'
-    help = """Install an application in the current project. The application must
-    already be installed in the system. Use 'djity-admin.py ls_apps' to findout which Djity
-    applications are availables on this machine."""
+    help = """Install an application in the current project.\
+ The application must already be installed in the system.\
+ Use 'djity-admin.py ls_apps' to findout which Djity applications\
+ are available on this machine."""
 
     def handle(self, *args, **options):
-        app = args[0]
+        try:
+            app = args[0]
+        except:
+            logging.error("No application in arguments, check usage with '--help'")
+            return
         try:
             # get the path of the python package for the current app
             app_path = import_module(app).__path__
@@ -43,4 +48,4 @@ class Command(BaseCommand):
         media_link = settings.MEDIA_ROOT+"/"+app
         create_link(media_path,media_link)
 
-        logging.info("Application %s is installed. You should use 'sync_db' (or let djity-admin.py do it if you are using 'djity-admin.py create_project')")
+        print "Application %s is installed.\nYou should use 'python manage.py sync_db'" % app
