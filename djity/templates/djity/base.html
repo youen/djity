@@ -139,6 +139,14 @@
         Dialogs definition
         -->
 
+		<div id="login_dialog" class="ui-helper-hidden" title="{% trans 'Login' %}">
+			<form method="post" action="." class="">
+				<label for="login_username">{% trans "user" %}</label><br/>
+				<input id="login_username" name="Username" type="text"><br/>
+				<label for="login_password">{% trans "password" %}</label><br/>
+				<input id="login_password" name="Password" type="password"><br/>
+			</form>
+		</div>
         {% if perm.manage %}
         <!-- Delete Tab -->
         <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab ?' %}" class="ui-helper-hidden" >
