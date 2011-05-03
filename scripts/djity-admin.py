@@ -117,8 +117,16 @@ class ApplicationSkeleton(Skeleton):
         print 'Module Name -> %s' % self['module_name']
         self['package_name'] = "djity_%s" % self['module_name']
         print 'Package Name -> %s' % self['package_name']
-
         self.write(dst_dir, run_dry=run_dry, ignore=['setup_trap'])
+        print 'You might want to do something like:'
+        print '> cd %s' % dst_dir
+        print '> python setup.py develop'
+        print '> djity-admin.py ls_apps'
+        print "Then you may create a new project using 'djity-admin.py create_project'..."
+        print "...Or install the application in an existing project"
+        print '> cd /path/to/project/'
+        print '> python manage.py install_app %s' % self['package_name']
+        print '> python manage.py syncdb'
 
 # execute command create_project
 if command == 'create_project':
