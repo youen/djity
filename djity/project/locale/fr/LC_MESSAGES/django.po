@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-04 09:55+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: ajax.py:35
+msgid "Project title saved."
+msgstr ""
+
+#: ajax.py:79
+msgid ""
+"Tab creation failed. No table for application, contact the administrator."
+msgstr ""
+
+#: ajax.py:112
+#, python-format
+msgid "Your new project %s is created !"
+msgstr ""
+
+#: ajax.py:129
+msgid "Root project can't inherit members"
+msgstr ""
+
+#: ajax.py:134
+#, python-format
+msgid "This project inherit members of %s project."
+msgstr ""
+
+#: ajax.py:159
+#, python-format
+msgid "Member %s is no longer a member of this project."
+msgstr ""
+
+#: ajax.py:170
+msgid "Members of this project updated"
+msgstr ""
+
+#: ajax.py:175
+msgid "You can't change yourself your manager role."
+msgstr ""
+
+#: ajax.py:179
+msgid "At least one manager is required"
+msgstr ""
+
+#: ajax.py:200
+msgid ""
+"Your subscription is registered. Wait for validation from a manager of this "
+"project."
+msgstr ""
+
+#: ajax.py:203
+msgid "You are no longer a member of this project."
+msgstr ""
+
+#: models.py:260
+msgid "Module name"
+msgstr ""
+
+#: models.py:263
+msgid "Label"
+msgstr ""
+
+#: models.py:264
+msgid "the label view in tabs"
+msgstr ""
+
+#: models.py:268
+msgid "Module"
+msgstr ""
+
+#: views.py:38
+msgid "login"
+msgstr ""
+
+#: views.py:52
+msgid ""
+"You can't view any page on this project !\n"
+"You can subscribe using the button on the top left corner."
+msgstr ""
+
+#: views.py:53
+msgid "subscribe"
+msgstr ""

@@ -1,0 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-04 09:54+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ajax.py:19
+msgid "You are now disconnected"
+msgstr ""
+
+#: ajax.py:41
+#, python-format
+msgid "Your account is created ! your are connected as %s"
+msgstr ""
+
+#: ajax.py:43
+msgid "We are creating your account... please wait"
+msgstr ""
+
+#: ajax.py:83
+msgid "Your password is changed"
+msgstr ""
+
+#: ajax.py:99
+msgid "Authentication failed"
+msgstr ""
+
+#: ajax.py:102
+msgid "This account is disabled"
+msgstr ""
+
+#: ajax.py:105
+msgid "successfully connected"
+msgstr ""
+
+#: ajax.py:107
+msgid "connecting... please wait"
+msgstr ""
+
+#: forms.py:27 forms.py:111
+msgid "Passwords don't match"
+msgstr ""
+
+#: forms.py:88
+#, python-format
+msgid "Username %s is not valid"
+msgstr ""
+
+#: forms.py:100
+#, python-format
+msgid "Username %s is not avaible"
+msgstr ""
+
+#: models.py:18
+msgid "home"
+msgstr ""
