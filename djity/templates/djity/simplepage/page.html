@@ -7,8 +7,12 @@
 
 {% endblock %}
 
+{% block module_onload %}
+$('#simple_page_content').editable({save_function:dj.functions.save_simple_page});
+
+{% endblock %}
 {% block body %}
-<div id="simple_page_content" class='dj-editable'>
+<div id="simple_page_content" >
 	{{page_content|safe}}
 </div>
 {% endblock %}

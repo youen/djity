@@ -1,5 +1,3 @@
-// Hack while editable don't use js_target
-footer_callback = function () {}
 
 
 /*
@@ -253,7 +251,7 @@ dj.message = function(msg) {
 	$('#messages').notify('create',{text:msg});
 };
 
-dj.functions.save_text_portlet = function(id,html) {
+dj.functions.save_text_portlet = function(html,id) {
 	/*
 	 * save change for a text portlet 
 	 *
@@ -266,7 +264,7 @@ dj.functions.save_text_portlet = function(id,html) {
 	);
 };
 
-dj.functions.save_project_title = function(id,html){
+dj.functions.save_project_title = function(html){
 	dj.remote('djity.project.save_project_title',{
 			'js_target':document,
 			'html':html,

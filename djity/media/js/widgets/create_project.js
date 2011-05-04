@@ -53,7 +53,9 @@ dj.widgets.create_project =
 	validate : function ()
 	{
 		dj.remote('djity.project.create_project',
-						{'name': $('#new_project_name').val()}
+						{	
+							'js_target':document,
+							'name': $('#new_project_name').val()}
 					);	
 
 		

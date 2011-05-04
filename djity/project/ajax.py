@@ -111,7 +111,7 @@ def create_project(request,js_target,name,context=None):
     child.save(manager=context['user'])
     msg = _(u'Your new project %s is created !'%name)
     js_target.message(msg, post=True)
-    js_target.redirect("/%s"%child.name)
+    js_target.redirect(child.djity_url())
 register('create_project')
 
 """

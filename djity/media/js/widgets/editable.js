@@ -133,7 +133,7 @@ $.widget("ui.editable",{
 			var self = this,
 				options = self.options,
 				editorBox = self.editorBox;
-			self.options.save_function(self.element.attr('id'),self.element.html());
+			self.options.save_function(self.element.html(),self.element.attr('id'));
 			self.close();	
 	},
 
