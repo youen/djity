@@ -67,6 +67,7 @@ function init_right_tabs() {
 					$(this).dialog('close');
 					$('#' + dj.context.module_name ).find('a')[0].textContent = $('#' + dj.context.module_name + '-title').val();
 					dj.remote('djity.project.edit_tab',{
+						js_target:document,
 						'label':$('#' + dj.context.module_name + '-title').val(),
 						'status':$('#' + dj.context.module_name + '-status').val(),
 						});

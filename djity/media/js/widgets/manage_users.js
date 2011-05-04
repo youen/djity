@@ -76,9 +76,9 @@ dj.widgets.manage_users =
 	{
 		
 	
-		this.inherit_toggle(false);
-		this.forbid_toggle(false);
 		this.dialog.html($(table));
+
+
 		this.dialog.buttonset();
 		this.dialog.find('label')
 			.css('width','100%')
@@ -93,7 +93,7 @@ dj.widgets.manage_users =
 				dj.widgets.manage_users.inherit_toggle();
 			});
 
-		this.forbid_element = this.dialog.find('#forbid-permissions')
+		this.forbid_element = this.dialog.find('#forbid-subscriptions')
 			.change(function()
 			{
 				dj.widgets.manage_users.forbid_toggle();
@@ -102,6 +102,8 @@ dj.widgets.manage_users =
 		this.table.find('th')
 			.addClass('ui-widget-header');
 
+		this.inherit_toggle(this.dialog.find("#inherit-permissions:checkbox:checked").get().length == 1);
+		this.forbid_toggle(this.dialog.find("#forbid-subscriptions:checkbox:checked").get().length == 1);
 		this.dialog
 			.dialog("option","width",'500px')
 			.dialog("option","height",'auto')
@@ -121,19 +123,37 @@ dj.widgets.manage_users =
 
 	inherit_toggle : function(inherit)
 	{
-		if(inherit === undefined) { inherit = !this.inherit}
-		else{ if(inherit == this.inherit){return}}
-		if(inherit)
+		if(inherit !== undefined) 
 		{
-			this.table.hide('blind');
-			this.inherit = true;
+			if(inherit)
+			{
+				this.inherit = true;
+			}
+			else
+			{
+				this.inherit = false;
+			}
+
 		}
 		else
 		{
-			this.table.show('blind');
-			this.inherit = false;
-		}
-
+			inherit = !this.inherit;
+			if(inherit)
+			{
+				this.inherit = true;
+				this.dialog.find("#inherit-permissions").attr('checked',true);
+			}
+			else
+			{
+				this.inherit = false;
+				this.dialog.find("#inherit-permissions").attr('checked',false);
+			}
+			dj.remote('djity.project.save_inherit_permissions',
+				{
+					js_target:'dj.widgets.manage_users',
+					inherit:this.inherit,
+				});
+	    }
 	},
 
 	forbid_toggle : function(forbid)
@@ -142,14 +162,18 @@ dj.widgets.manage_users =
 		else{ if(forbid == this.forbid){return}}
 		if(forbid)
 		{
-			this.table.hide('blind');
 			this.forbid = true;
+
 		}
 		else
 		{
-			this.table.show('blind');
 			this.forbid = false;
 		}
+		dj.remote('djity.project.save_forbid_subscriptions',
+			{
+				js_target:'dj.widgets.manage_users',
+				forbid:this.forbid,
+			});
 
 	},
 

@@ -124,80 +124,88 @@ def module_visibility(request,visibility,context=None):
 @djity_view(perm='manage')
 def save_manage_users(request,js_target,inherit,forbid,users=None,context=None):
     project = context['project']
-    if inherit:
-        if project.name == "root":
-            msg = unicode(_(u"Root project can't inherit members"))
-            js_target.message(msg)
-            return 
-        project.inherit_members = True
-        project.save()
-        js_target.message(_(u'This project inherits members of %s project.'%project.parent.label))
-        js_target.close()
-        return
-
-    if forbid != project.forbid_subscriptions:
-        project.forbid_subscriptions = forbid
-        project.save()
-        if forbid:
-            js_target.message(_(u'New subscriptions to this project are now forbidden.'))
+    has_manager = False
+    members = []
+    deleted_members = []
+    for user,role in users.items():
+        if role == settings.MANAGER:
+             has_manager = True
+        member = Member.objects.get(project=project,user__username=user)
+        if role == -1: #pseudo role for deleted user
+             deleted_members.append(member)
         else:
-            js_target.message(_(u'New subscriptions to this project are now allowed.'))
-
-    else :
-        has_manager = False
-        members = []
-        deleted_members = []
-        for user,role in users.items():
-            if role == settings.MANAGER:
-                has_manager = True
-
-            member = Member.objects.get(project=project,user__username=user)
-            if role == -1: #pseudo role for deleted user
-                deleted_members.append(member)
-
-
-            else:
-                member.role = role
-                members.append(member)
+            member.role = role
+            members.append(member)
             
-        if has_manager :
-            for deleted_member in deleted_members:
-                deleted_member.delete()
-                msg = unicode(_(u'Member %s is no longer a member of this project.'%user))
-                js_target.message(msg)
-            
-            awaiting_members = 0
-            for member in members:
-                member.save()
-                if member.role  == settings.AWAITING :
-                    awaiting_members += 1
-            
-            project.inherit_members = False
-            project.save()
-            msg = unicode(_(u"Members of this project updated"))
+    if has_manager :
+        for deleted_member in deleted_members:
+            deleted_member.delete()
+            msg = unicode(_(u'Member %s is no longer a member of this project.'%user))
             js_target.message(msg)
-            js_target.close(awaiting_members)
+            
+        awaiting_members = 0
+        for member in members:
+            member.save()
+            if member.role  == settings.AWAITING :
+                awaiting_members += 1
+            
+        project.save()
+        msg = unicode(_(u"Members of this project updated"))
+        js_target.message(msg)
+        js_target.close(awaiting_members)
         
-        elif context['user'].username == user and role != settings.MANAGER:
-            msg = unicode(_(u"You can't change yourself your manager role."))
-            js_target.message(msg)
+    elif context['user'].username == user and role != settings.MANAGER:
+        msg = unicode(_(u"You can't change yourself your manager role."))
+        js_target.message(msg)
         
-        else:
-            msg = unicode(_('At least one manager is required'))
-            js_target.message(msg)
+    else:
+        msg = unicode(_('At least one manager is required'))
+        js_target.message(msg)
 
 
 register('save_manage_users')
 
 @djity_view(perm='manage')
+def save_inherit_permissions(request, js_target,inherit,context=None):
+    project = context['project']
+
+    if inherit:
+        if project.name == "root":
+            msg = unicode(_(u"Root project can't inherit members"))
+            js_target.message(msg)
+            js_target.inherit_toggle(False)
+            return 
+        js_target.message(_(u'This project inherits members of %s project.'%project.parent.label))
+    else:
+        js_target.message(_(u"This project doesn't inherits members of %s project."%project.parent.label))
+
+    project.inherit_members = inherit
+    project.save()
+
+register('save_inherit_permissions')
+
+@djity_view(perm='manage')
+def save_forbid_subscriptions(request, js_target,forbid,context=None):
+
+    project = context['project']
+    if forbid != project.forbid_subscriptions:
+        project.forbid_subscriptions = forbid
+        if forbid:
+            js_target.message(_(u'New subscriptions to this project are now forbidden.'))
+        else:
+            js_target.message(_(u'New subscriptions to this project are now allowed.'))
+        project.save()
+        
+register('save_forbid_subscriptions')
+
+@djity_view(perm='manage')
 def get_manage_users(request, js_target,context=None):
     project = context['project']
     context['roles'] = filter(lambda r:r[0] != 0 ,settings.ROLES_DISPLAY)
-    context['members'] = project.get_members()
+    context['members'] = project.members.all()
     context['users'] = [m.user for m in context['members']] 
     render = render_to_string("djity/project/manage_users.html",context)
     js_target.create_table(render)
-    js_target.inherit_toggle(project.inherit_members)
 
 register('get_manage_users')
 

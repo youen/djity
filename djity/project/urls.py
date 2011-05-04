@@ -9,27 +9,14 @@ from django.conf import settings
 
 from django.db.models.loading import get_models
 
-redirected_url = patterns('',
-        url(r'^(?P<path>[-\w]+(/[-\w]*)?)','djity.portal.views.redirect_root',name='redirect_root'),
-)
 
 portal_urls = patterns('',
         url(r'^login/*$','djity.project.views.login',name='login'),
         url(r'^forbidden/*$','djity.project.views.forbidden',name='forbidden'),
 )
 
+
 urlpatterns = patterns('',
-    (r'^/*$',include(redirected_url),{'project_name':'root'}),
-)
-
-
-for app in settings.DJITY_APPS:
-    app_url = import_module('%s.urls'%app)
-    urlpatterns += patterns('',
-                (r'^(?P<project_name>[-\w]+)/%s/*'%app_url.prefix,include(app_url)),
-    )
-
-urlpatterns += patterns('',
     # project page redirect to the first tab
     url(r'^(?P<project_name>[-\w]+)/*$','djity.project.views.first_tab',name='first_tab'),
     # login view as a pseudo application
@@ -39,4 +26,14 @@ urlpatterns += patterns('',
     (r'^(?P<project_name>[-\w]+)/+',include(simplepage_urls)),
 )
 
+#import urls from djity applications
+for app in settings.DJITY_APPS:
+    app_url = import_module('%s.urls'%app)
+    urlpatterns += patterns('',
+                (r'^(?P<project_name>[-\w]+)/%s/*'%app_url.prefix,include(app_url)),
+    )
 
+#redirect to the root project
+urlpatterns += patterns('',
+        url(r'^(?P<path>.*)','djity.portal.views.redirect_root',name='redirect_root'),
+)

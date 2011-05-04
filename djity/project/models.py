@@ -110,10 +110,21 @@ class Project(models.Model):
     def get_members(self):
         """
         Return the members of this project.
-        If this project inherit permissions return the members for the parent project.
+        If this project inherit permissions return the members for the parent project plus the members of this project.
         """
         if self.inherit_members: 
-            return self.parent.get_members()
+            users = {}
+            for member in self.parent.get_members():
+                users[member.user] = member
+            for local_member  in Member.objects.filter(project=self):
+                if local_member.user not in users:
+                    users[local_member.user] = local_member
+                # overwrite permission if user grant a permission
+                elif users[local_member.user].role < local_member.role:
+                    users[local_member.user] = local_member
+
+            return users.values()
+
         else:
             return  Member.objects.filter(project=self)     
 
@@ -123,17 +134,23 @@ class Project(models.Model):
         If `user` is anonymous or `user` haven't role for this project, return the anonymous role.
         If this project inherit permissions return the role for the parent project.
         """
+        # attempt to get the role of the user
+        try:
+            if user.is_anonymous():
+                local_role =  settings.ANONYMOUS
+            else:
+                local_role =  Member.objects.get(user=user,project=self).role     
+        except Member.DoesNotExist:
+            local_role = settings.ANONYMOUS
         if self.inherit_members: 
-            return self.parent.get_role(user)
+            parent_role = self.parent.get_role(user)
+            print parent_role, local_role
+            if parent_role > local_role:
+                return parent_role
+            else:
+                return local_role
         else:
-            # attempt to get the role of the user
-            try:
-                if user.is_anonymous():
-                    return settings.ANONYMOUS
-                else:
-                    return  Member.objects.get(user=user,project=self).role     
-            except Member.DoesNotExist:
-                return settings.ANONYMOUS
+            return local_role
 
     def can_view(self,user):
         """
@@ -198,12 +215,8 @@ class Project(models.Model):
     def count_awaiting_members(self):
         """
         Return the number of awaiting members for this project.
-        If this project inherit permissions return the number of awaiting users for the parent project.
         """
-        if self.inherit_members: 
-            return self.parent.count_awaiting_members()
-        else:
-            return self.members.filter(role=settings.AWAITING).count()
+        return self.members.filter(role=settings.AWAITING).count()
 
 
     def get_available_modules(self):
@@ -224,12 +237,9 @@ class Project(models.Model):
     def add_awaiting_user(self,user,remove_if_exist=True):
         """
         add a user awaiting validation
-        If this project inherit permissions add the awaiting users to the parent project.
         """
         if self.forbid_subscriptions:
             return False
-        if self.inherit_members: 
-            return self.parent.add_awaiting_user(user,remove_if_exist)
         else:
             try:
                 member = Member.objects.get(project=self,user=user)
