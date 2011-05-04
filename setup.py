@@ -2,12 +2,14 @@
 
 from setuptools import setup , find_packages
 
+import djity
+
 setup(name='djity',
-    version='0.2',
-    description='A versatile portal for Web applications and projects based on Django',
-    author='Team Djity',
-    author_email='contact@djity.net',
-    url='http://redmine.djity.net/projects/djityportal',
+    version=djity.version,
+    description=djity.description,
+    author=djity.author,
+    author_email=djity.author_email,
+    url=djity.url,
     packages= find_packages(),
     package_data={'djity':[
         'templates/djity/*.html',
