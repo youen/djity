@@ -155,12 +155,24 @@
 	
         <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab ?' %}" class="ui-helper-hidden" >
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-            Tab {{ module_name }}  will be permanently deleted and cannot be recovered. Are you sure?</p>
+			{% blocktrans %}
+			Tab {{ module_name }}  will be permanently deleted and cannot be recovered. Are you sure?"
+			{% endblocktrans %}
+			</p>
         </div>
 		{% else %}
-        <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab ?' %}" class="ui-helper-hidden" >
+        <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab and delete project ?' %}" class="ui-helper-hidden" >
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-			Tab {{ module_name }}  and the project {{ project_name }} will be permanently deleted and cannot be recovered. Are you sure?</p>
+			{% blocktrans %}
+			Tab {{ module_name }} will be permanently deleted and cannot be recovered. Are you sure?"
+			{% endblocktrans %}
+			</p>
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			{% blocktrans %}
+			This is the last tab of the project {{ project_name }}.
+			It will be permanently deleted along with all its data (theme, memberships, etc.) and cannot be recovered. Are you sure?
+			{% endblocktrans %}
+			</p>
         </div>
 		{% endif %}	
 
@@ -184,7 +196,8 @@
 
         <!-- Create project dialog -->
         <div id="create_project_dialog" title="{% trans 'Create project' %}" class="ui-helper-hidden" >
-                <input id="new_project_name" value="" />
+			{% trans "Permanent label" %}:<br/>
+			<input id="new_project_name" value="" />
         </div>
 
 		<!-- project users management dialog -->

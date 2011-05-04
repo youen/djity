@@ -91,11 +91,18 @@ class TemplatePortlet(Portlet):
     def __unicode__(self):
         return _(u"TemplatePortlet: %s") % self.template
 
+def get_portlets(container):
+    """
+    Access all portlets associated to a given container
+    """
+    ctype = ContentType.objects.get_for_model(container)
+    portlets = Portlet.objects.filter(container_type__pk=ctype.id, container_id=container.id)
+    return portlets
+
 def get_portlets_data(container,position,parent_context):
     """
     Build context for all portlets for a container and at a given postion (left, right, etc..)
     """
-    from django.contrib.contenttypes.models import ContentType
     ctype = ContentType.objects.get_for_model(container)
     portlets = Portlet.objects.filter(container_type__pk=ctype.id, container_id=container.id,position=position)
     portlets.order_by('rel_position')

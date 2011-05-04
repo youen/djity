@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 
 from djity.portal.models import SiteRoot
-from djity.portlet.models import TextPortlet
+from djity.portlet.models import Portlet,TextPortlet,get_portlets
 from djity.transmeta import TransMeta
 from djity.utils import has_perm, granted_perms, djreverse
 from djity.utils.inherit import SuperManager
@@ -92,7 +92,15 @@ class Project(models.Model):
             TextPortlet(content="This is a project footer. Edit me !",
                     div_class="footer",container=self,position="bottom",
                     rel_position=0).save()
-            
+           
+    def delete(self):
+        """
+        When deleting a project, delete also all its portlets
+        """
+        for portlet in get_portlets(self):
+            portlet.delete()
+        super(Project,self).delete()
+
     def __unicode__(self):
         return self.label
 
@@ -287,6 +295,14 @@ class Module(models.Model):
 
         super(Module,self).save(*args,**kwargs)
 
+    def delete(self):
+        """
+        When deleting a module, delete also all its portlets
+        """
+        for portlet in get_portlets(self):
+            portlet.delete()
+        super(Module,self).delete()
+    
     def as_leaf_class(self):
         content_type = self.content_type
         model = content_type.model_class()
