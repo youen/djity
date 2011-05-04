@@ -47,7 +47,7 @@ dj.functions.project_subscribe_button = function (){
 		$("#project_subscribe_button")
 			.click(function()
 			{
-					dj.remote('djity.project.project_subscribe',{});
+					dj.remote('djity.project.project_subscribe',{js_target:Document});
 			});
 	}
 	$('#project_buttons').removeClass('ui-helper-hidden');

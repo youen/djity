@@ -27,6 +27,7 @@ class Project(models.Model):
     created_on = models.DateTimeField(auto_now=True)
     is_root = models.BooleanField(default=False)
     inherit_members = models.BooleanField(default=False)
+    forbid_subscriptions = models.BooleanField(default=False)
     parent = models.ForeignKey('self',related_name="children",null=True,default=None) 
     css = models.OneToOneField('style.CSS')
 
@@ -225,6 +226,8 @@ class Project(models.Model):
         add a user awaiting validation
         If this project inherit permissions add the awaiting users to the parent project.
         """
+        if self.forbid_subscriptions:
+            return False
         if self.inherit_members: 
             return self.parent.add_awaiting_user(user,remove_if_exist)
         else:
