@@ -122,7 +122,7 @@ def module_visibility(request,visibility,context=None):
 
 
 @djity_view(perm='manage')
-def save_manage_users(request, js_target, inherit,users=None,context=None):
+def save_manage_users(request,js_target,inherit,forbid,users=None,context=None):
     project = context['project']
     if inherit:
         if project.name == "root":
@@ -131,10 +131,17 @@ def save_manage_users(request, js_target, inherit,users=None,context=None):
             return 
         project.inherit_members = True
         project.save()
-        msg = unicode(_(u'This project inherit members of %s project.'%project.parent.label))
-        js_target.message(msg)
+        js_target.message(_(u'This project inherits members of %s project.'%project.parent.label))
         js_target.close()
         return
+
+    if forbid != project.forbid_subscriptions:
+        project.forbid_subscriptions = forbid
+        project.save()
+        if forbid:
+            js_target.message(_(u'New subscriptions to this project are now forbidden.'))
+        else:
+            js_target.message(_(u'New subscriptions to this project are now allowed.'))
 
     else :
         has_manager = False

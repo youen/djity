@@ -106,7 +106,9 @@
 							<a id="manage_users_button" class="dj-mini-button">{% trans "Manage users" %}{% if awaiting_members > 0 %} ({{awaiting_members}} {% trans "awaiting members" %}){% endif %}</a>
 							<a id="project_style_button" class="dj-mini-button">{% trans "Manage style" %}</a>
 						{% else %}
-							<a id="project_subscribe_button" class="dj-mini-button"></a>
+							{% if not project.forbid_subscriptions %}
+								<a id="project_subscribe_button" class="dj-mini-button"></a>
+							{% endif %}
 						{% endif %}
 
 					</nav>

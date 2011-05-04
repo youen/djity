@@ -6,12 +6,16 @@ dj.widgets.manage_users =
 
 
 
-	init : function(inherit)
+	init : function(inherit,forbid)
 	{
 	   	//inherit permissions
 		if(inherit === undefined ) inherit = false;
 		this.inherit = inherit;
 
+		//forbid subscriptions
+		if(forbid === undefined ) forbid = false;
+		this.forbid = forbid;
+		
 		//init button
 		this.element = $('#manage_users_button')
 			.button(
@@ -52,6 +56,7 @@ dj.widgets.manage_users =
 					dj.remote('djity.project.save_manage_users',
 						{
 						'inherit': dj.widgets.manage_users.inherit,
+						'forbid': dj.widgets.manage_users.forbid,
 						'users': users,
 						'js_target':'dj.widgets.manage_users',
 						});
@@ -72,6 +77,7 @@ dj.widgets.manage_users =
 		
 	
 		this.inherit_toggle(false);
+		this.forbid_toggle(false);
 		this.dialog.html($(table));
 		this.dialog.buttonset();
 		this.dialog.find('label')
@@ -85,6 +91,12 @@ dj.widgets.manage_users =
 			.change(function()
 			{
 				dj.widgets.manage_users.inherit_toggle();
+			});
+
+		this.forbid_element = this.dialog.find('#forbid-permissions')
+			.change(function()
+			{
+				dj.widgets.manage_users.forbid_toggle();
 			});
 
 		this.table.find('th')
@@ -120,6 +132,23 @@ dj.widgets.manage_users =
 		{
 			this.table.show('blind');
 			this.inherit = false;
+		}
+
+	},
+
+	forbid_toggle : function(forbid)
+	{
+		if(forbid === undefined) { forbid = !this.forbid}
+		else{ if(forbid == this.forbid){return}}
+		if(forbid)
+		{
+			this.table.hide('blind');
+			this.forbid = true;
+		}
+		else
+		{
+			this.table.show('blind');
+			this.forbid = false;
 		}
 
 	},
