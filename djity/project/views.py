@@ -54,3 +54,13 @@ def first_tab(request,context):
     return render_to_response('djity/base.html',context)
 
 
+@djity_view()
+def forbidden(request,context):
+    """
+    Forbidden page of the project.
+    """
+    context.message(_("You can't view this page on this project !\nYou can subscribe using the button on the top left corner."))
+    context["module"] = {'label':_('subscribe')}
+    return render_to_response('djity/base.html',context)
+
+

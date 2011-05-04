@@ -13,8 +13,9 @@ redirected_url = patterns('',
         url(r'^(?P<path>[-\w]+(/[-\w]*)?)','djity.portal.views.redirect_root',name='redirect_root'),
 )
 
-account_urls = patterns('',
-        url(r'^','djity.project.views.login',name='login'),
+portal_urls = patterns('',
+        url(r'^login/*$','djity.project.views.login',name='login'),
+        url(r'^forbidden/*$','djity.project.views.forbidden',name='forbidden'),
 )
 
 urlpatterns = patterns('',
@@ -32,26 +33,10 @@ urlpatterns += patterns('',
     # project page redirect to the first tab
     url(r'^(?P<project_name>[-\w]+)/*$','djity.project.views.first_tab',name='first_tab'),
     # login view as a pseudo application
-    (r'^(?P<project_name>[-\w]+)/login/*$',include(account_urls)),
+    (r'^(?P<project_name>[-\w]+)/',include(portal_urls)),
     # all other urls are handled by djity.modules.simple_page
-    (r'^(?P<project_name>[-\w]+)/+',include(simplepage_urls)),
     (r'^(?P<project_name>[-\w]+)/css/',include(css_urls)),
-    (r'^(?P<project_name>[-\w]+)/login/',include(account_urls)),
+    (r'^(?P<project_name>[-\w]+)/+',include(simplepage_urls)),
 )
-
-urlpatterns += patterns('',
-
-    # Root project urls
-    (r'^root/css/',include(css_urls),{'project_name':'root'}),
-    (r'^css/',include(css_urls),{'project_name':'root'}),
-    (r'^login/',include(account_urls),{'project_name':'root'}),
-    (r'^/*$','djity.project.views.first_tab',{'project_name':'root'}),
-)
-
-for app in settings.DJITY_APPS:
-    app_url = import_module('%s.urls'%app)
-    urlpatterns += patterns('',
-            (r'^%s/*'%app_url.prefix,include(app_url),{'project_name':'root'}),
-    )
 
 
