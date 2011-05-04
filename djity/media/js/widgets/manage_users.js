@@ -86,6 +86,7 @@ dj.widgets.manage_users =
 
 
 		this.table = this.dialog.find('table');
+		this.inherit_members = this.dialog.find('#inherit-members');
 
 		this.inherit_element = this.dialog.find('#inherit-permissions')
 			.change(function()
@@ -128,10 +129,12 @@ dj.widgets.manage_users =
 			if(inherit)
 			{
 				this.inherit = true;
+				this.inherit_members.show();
 			}
 			else
 			{
 				this.inherit = false;
+				this.inherit_members.hide();
 			}
 
 		}
@@ -141,11 +144,13 @@ dj.widgets.manage_users =
 			if(inherit)
 			{
 				this.inherit = true;
+				this.inherit_members.show('blind');
 				this.dialog.find("#inherit-permissions").attr('checked',true);
 			}
 			else
 			{
 				this.inherit = false;
+				this.inherit_members.hide('blind');
 				this.dialog.find("#inherit-permissions").attr('checked',false);
 			}
 			dj.remote('djity.project.save_inherit_permissions',

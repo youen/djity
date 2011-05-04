@@ -203,6 +203,7 @@ def get_manage_users(request, js_target,context=None):
     project = context['project']
     context['roles'] = filter(lambda r:r[0] != 0 ,settings.ROLES_DISPLAY)
     context['members'] = project.members.all()
+    context['inherit_members'] = map(lambda m:(m.user,settings.ROLES_DISPLAY[m.role][1]),project.get_members(inherit=True))
     context['users'] = [m.user for m in context['members']] 
     render = render_to_string("djity/project/manage_users.html",context)
     js_target.create_table(render)

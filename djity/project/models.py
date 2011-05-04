@@ -115,12 +115,12 @@ class Project(models.Model):
             parents = []
         return parents
 
-    def get_members(self):
+    def get_members(self,inherit=False):
         """
         Return the members of this project.
-        If this project inherit permissions return the members for the parent project plus the members of this project.
+        If this project inherit permissions or `inherit` is True then return the members for the parent project plus the members of this project.
         """
-        if self.inherit_members: 
+        if self.parent != None and (inherit or self.inherit_members): 
             users = {}
             for member in self.parent.get_members():
                 users[member.user] = member

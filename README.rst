@@ -16,7 +16,7 @@ General info
 ============
 
 Authors:
- * Youen Péron (youen.peron<at>djity.net)
+ * Youen Péron (youen.peron<at>gmail.com)
  * Alban Mouton (alban.mouton<at>djity.net)
 
 License: GPL v3
