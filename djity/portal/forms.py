@@ -24,7 +24,7 @@ class ProfileForm(forms.Form):
             password1 = cleaned_data['password1']
             password2 = cleaned_data['password2']
             if password1 != password2:
-                msg = _("Passwords don't match")
+                msg = _("Passwords don't match.")
                 self._errors['password1'] = self.error_class([msg])
                 del cleaned_data['password1']
                 del cleaned_data['password2']

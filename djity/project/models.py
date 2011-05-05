@@ -91,7 +91,7 @@ class Project(models.Model):
             self.init_modules()
             
             #add a footer portlet
-            TextPortlet(content=sanitize("""This is a project footer. Edit me! <br><div style="text-align:right">powered by&nbsp;<a href="'http://djity.net" style="text-align:right">Djity</a></div>"""),
+            TextPortlet(content=sanitize("""This is a project footer. Edit me! <br><div style="text-align:right">powered by&nbsp;<a href="http://djity.net" style="text-align:right">Djity</a></div>"""),
                     div_class="footer",container=self,position="bottom",
                     rel_position=0).save()
            

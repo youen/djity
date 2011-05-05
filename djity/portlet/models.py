@@ -68,7 +68,7 @@ class TextPortlet(Portlet):
         return render_to_string("djity/portlet/text_portlet.html",context)
 
     def __unicode__(self):
-        return _(u"TextPortlet: %s")% self.content
+        return u"TextPortlet: %s" % self.content
 
     class Meta:
         translate = ('content',)
@@ -89,7 +89,7 @@ class TemplatePortlet(Portlet):
         return render_to_string(self.template,context)
     
     def __unicode__(self):
-        return _(u"TemplatePortlet: %s") % self.template
+        return u"TemplatePortlet: %s" % self.template
 
 def get_portlets(container):
     """

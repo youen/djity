@@ -28,8 +28,8 @@ dj.widgets.login =
 				show:'blind',
 				buttons:
 				{
-					gettext('Login'):function(){dj.widgets.login.login();},
-					gettext('Create an account'):function()
+					'Login':function(){dj.widgets.login.login();},
+					'Create an account':function()
 						{
 							dj.widgets.login.close();
 							dj.widgets.register.open();

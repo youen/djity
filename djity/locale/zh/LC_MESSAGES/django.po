@@ -8,110 +8,64 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-05 15:06+0200\n"
+"POT-Creation-Date: 2011-05-05 17:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
 #: portal/ajax.py:19
-msgid "You are now disconnected"
+msgid "You are now disconnected."
 msgstr ""
 
 #: portal/ajax.py:41
 #, python-format
-msgid "Your account is created ! your are connected as %s"
+msgid "Your account is created ! your are connected as %s."
 msgstr ""
 
-#: portal/ajax.py:43
-msgid "We are creating your account... please wait"
+#: portal/ajax.py:42
+msgid "We are creating your account... please wait."
 msgstr ""
 
-#: portal/ajax.py:83
-msgid "Your password is changed"
+#: portal/ajax.py:81
+msgid "Your password has been changed."
+msgstr ""
+
+#: portal/ajax.py:96
+msgid "Authentication failed."
 msgstr ""
 
 #: portal/ajax.py:99
-msgid "Authentication failed"
+msgid "This account is disabled."
 msgstr ""
 
 #: portal/ajax.py:102
-msgid "This account is disabled"
+msgid "You were successfully connected !"
 msgstr ""
 
-#: portal/ajax.py:105
-msgid "successfully connected"
-msgstr ""
-
-#: portal/ajax.py:107
-msgid "connecting... please wait"
+#: portal/ajax.py:103
+msgid "Connecting... please wait."
 msgstr ""
 
 #: portal/forms.py:27 portal/forms.py:111
-msgid "Passwords don't match"
+msgid "Passwords don't match."
 msgstr ""
 
 #: portal/forms.py:88
 #, python-format
-msgid "Username %s is not valid"
+msgid "Username %s is not valid."
 msgstr ""
 
 #: portal/forms.py:100
 #, python-format
-msgid "Username %s is not avaible"
-msgstr ""
-
-#: portal/models.py:19
-msgid "home"
+msgid "Username %s is not avaible."
 msgstr ""
 
 #: portlet/ajax.py:23
-msgid "Change in portlet saved"
-msgstr ""
-
-#: portlet/models.py:25
-msgid "position"
-msgstr ""
-
-#: portlet/models.py:31
-msgid "relative position"
-msgstr ""
-
-#: portlet/models.py:33
-msgid "is active"
-msgstr ""
-
-#: portlet/models.py:34
-msgid "if disabled this portlet won't be displayed in the container"
-msgstr ""
-
-#: portlet/models.py:36
-msgid "style"
-msgstr ""
-
-#: portlet/models.py:63
-msgid "content"
-msgstr ""
-
-#: portlet/models.py:71
-#, python-format
-msgid "TextPortlet: %s"
-msgstr ""
-
-#: portlet/models.py:84
-msgid "template"
-msgstr ""
-
-#: portlet/models.py:85
-msgid "onload"
-msgstr ""
-
-#: portlet/models.py:92
-#, python-format
-msgid "TemplatePortlet: %s"
+msgid "Change in portlet saved."
 msgstr ""
 
 #: project/ajax.py:35
@@ -119,34 +73,36 @@ msgid "Project title saved."
 msgstr ""
 
 #: project/ajax.py:79
+#, python-format
 msgid ""
-"Tab creation failed. No table for application, contact the administrator."
+"Tab creation failed. There is no table %s in the database, contact the "
+"administrator."
 msgstr ""
 
 #: project/ajax.py:112
 #, python-format
-msgid "Your new project %s is created !"
+msgid "Your new project %s was created !"
 msgstr ""
 
 #: project/ajax.py:143
 #, python-format
-msgid "Member %s is no longer a member of this project."
+msgid "User %s is no longer a member of this project."
 msgstr ""
 
 #: project/ajax.py:153
-msgid "Members of this project updated"
+msgid "Members of this project updated."
 msgstr ""
 
 #: project/ajax.py:158
-msgid "You can't change yourself your manager role."
+msgid "You can't remove yourself from the managers of the current project."
 msgstr ""
 
 #: project/ajax.py:162
-msgid "At least one manager is required"
+msgid "At least one manager is required."
 msgstr ""
 
 #: project/ajax.py:174
-msgid "Root project can't inherit members"
+msgid "Root project can't inherit members."
 msgstr ""
 
 #: project/ajax.py:178
@@ -156,7 +112,7 @@ msgstr ""
 
 #: project/ajax.py:180
 #, python-format
-msgid "This project doesn't inherits members of %s project."
+msgid "This project doesn't inherit members of %s project."
 msgstr ""
 
 #: project/ajax.py:194
@@ -177,24 +133,8 @@ msgstr ""
 msgid "You are no longer a member of this project."
 msgstr ""
 
-#: project/models.py:283
-msgid "Module name"
-msgstr ""
-
-#: project/models.py:286
-msgid "Label"
-msgstr ""
-
-#: project/models.py:287
-msgid "the label view in tabs"
-msgstr ""
-
-#: project/models.py:291
-msgid "Module"
-msgstr ""
-
-#: project/views.py:38
-msgid "login"
+#: project/views.py:38 templates/djity/base.html:147
+msgid "Login"
 msgstr ""
 
 #: project/views.py:52
@@ -204,7 +144,7 @@ msgid ""
 msgstr ""
 
 #: project/views.py:53 project/views.py:63
-msgid "subscribe"
+msgid "Subscribe"
 msgstr ""
 
 #: project/views.py:62
@@ -214,7 +154,7 @@ msgid ""
 msgstr ""
 
 #: simplepage/ajax.py:21
-msgid "Change in page saved"
+msgid "Change in page saved."
 msgstr ""
 
 #: simplepage/views.py:32
@@ -222,177 +162,131 @@ msgid "The current page is empty, you can write some content."
 msgstr ""
 
 #: style/ajax.py:27
-msgid "The style of the project has been saved"
+msgid "The style of the project has been saved."
 msgstr ""
 
 #: style/ajax.py:42
-msgid "The style of the project has been set to default"
+msgid "The style of the project has been set to default."
 msgstr ""
 
 #: style/ajax.py:53
 #, python-format
 msgid ""
-"Style of the current project has been overwritten by the style of its parent "
-"\"%s\""
+"The style of the current project has been overwritten by the style of the "
+"project %s."
 msgstr ""
 
 #: style/ajax.py:56
-msgid "The current project is root and cannot inherit its style"
+msgid "The current project is root and cannot inherit its style."
 msgstr ""
 
 #: templates/djity/base.html:82
-msgid "<p><strong>Warning</strong></p>"
+msgid "Warning"
 msgstr ""
 
 #: templates/djity/base.html:107
 msgid "New project"
 msgstr ""
 
-#: templates/djity/base.html:108
+#: templates/djity/base.html:109 templates/djity/base.html.py:200
 msgid "Manage users"
 msgstr ""
 
-#: templates/djity/base.html:108
-msgid "awaiting members"
+#: templates/djity/base.html:109
+msgid "Awaiting members"
 msgstr ""
 
-#: templates/djity/base.html:109
+#: templates/djity/base.html:110
 msgid "Manage style"
 msgstr ""
 
-#: templates/djity/base.html:134
+#: templates/djity/base.html:135
 msgid "Add new tab"
 msgstr ""
 
-#: templates/djity/base.html:146
-msgid "Login"
+#: templates/djity/base.html:149
+msgid "User"
 msgstr ""
 
-#: templates/djity/base.html:148
-msgid "user"
+#: templates/djity/base.html:151 templates/djity/portal/profile_form.html:15
+#: templates/djity/portal/registration_form.html:29
+msgid "Password"
 msgstr ""
 
-#: templates/djity/base.html:150
-msgid "password"
-msgstr ""
-
-#: templates/djity/base.html:158
+#: templates/djity/base.html:159
 msgid "Remove tab ?"
 msgstr ""
 
-#: templates/djity/base.html:160
+#: templates/djity/base.html:161 templates/djity/base.html.py:167
 #, python-format
 msgid ""
-"\n"
-"\t\t\tTab %(module_name)s  will be permanently deleted and cannot be "
-"recovered. Are you sure?\"\n"
-"\t\t\t"
+"Tab %(module_name)s will be permanently deleted and cannot be recovered. Are "
+"you sure?"
 msgstr ""
 
-#: templates/djity/base.html:166
+#: templates/djity/base.html:165
 msgid "Remove tab and delete project ?"
 msgstr ""
 
-#: templates/djity/base.html:168
+#: templates/djity/base.html:170
 #, python-format
 msgid ""
-"\n"
-"\t\t\tTab %(module_name)s will be permanently deleted and cannot be "
-"recovered. Are you sure?\"\n"
-"\t\t\t"
+"This is the last tab of the project %(project_name)s.\tIt will be "
+"permanently deleted along with all its data (theme, memberships, etc.) and "
+"cannot be recovered. Are you sure?"
 msgstr ""
 
-#: templates/djity/base.html:173
-#, python-format
-msgid ""
-"\n"
-"\t\t\tThis is the last tab of the project %(project_name)s.\n"
-"\t\t\tIt will be permanently deleted along with all its data (theme, "
-"memberships, etc.) and cannot be recovered. Are you sure?\n"
-"\t\t\t"
-msgstr ""
-
-#: templates/djity/base.html:182
+#: templates/djity/base.html:176
 msgid "Edit tab parameters"
 msgstr ""
 
-#: templates/djity/base.html:192
+#: templates/djity/base.html:186
 msgid "Create new Tab"
 msgstr ""
 
-#: templates/djity/base.html:200
+#: templates/djity/base.html:194
 msgid "Create project"
 msgstr ""
 
-#: templates/djity/base.html:201
+#: templates/djity/base.html:195
 msgid "Permanent label"
 msgstr ""
 
-#: templates/djity/base.html:206
-msgid "Users Manager"
-msgstr ""
-
-#: templates/djity/base.html:216
+#: templates/djity/base.html:210
 msgid "handle"
 msgstr ""
 
-#: templates/djity/base.html:220
+#: templates/djity/base.html:214
 msgid "Your browser doesn't support iframes"
 msgstr ""
 
-#: templates/djity/base.html:226
+#: templates/djity/base.html:220
 msgid "Connection needed"
 msgstr ""
 
-#: templates/djity/base.html:227
+#: templates/djity/base.html:221
 msgid "You need to be connected to request subscrition."
 msgstr ""
 
-#: templates/djity/portal/login.html:11
-msgid "Your username and password didn't match. Please try again."
-msgstr ""
-
-#: templates/djity/portal/login.html:16
-msgid "You are already logged in as"
-msgstr ""
-
 #: templates/djity/portal/profile_form.html:6
-#: templates/djity/portal/profile_page.html:9
-#: templates/djity/portal/registration_form.html:6
-#: templates/djity/portal/registration_page.html:9
 msgid "Please correct the errors below:"
 msgstr ""
 
-#: templates/djity/portal/profile_form.html:15
-#: templates/djity/portal/profile_page.html:21
-#: templates/djity/portal/registration_form.html:29
-#: templates/djity/portal/registration_page.html:35
-msgid "Password:"
-msgstr ""
-
 #: templates/djity/portal/profile_form.html:22
-#: templates/djity/portal/profile_page.html:28
 #: templates/djity/portal/registration_form.html:36
-#: templates/djity/portal/registration_page.html:42
-msgid "Password (type again to catch typos):"
+msgid "Password (type again to catch typos)"
 msgstr ""
 
-#: templates/djity/portal/profile_page.html:31
-msgid "Change password"
+#: templates/djity/portal/registration_form.html:6
+msgid "Please correct the errors below"
 msgstr ""
 
 #: templates/djity/portal/registration_form.html:15
-#: templates/djity/portal/registration_page.html:21
-msgid "Username:"
+msgid "Username"
 msgstr ""
 
 #: templates/djity/portal/registration_form.html:22
-#: templates/djity/portal/registration_page.html:28
-msgid "Email address:"
-msgstr ""
-
-#: templates/djity/portal/registration_page.html:45
-msgid "Sign up !"
+msgid "Email address"
 msgstr ""
 
 #: templates/djity/project/manage_users.html:23
@@ -400,11 +294,11 @@ msgid "Deleted"
 msgstr ""
 
 #: templates/djity/project/manage_users.html:34
-msgid "Inherit Permissions"
+msgid "Inherit permissions"
 msgstr ""
 
 #: templates/djity/project/manage_users.html:43
-msgid "Forbid Subscriptions"
+msgid "Forbid subscriptions"
 msgstr ""
 
 #: templates/djity/project/paginator.html:24
@@ -416,11 +310,11 @@ msgid "Next"
 msgstr ""
 
 #: templates/djity/project/tab.html:8
-msgid "Remove Tab"
+msgid "Remove tab"
 msgstr ""
 
 #: templates/djity/project/tab.html:9
-msgid "Configure Tab"
+msgid "Configure\ttab"
 msgstr ""
 
 #: templates/djity/style/themeroller.html:28

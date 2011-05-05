@@ -79,7 +79,7 @@
 		<!--[if lte IE 7]>
 			<link rel="stylesheet" href="/wp-content/themes/2010/styles-ie6.css" />
 			<div class="alert-ie6" style="padding: 1em; background: #900; font-size: 1.1em; color: #fff;">
-				{% trans '<p><strong>Warning</strong></p>' %}
+				<p><strong>{% trans 'Warning' %}</p></strong>
 			</div>
 		<![endif]-->
 
@@ -105,7 +105,8 @@
 					<nav id="project_buttons" class="ui-helper-hidden">
                         {% if perm.manage %}
 							<a id="create_project_button" class="dj-mini-button">{% trans "New project" %}</a>
-							<a id="manage_users_button" class="dj-mini-button">{% trans "Manage users" %}{% if awaiting_members > 0 %} ({{awaiting_members}} {% trans "awaiting members" %}){% endif %}</a>
+							<a id="manage_users_button"
+								class="dj-mini-button">{% trans "Manage users" %}{% if awaiting_members > 0 %} {{awaiting_members}} {% trans "Awaiting members" %}){% endif %}</a>
 							<a id="project_style_button" class="dj-mini-button">{% trans "Manage style" %}</a>
 						{% else %}
 							{% if not project.forbid_subscriptions %}
@@ -145,9 +146,9 @@
 
 		<div id="login_dialog" class="ui-helper-hidden" title="{% trans 'Login' %}">
 			<form method="post" action="." class="">
-				<label for="login_username">{% trans "user" %}</label><br/>
+				<label for="login_username">{% trans "User" %}</label><br/>
 				<input id="login_username" name="Username" type="text"><br/>
-				<label for="login_password">{% trans "password" %}</label><br/>
+				<label for="login_password">{% trans "Password" %}</label><br/>
 				<input id="login_password" name="Password" type="password"><br/>
 			</form>
 		</div>
@@ -157,23 +158,16 @@
 	
         <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab ?' %}" class="ui-helper-hidden" >
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-			{% blocktrans %}
-			Tab {{ module_name }}  will be permanently deleted and cannot be recovered. Are you sure?"
-			{% endblocktrans %}
+			{% blocktrans %}Tab {{ module_name }} will be permanently deleted and cannot be recovered. Are you sure?{% endblocktrans %}
 			</p>
         </div>
 		{% else %}
         <div id="{{ module_name }}-delete"  title="{% trans 'Remove tab and delete project ?' %}" class="ui-helper-hidden" >
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-			{% blocktrans %}
-			Tab {{ module_name }} will be permanently deleted and cannot be recovered. Are you sure?"
-			{% endblocktrans %}
+			{% blocktrans %}Tab {{ module_name }} will be permanently deleted and cannot be recovered. Are you sure?{% endblocktrans %}
 			</p>
 			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-			{% blocktrans %}
-			This is the last tab of the project {{ project_name }}.
-			It will be permanently deleted along with all its data (theme, memberships, etc.) and cannot be recovered. Are you sure?
-			{% endblocktrans %}
+			{% blocktrans %}This is the last tab of the project {{ project_name }}.	It will be permanently deleted along with all its data (theme, memberships, etc.) and cannot be recovered. Are you sure?{% endblocktrans %}
 			</p>
         </div>
 		{% endif %}	
@@ -203,7 +197,7 @@
         </div>
 
 		<!-- project users management dialog -->
-		<div id="manage_users_dialog" class="ui-helper-hidden" title="{% trans 'Users Manager' %}">
+		<div id="manage_users_dialog" class="ui-helper-hidden" title="{% trans 'Manage users' %}">
 			<p id="manage_users_dialog_error"></p>
 			<div id='manage_users_dialog_table'>
 			</div>

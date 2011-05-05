@@ -78,7 +78,7 @@ def save_profile(request,js_target,password1,password2,context=None):
         user = context['user']
         user.set_password(password1) 
         user.save()
-        js_target.message(_('Your password is changed.'))
+        js_target.message(_('Your password has been changed.'))
         js_target.close()
     
     else:
@@ -101,7 +101,6 @@ def login(request,js_target, username, password, context):
     django_login(request, user)
     js_target.message(_('You were successfully connected !'),post=True)
     js_target.message(_('Connecting... please wait.'))
-    js_target.message(msg)
     js_target.close()
     js_target.next()
 

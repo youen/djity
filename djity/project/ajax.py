@@ -76,7 +76,7 @@ def add_module(request, js_target, tab_name, module_type, context=None):
 
     tables = [module_type.lower()+'_'+module_type.lower(),'djity_'+module_type.lower()+'_'+module_type.lower()]
     if not db_table_exists(tables):
-        js_target.message(_("Tab creation failed. No table for application, contact the administrator." % tables))
+        js_target.message(_("Tab creation failed. There is no table %s in the database, contact the administrator." % module_type))
         return
 
     try:
@@ -109,7 +109,7 @@ def create_project(request,js_target,name,context=None):
     parent = context['project']
     child = Project(label=name,parent=parent)
     child.save(manager=context['user'])
-    msg = _('Your new project %s is created !'%name)
+    msg = _('Your new project %s was created !'%name)
     js_target.message(msg, post=True)
     js_target.redirect(child.djity_url())
 register('create_project')
@@ -140,7 +140,7 @@ def save_manage_users(request,js_target,inherit,forbid,users=None,context=None):
     if has_manager :
         for deleted_member in deleted_members:
             deleted_member.delete()
-            msg = _('Member %s is no longer a member of this project.'%user)
+            msg = _('User %s is no longer a member of this project.'%user)
             js_target.message(msg)
             
         awaiting_members = 0
@@ -155,7 +155,7 @@ def save_manage_users(request,js_target,inherit,forbid,users=None,context=None):
         js_target.close(awaiting_members)
         
     elif context['user'].username == user and role != settings.MANAGER:
-        msg = _("You can't remove yourself from the managers.")
+        msg = _("You can't remove yourself from the managers of the current project.")
         js_target.message(msg)
         
     else:
@@ -177,7 +177,7 @@ def save_inherit_permissions(request, js_target,inherit,context=None):
             return 
         js_target.message(_(u'This project inherits members of %s project.'%project.parent.label))
     else:
-        js_target.message(_(u"This project doesn't inherits members of %s project."%project.parent.label))
+        js_target.message(_(u"This project doesn't inherit members of %s project."%project.parent.label))
 
     project.inherit_members = inherit
     project.save()

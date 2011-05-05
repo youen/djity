@@ -35,7 +35,7 @@ def login(request,context):
     context['next_page'] = request.GET['next']
     context['onload'] = "dj.widgets.login.open();"
     context['no_right_tabs'] = True
-    context["module"] = {'label':_('login')}
+    context["module"] = {'label':_('Login')}
     return render_to_response('djity/base.html',context)
 
 
@@ -50,7 +50,7 @@ def first_tab(request,context):
     if not context['user'].is_authenticated():
         return HttpResponseRedirect("%s?%s=%s"%(djreverse('login',context),REDIRECT_FIELD_NAME,context['path']))
     context.message(_("You can't view any page on this project !\nYou can subscribe using the button on the top left corner."))
-    context["module"] = {'label':_('subscribe')}
+    context["module"] = {'label':_('Subscribe')}
     return render_to_response('djity/base.html',context)
 
 
@@ -60,7 +60,7 @@ def forbidden(request,context):
     Forbidden page of the project.
     """
     context.message(_("You can't view this page on this project !\nYou can subscribe using the button on the top left corner."))
-    context["module"] = {'label':_('subscribe')}
+    context["module"] = {'label':_('Subscribe')}
     return render_to_response('djity/base.html',context)
 
 
