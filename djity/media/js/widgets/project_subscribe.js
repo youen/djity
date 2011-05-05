@@ -16,14 +16,14 @@ dj.functions.project_subscribe_button = function (){
 	switch(dj.context.role){
 		// Awaiting
 		case 1:
-			button_label = "Cancel subscription";
+			button_label = gettext("Cancel subscription");
 			break;
 		// Anonymous
 		case 0:
-			button_label = "Subscribe";
+			button_label = gettext("Subscribe");
 			break;
 		default:
-			button_label = "Unsubscribe";
+			button_label = gettext("Unsubscribe");
 	}
 		
 	$("#project_subscribe_button")

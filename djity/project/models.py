@@ -280,15 +280,13 @@ class Module(models.Model):
     content_type = models.ForeignKey(ContentType,editable=False,null=True)
     objects = SuperManager()
 
-    name =  models.SlugField(_('Module name'),max_length=50)
+    name =  models.SlugField('Module name',max_length=50)
     project = models.ForeignKey('Project', related_name='modules')
     tab_position = models.IntegerField('Tab position')
-    label = models.CharField(_('Label'),max_length=200,
-                help_text = _('the label view in tabs')
+    label = models.CharField('Label',max_length=200,
+                help_text = 'the label view in tabs'
             )
     status = models.IntegerField(default=settings.DRAFT)
-
-    module_label = _('Module')
 
     class Meta:
         translate = ('label',)

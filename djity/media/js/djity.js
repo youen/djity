@@ -210,41 +210,6 @@ function paginator() {
 
 }
 
-function init_tag(){
-	$('.tag').box({
-			closeable:dj.context.perm.manage,
-			icon: 'ui-icon-tag',
-			state: 'ui-state-default',
-			close: function (){
-				eval(this.id+'_callback')(this.id);
-			}
-	});
-	$(".new_tag")
-		.autocomplete({
-			source:["youen","lixia","alban"],
-			select:function(event,ui){
-			$('<span class="tag"><p><a>' + ui.item.value + '</a></p></span>')
-				.box({
-					closeable:dj.context.perm.manage,
-					icon: 'ui-icon-tag',
-					state: '',
-					effect:'',
-				})
-				.insertBefore(this);
-				
-				$(this).val('new tag');
-				this.select();
-				// stop event ! http://stackoverflow.com/questions/2561903/clear-form-field-after-select-for-jquery-ui-autocomplete
-				return false; 
-			}
-		})
-		.focus(function(){
-			// Select input field contents
-			this.select();
-		});
-	
-}
-
 /* Define tools function  */
 
 dj.message = function(msg) {

@@ -33,7 +33,7 @@ $.widget("ui.editable",{
 			
 			doc.attr('contentEditable',true);
 			
-		    $('<button  title="save">save</button>')
+		    $('<button title="'+gettext('save')+'">'+gettext('save')+'</button>')
 				.button({
 					icons:{
 						'primary':''
@@ -47,7 +47,7 @@ $.widget("ui.editable",{
 				.appendTo(editorBox);
 
 
-			$('<button  title="Rich Edit">Riche Edit</button>')
+			$('<button  title="'+gettext('Rich Edit')+'">'+gettext('Rich Edit')+'</button>')
 				.button({
 					icons:{
 						'primary':''
@@ -60,7 +60,7 @@ $.widget("ui.editable",{
 				.click(	function (event){self.editor();})
 				.appendTo(editorBox);
 
-			$('<button  title="Cancel">Cancel</button>')
+			$('<button  title="'+gettext('Cancel')+'">'+gettext('Cancel')+'</button>')
 				.button({
 					icons:{
 						'primary':''

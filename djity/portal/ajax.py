@@ -16,7 +16,7 @@ dajax_register = lambda name:dajaxice_functions.register_function('djity.portal.
 def logout(request,context=None):
     django_logout(request)
     dajax = Dajax()
-    msg = _(u'You are now disconnected')
+    msg = _('You are now disconnected.')
     messages.add_message(request, messages.INFO, unicode(msg) )
     dajax.script('location.reload()')
     return dajax.json()
@@ -38,10 +38,8 @@ def register(request,js_target,username,email,password1,password2,context=None):
         
         if user is not None:
             django_login(request,user)
-            msg = unicode(_(u'Your account is created ! your are connected as %s'%username))
-            messages.add_message(request, messages.INFO, unicode(msg) )
-            msg = unicode(_(u'We are creating your account... please wait'))
-            js_target.message(msg)
+            js_target.message(_('Your account is created ! your are connected as %s.'%username),post=True)
+            js_target.message(_('We are creating your account... please wait.'))
             js_target.close()
             js_target.reload()
 
@@ -80,8 +78,7 @@ def save_profile(request,js_target,password1,password2,context=None):
         user = context['user']
         user.set_password(password1) 
         user.save()
-        msg = unicode(_('Your password is changed'))
-        js_target.message(msg)
+        js_target.message(_('Your password is changed.'))
         js_target.close()
     
     else:
@@ -96,16 +93,15 @@ dajax_register('save_profile')
 def login(request,js_target, username, password, context):
     user = authenticate(username=username,password=password)
     if user is None:
-        js_target.message(unicode(_("Authentication failed")))
+        js_target.message(_("Authentication failed."))
         return 
     if not user.is_active:
-        js_target.message(unicode(_("This account is disabled")))
+        js_target.message(_("This account is disabled."))
         return 
     django_login(request, user)
-    msg = _(u'successfully connected')
-    messages.add_message(request, messages.INFO, unicode(msg) )
-    msg = _(u'connecting... please wait')
-    js_target.message(unicode(msg))
+    js_target.message(_('You were successfully connected !'),post=True)
+    js_target.message(_('Connecting... please wait.'))
+    js_target.message(msg)
     js_target.close()
     js_target.next()
 

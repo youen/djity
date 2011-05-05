@@ -22,18 +22,18 @@ class Portlet(models.Model):
     container = generic.GenericForeignKey(ct_field='container_type',fk_field='container_id')
 
     # position of the portlet in the template, can be 'top','bottom','left' or 'right'
-    position = models.CharField(_("position"),max_length=200)
+    position = models.CharField("position",max_length=200)
     # position relative to other portlets that have same position value
     # If a portlet has a lower value than another one it will be displayed on top
     # If a portlet has a value of -1 it will always be on top
     # If a portlet has a value of 10 it will always be at the bottom
     # Other values should always be positive
-    rel_position = models.IntegerField(_("relative position"),default=1)
+    rel_position = models.IntegerField("relative position",default=1)
     # should the portlet be displayed
-    is_active = models.BooleanField(_('is active'), default=True,
-        help_text=_("if disabled this portlet won't be displayed in the container"))
+    is_active = models.BooleanField('is active', default=True,
+        help_text="if disabled this portlet won't be displayed in the container")
 
-    div_class = models.CharField(_("style"),max_length=200,default="dj-editable ui-widget ui-widget-content ui-corner-all")
+    div_class = models.CharField("style",max_length=200,default="dj-editable ui-widget ui-widget-content ui-corner-all")
     
     onload = ""
     media = set()
@@ -60,7 +60,7 @@ class TextPortlet(Portlet):
     
     objects = SuperManager()
 
-    content = models.TextField(_("content"))
+    content = models.TextField("content")
 
 
     def render(self,context):
@@ -81,8 +81,8 @@ class TemplatePortlet(Portlet):
     """
     objects = SuperManager()
 
-    template = models.CharField(_("template"),max_length=200)
-    onload = models.CharField(_("onload"),max_length=200,default="")
+    template = models.CharField("template",max_length=200)
+    onload = models.CharField("onload",max_length=200,default="")
 
     def render(self,context):
         context["portlet"] = self

@@ -20,6 +20,6 @@ def save_text_portlet(request,js_target,div_id,html,context=None):
     if tp.content != html :
         tp.content = html
         tp.save()
-        js_target.message(_('Change in portlet saved'))
+        js_target.message(_('Change in portlet saved.'))
 
 register('save_text_portlet')
