@@ -1,3 +1,4 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 from django.conf.urls.defaults import *
 
 from djity.simplepage.urls import urlpatterns as simplepage_urls
@@ -23,7 +24,6 @@ urlpatterns = patterns('',
     (r'^(?P<project_name>[-\w]+)/',include(portal_urls)),
     # all other urls are handled by djity.modules.simple_page
     (r'^(?P<project_name>[-\w]+)/css/',include(css_urls)),
-    (r'^(?P<project_name>[-\w]+)/+',include(simplepage_urls)),
 )
 
 #import urls from djity applications
@@ -35,5 +35,6 @@ for app in settings.DJITY_APPS:
 
 #redirect to the root project
 urlpatterns += patterns('',
+        (r'^(?P<project_name>[-\w]+)/+',include(simplepage_urls)),
         url(r'^(?P<path>[-\w]*)','djity.portal.views.redirect_root',name='redirect_root'),
 )

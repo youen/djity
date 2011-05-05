@@ -10,6 +10,7 @@ This guide is write for programers wishing improve Djity itself.
 
 	documention.rst	
 	environment.rst
+	localization.rst
 	communication.rst
 	role.rst
 	conventions.rst

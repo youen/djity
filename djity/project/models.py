@@ -1,3 +1,4 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 from django.utils.translation import ugettext_lazy as _ 
 from django.db import models
 from django.contrib.auth.models import User
@@ -10,6 +11,7 @@ from djity.portal.models import SiteRoot
 from djity.portlet.models import Portlet,TextPortlet,get_portlets
 from djity.transmeta import TransMeta
 from djity.utils import has_perm, granted_perms, djreverse
+from djity.utils.security import sanitize
 from djity.utils.inherit import SuperManager
 
 
@@ -89,7 +91,7 @@ class Project(models.Model):
             self.init_modules()
             
             #add a footer portlet
-            TextPortlet(content="This is a project footer. Edit me !",
+            TextPortlet(content=sanitize("""This is a project footer. Edit me! <br><div style="text-align:right">powered by&nbsp;<a href="'http://djity.net" style="text-align:right">Djity</a></div>"""),
                     div_class="footer",container=self,position="bottom",
                     rel_position=0).save()
            
@@ -214,7 +216,7 @@ class Project(models.Model):
         # get the awaiting memebea
         context['awaiting_members'] = self.count_awaiting_members()
 
-    def djity_url(self):
+    def djity_url(self,context=None):
         """
         return the url of this project
         """

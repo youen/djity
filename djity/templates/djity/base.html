@@ -9,6 +9,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
 		<title>{% block head_title %}{{module.label|capfirst}} - {{project.label|capfirst}}{% endblock %}</title>
+		{# Links to the favicon #}
+		<link rel="icon" type="image/png" href="{{ MEDIA_URL }}/djity/images/djity_small_green.png" />
 
 		{# Links to needed CSS files, ui_css and project_css are dynamic and depend on the current project  #}
 		<link id="ui_css" class="editable_css" rel="stylesheet" type="text/css" href="{% url ui_css project_name=project_name%}"/>
@@ -87,14 +89,14 @@
             <div id="project_left1">
 				{% ifnotequal project.name "root" %}
                     <div id="parent_projects">
-						{% for parent in parent_projects %}  <a href="/{{LANGUAGE_CODE}}/{{ parent.name }}">{{ parent }}</a>{% endfor %}
+						{% for parent in parent_projects %}  <a href="{% djiurl parent %}">{{ parent }}</a>{% endfor %}
 					</div>
                     <span id="project_title" class="dj-editable ui-widget ui-widget-content">
                     {{ project }}
 					</span>
                 {% else %}
 	                <div id="project_logo" dir="ltr">
-						{% block logo_link_image %}<a href="/{{LANGUAGE_CODE}}"><img src="{{ MEDIA_URL }}/djity/images/djity_large_green.png" alt="{{ site_name }}"/></a>{% endblock %}
+						{% block logo_link_image %}<a href="{% djiurl project %}"><img src="{{ MEDIA_URL }}/djity/images/djity_large_green.png" alt="{{ project.name }}"/></a>{% endblock %}
 					</div>
                 {% endifnotequal %}
                 </div>
@@ -117,7 +119,7 @@
                 {% if children_projects %}
                     <nav id="children_projects">
                         {% for child in children_projects %}
-						<a href="/{{LANGUAGE_CODE}}/{{ child.name }}" class="dj-mini-button">{{ child }}</a>
+						<a href="{% djiurl child %}" class="dj-mini-button">{{ child }}</a>
                         {% endfor %}
                     </nav>
                     {% endif %}

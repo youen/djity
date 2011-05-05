@@ -1,3 +1,4 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.conf import settings 
