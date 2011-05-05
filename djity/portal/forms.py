@@ -85,7 +85,7 @@ class RegistrationForm(forms.Form):
             username = cleaned_data['username']
             # check if username is a valid
             if check_username(username):
-                msg = _('Username %s is not valid'%username)
+                msg = _('Username %s is not valid.'%username)
                 self._errors['username'] = self.error_class([msg])
                 del cleaned_data['username']
             #check if username doesn't exit
@@ -97,7 +97,7 @@ class RegistrationForm(forms.Form):
                     unique_user = True
                 
                 if not unique_user :
-                    msg = _('Username %s is not avaible'%username)
+                    msg = _('Username %s is not avaible.'%username)
                     self._errors['username'] = self.error_class([msg])
                     del cleaned_data['username']
 
@@ -108,7 +108,7 @@ class RegistrationForm(forms.Form):
             password1 = cleaned_data['password1']
             password2 = cleaned_data['password2']
             if password1 != password2:
-                msg = _("Passwords don't match")
+                msg = _("Passwords don't match.")
                 self._errors['password1'] = self.error_class([msg])
                 del cleaned_data['password1']
                 del cleaned_data['password2']

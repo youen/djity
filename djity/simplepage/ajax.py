@@ -18,6 +18,6 @@ def save_simple_page(request,js_target,html,context=None):
     if simple_page.content != html :
         simple_page.content = html
         simple_page.save()
-        js_target.message(_('Change in page saved'))
+        js_target.message(_('Change in page saved.'))
 
 register('save_simple_page')

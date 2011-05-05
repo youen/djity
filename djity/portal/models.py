@@ -15,7 +15,7 @@ class SiteRoot(models.Model):
     >>> site = SiteRoot.objects.create(label = 'root', name = 'djity', presentation = 'une presentation')
     """
 
-    label = models.CharField("label", max_length=4, default=_("home"))
+    label = models.CharField("label", max_length=4, default="home")
     name =  models.TextField()
     presentation =  models.TextField()
     portlets = generic.GenericRelation('portlet.Portlet')

@@ -109,7 +109,7 @@ def create_project(request,js_target,name,context=None):
     parent = context['project']
     child = Project(label=name,parent=parent)
     child.save(manager=context['user'])
-    msg = _(u'Your new project %s is created !'%name)
+    msg = _('Your new project %s is created !'%name)
     js_target.message(msg, post=True)
     js_target.redirect(child.djity_url())
 register('create_project')
@@ -140,7 +140,7 @@ def save_manage_users(request,js_target,inherit,forbid,users=None,context=None):
     if has_manager :
         for deleted_member in deleted_members:
             deleted_member.delete()
-            msg = unicode(_(u'Member %s is no longer a member of this project.'%user))
+            msg = _('Member %s is no longer a member of this project.'%user)
             js_target.message(msg)
             
         awaiting_members = 0
@@ -150,16 +150,16 @@ def save_manage_users(request,js_target,inherit,forbid,users=None,context=None):
                 awaiting_members += 1
             
         project.save()
-        msg = unicode(_(u"Members of this project updated"))
+        msg = _("Members of this project updated.")
         js_target.message(msg)
         js_target.close(awaiting_members)
         
     elif context['user'].username == user and role != settings.MANAGER:
-        msg = unicode(_(u"You can't change yourself your manager role."))
+        msg = _("You can't remove yourself from the managers.")
         js_target.message(msg)
         
     else:
-        msg = unicode(_('At least one manager is required'))
+        msg = _('At least one manager is required.')
         js_target.message(msg)
 
 
@@ -171,7 +171,7 @@ def save_inherit_permissions(request, js_target,inherit,context=None):
 
     if inherit:
         if project.name == "root":
-            msg = unicode(_(u"Root project can't inherit members"))
+            msg = _("Root project can't inherit members.")
             js_target.message(msg)
             js_target.inherit_toggle(False)
             return 
@@ -213,11 +213,11 @@ register('get_manage_users')
 @djity_view()
 def project_subscribe(request,js_target,context=None):
     if context['project'].add_awaiting_user(context['user']):
-        msg = unicode(_("Your subscription is registered. Wait for validation from a manager of this project."))
-        messages.add_message(request, messages.INFO,msg)
+        msg = _("Your subscription is registered. Wait for validation from a manager of this project.")
+        js_target.message(msg,post=True)
     else:
-        msg = unicode(_("You are no longer a member of this project."))
-        messages.add_message(request, messages.INFO,msg)
+        msg = _("You are no longer a member of this project.")
+        js_target.message(msg,post=True)
     js_target.reload()
 
 register('project_subscribe')
