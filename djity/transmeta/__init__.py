@@ -96,6 +96,9 @@ def default_set_value(field):
     '''
     def default_set_value_func(self,value):
         attname = lambda x: get_real_fieldname(field, x)
+        default_transmeta_attr = attname(
+            getattr(settings, 'TRANSMETA_DEFAULT_LANGUAGE', 'en')
+        )
         
         if hasattr(self, attname(get_language())) :
             setattr(self, attname(get_language()),value)
@@ -106,11 +109,12 @@ def default_set_value(field):
         elif hasattr(self, attname(settings.LANGUAGE_CODE)):
             setattr(self, attname(settings.LANGUAGE_CODE),value)
         else:
-            default_transmeta_attr = attname(
-                getattr(settings, 'TRANSMETA_DEFAULT_LANGUAGE', 'en')
-            )
             setattr(self, default_transmeta_attr, value)
         
+        #Always set somthing for the default language
+        print getattr(self, default_transmeta_attr)
+        if getattr(self, default_transmeta_attr) == '':
+            setattr(self, default_transmeta_attr, value)
 
     return default_set_value_func
 
@@ -196,9 +200,9 @@ class TransMeta(models.base.ModelBase):
                     kwargs = {
                                 'verbose_name': lang_attr.verbose_name,
                                 'related_name': '%s_%s_set_%s' % (
-									name.lower(),
-									field,
-									lang_code),
+                                    name.lower(),
+                                    field,
+                                    lang_code),
 
                                 'limit_choices_to': lang_attr.rel.limit_choices_to,
                                 'lookup_overrides': lang_attr.rel.lookup_overrides,
