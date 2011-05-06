@@ -37,18 +37,20 @@ DATE_FORMAT = None
 TIME_FORMAT = None 
 # Absolute path to the directory that holds media. Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = "%s/media" % PROJECT_ROOT
+STATIC_ROOT = "%s/static" % PROJECT_ROOT
 
 # Absolute path to the directory containing data for this intance of djity
 DATA_DIR = "%s/data" % PROJECT_ROOT
 
 # Djity's themeroller textures and icons directories
-TEXTURES_DIR = "%s/djity/images/textures/" % MEDIA_ROOT
-ICONS_DIR = "%s/djity/images/icons/" % MEDIA_ROOT
+TEXTURES_DIR = "%s/djity/images/textures/" % STATIC_ROOT
+ICONS_DIR = "%s/djity/images/icons/" % STATIC_ROOT
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/site_media/'
+STATIC_URL = '/site_static/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a trailing slash. Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
@@ -86,6 +88,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.static',
 )
 
 INSTALLED_APPS = [
@@ -101,6 +104,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.messages',
     'django.contrib.comments',
+    'django.contrib.staticfiles',
 
     #extensions
 
@@ -217,8 +221,8 @@ if len (DJITY_APPS) >= 0:
     INSTALLED_APPS += DJITY_APPS
 
 
-# create link for djity media dir
-djity_media = DJITY_ROOT+"/media"
+# create link for djity static dir
+djity_static = DJITY_ROOT+"/static"
 
 # import djity apps separate settings
 # add their templates to the list

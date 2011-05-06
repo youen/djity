@@ -365,12 +365,12 @@ html>body #main {
 /* LANG FLAG */
 
 .ui-widget .dj-icon-fr {
-	background-image : url('{{ MEDIA_URL }}/djity/images/flag/fr.png');
+	background-image : url('{{ STATIC_URL }}/djity/images/flag/fr.png');
 	margin-top:-5px;
 }
 
 .ui-widget .dj-icon-en {
-	background-image : url('{{ MEDIA_URL }}/djity/images/flag/en.png');
+	background-image : url('{{ STATIC_URL }}/djity/images/flag/en.png');
 	margin-top:-5px;
 }
 /* HTML5 */

@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        create_link(settings.DJITY_ROOT+'/media',settings.MEDIA_ROOT+"/djity")
+        create_link(settings.DJITY_ROOT+'/static/djity/',settings.STATIC_ROOT+"/djity")
 
         # Is there a SiteRoot instance
         site_roots = SiteRoot.objects.all()

@@ -43,9 +43,9 @@ class Command(BaseCommand):
             with open(apps_path,'a') as apps_file:
                 apps_file.write("%s\n" % app)
 
-        # if necessary create link to this app's media directory
-        media_path = app_path+"/media"
-        media_link = settings.MEDIA_ROOT+"/"+app
-        create_link(media_path,media_link)
+        # if necessary create link to this app's static directory (for develop mode)
+        static_path = app_path+"/static"
+        static_link = settings.STATIC_ROOT+"/"+app
+        create_link(static_path,static_link)
 
         print "Application %s is installed.\nYou should use 'python manage.py sync_db'" % app
