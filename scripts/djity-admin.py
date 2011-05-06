@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import djity,shutil,os,sys
+import djity,shutil,os,sys,random
 from optparse import OptionParser
 from skeleton import Skeleton, Var, Bool
 from subprocess import Popen,call,PIPE
@@ -70,8 +70,14 @@ class ProjectSkeleton(Skeleton):
         for app in apps:
             self.variables.append(Bool(app, description="Install this application",default=True))
 
-        # use Skeleton to ask user's input and create destination directory 
-        Skeleton.run(self, dst_dir, run_dry=run_dry, ignore=['setup_trap'])
+        # use Skeleton to ask user's input
+        self.get_missing_variables()
+
+        # Generate a secret key in the same way django-admin does
+        self['secret_key'] = ''.join([random.choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
+
+        # use skeleton to write the target directory
+        self.write(dst_dir, run_dry=run_dry, ignore=['setup_trap'])
 
         # derive apps list from the user's input
         apps = filter(lambda a:self[a],apps)
@@ -80,8 +86,9 @@ class ProjectSkeleton(Skeleton):
             print "run 'manage.py install_app %s'" % app
             call("python manage.py install_app %s" % app,shell=True,cwd=dst_dir)
 
+        print "setup a bare project in %s" % dst_dir
         if self['develop']:
-            print "setup a default developement project..."
+            print "make it ready for quick development..."
             p = Popen("python manage.py syncdb",stdin=PIPE,stdout=PIPE,stderr=PIPE,shell=True,cwd=dst_dir)
             print "create tables"
             print "define superuser '%s'" % self['admin_name']
@@ -117,6 +124,7 @@ class ApplicationSkeleton(Skeleton):
         print 'Module Name -> %s' % self['module_name']
         self['package_name'] = "djity_%s" % self['module_name']
         print 'Package Name -> %s' % self['package_name']
+        # use skeleton to write the target directory
         self.write(dst_dir, run_dry=run_dry, ignore=['setup_trap'])
         print 'You might want to do something like:'
         print '> cd %s' % dst_dir

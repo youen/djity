@@ -56,7 +56,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 DAJAXICE_MEDIA_PREFIX="dajaxice" # Will create http://yourdomain.com/dajaxice/...
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '+uf*31w)3i8w74)1(^6u%utlfyb^lzu_1_4rqt=+c55v*=lj3g'
+SECRET_KEY = '{secret_key}'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
