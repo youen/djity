@@ -3,6 +3,7 @@ Development environment
 
 Virtualenv
 ++++++++++
+
 A virtual environment is mostly useful for a developer's working environment and more generally to put djity in a box separated from the rest of your system. You are free to skip this part if it is not relevant to your needs.
 See `<http://virtualenv.openplans.org/>`_, and `<http://www.doughellmann.com/projects/virtualenvwrapper/>`_ to learn more about the tools we recommend.
 You will need to have virtualenvwrapper installed, you can find installation instructions here: `<http://www.doughellmann.com/docs/virtualenvwrapper/install.html#basic-installation>`_.
@@ -36,14 +37,17 @@ You can exit this environement with the deactivate command::
 
 	$ deactivate
 
-Install dependencies
+Dependencies
 +++++++++++++++++++
 
 
-Embed dependencies
+Embedded dependencies
 ------------------
 
-Djity embeded JS projects :
+The source from some 3rd party programs are embedded for convenience. The list
+below is for informational purpose, you don't need to do anything about it.
+
+Djity embedded JS projects :
 
  * `JQuery <jquery.com>`_
  * `JQuery UI <jqueryui.com>`_
@@ -77,17 +81,16 @@ You have to install :
 
 	$ pip install beautifulsoup
 
- * PIL::
+ * `Python Imaging Library <http://www.pythonware.com/products/pil/>`_::
 
    $ sudo apt-get install python-imaging
    
 Optional dependences
 --------------------
 
- * `Django Debug Toolbar <http://robhudson.github.com/django-debug-toolbar/>`_::
+ * `Django Debug Toolbar <http://robhudson.github.com/django-debug-toolbar/>`_ (useful for developpers and required by option 'develop' of 'djity-admin.py create_project')::
 
    $ pip install django-debug-toolbar
-
 
 
 Repository
@@ -116,6 +119,5 @@ Setup of a new project
 Now that djity and all its required packages are installed you can create a new development project::
 
 	$ djity-admin.py create_project /path/to/my/project
-
 
 

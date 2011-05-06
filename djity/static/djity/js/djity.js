@@ -132,7 +132,6 @@ dj.init = function(){
 	children_projects();
 	toolbar();
 	paginator();
-	init_tag();
    
 	elRTE.prototype.options.lang = dj.context.LANGUAGE_CODE;
    //change elRTE save function	

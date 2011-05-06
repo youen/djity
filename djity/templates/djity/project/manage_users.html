@@ -31,7 +31,7 @@
 
 {% if project.name != "root" %}
 <input type="checkbox" id="inherit-permissions"	{% if project.inherit_members %}checked{% endif %}/>
-<label id="inherit-permissions-label" for="inherit-permissions">{% trans "Inherit Permissions" %}</label>
+<label id="inherit-permissions-label" for="inherit-permissions">{% trans "Inherit permissions" %}</label>
 <br/>
 {% endif %}
 <table id='inherit-members'>
@@ -40,5 +40,5 @@
 	{% endfor %}
 </table>
 	<input type="checkbox" id="forbid-subscriptions"{% if project.forbid_subscriptions %}checked{% endif %}/>
-	<label id="forbid-subscriptions-label" for="forbid-subscriptions">{% trans "Forbid Subscriptions" %}</label>
+	<label id="forbid-subscriptions-label" for="forbid-subscriptions">{% trans "Forbid subscriptions" %}</label>
 

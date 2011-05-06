@@ -8,8 +8,8 @@ This guide is write for programers wishing improve Djity itself.
 .. toctree::
 	:maxdepth: 2
 
-	documention.rst	
 	environment.rst
+	documention.rst	
 	localization.rst
 	communication.rst
 	role.rst
