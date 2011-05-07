@@ -33,7 +33,7 @@ for app in settings.DJITY_APPS:
                 (r'^(?P<project_name>[-\w]+)/%s/*'%app_url.prefix,include(app_url)),
     )
 
-#redirect to the root project
+#redirect to a simple or the root project
 urlpatterns += patterns('',
         (r'^(?P<project_name>[-\w]+)/+',include(simplepage_urls)),
         url(r'^(?P<path>[-\w]*)','djity.portal.views.redirect_root',name='redirect_root'),

@@ -112,7 +112,6 @@ def default_set_value(field):
             setattr(self, default_transmeta_attr, value)
         
         #Always set somthing for the default language
-        print getattr(self, default_transmeta_attr)
         if getattr(self, default_transmeta_attr) == '':
             setattr(self, default_transmeta_attr, value)
 
