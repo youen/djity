@@ -188,6 +188,7 @@ ugettext = lambda s: s # dummy ugettext function, as django's docs say
 LANGUAGES = (
     ('en', ugettext(u'English')),
     ('fr', ugettext(u'Français')),
+    ('zh', ugettext(u'中文')),
 )
 
 USE_L10N = True

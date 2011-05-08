@@ -373,6 +373,16 @@ html>body #main {
 	background-image : url('{{ STATIC_URL }}/djity/images/flag/en.png');
 	margin-top:-5px;
 }
+.ui-widget .dj-icon-zh {
+	background-image : url('{{ STATIC_URL }}/djity/images/flag/zh.png');
+	margin-top:-5px;
+}
+
+.ui-widget .dj-icon-sk {
+	background-image : url('{{ STATIC_URL }}/djity/images/flag/sk.png');
+	margin-top:-5px;
+}
+
 /* HTML5 */
 
 header,footer,section,aside,nav,article,figure,figcaption,hgroup,time  {
