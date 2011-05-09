@@ -52,13 +52,13 @@
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: {{ font_family }}; font-size: 1em; }
 .ui-widget-content {
 	border: 1px solid {{ wcontent_border_color }};
-	background: {{ wcontent_background_color }} url({% url texture project_name=project_name %}?filename={{ wcontent_background_texture }}&bg_color={{ wcontent_background_color|urlencode}}&percent={{ wcontent_background_percent }}) 50% 50% repeat-x;
+	background: {{ wcontent_background_color }} url({% url texture project_name=project_name %}?filename={{ wcontent_background_texture }}&bg_color={{ wcontent_background_color|urlencode}}&percent={{ wcontent_background_percent }}) 50% 50% repeat;
 	color: {{ wcontent_text_color }};
 }
 .ui-widget-content a { color: {{ wcontent_link_color }}; }
 .ui-widget-header {
 	border: 1px solid {{ header_border_color }};
-	background: {{ header_background_color }} url({% url texture project_name=project_name %}?filename={{ header_background_texture }}&bg_color={{ header_background_color|urlencode}}&percent={{ header_background_percent }}) 50% 50% repeat-x;
+	background: {{ header_background_color }} url({% url texture project_name=project_name %}?filename={{ header_background_texture }}&bg_color={{ header_background_color|urlencode}}&percent={{ header_background_percent }}) 50% 50% repeat;
 	color: {{ header_text_color }};
 	font-weight: bold;
 }
@@ -70,7 +70,7 @@
 ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
 	border: 1px solid {{ default_border_color }};
-	background: {{ default_background_color }} url({% url texture project_name=project_name %}?filename={{ default_background_texture }}&bg_color={{ default_background_color|urlencode}}&percent={{ default_background_percent }}) 50% 50% repeat-x;
+	background: {{ default_background_color }} url({% url texture project_name=project_name %}?filename={{ default_background_texture }}&bg_color={{ default_background_color|urlencode}}&percent={{ default_background_percent }}) 50% 50% repeat;
 	font-weight: normal;
 	color: {{ default_text_color }};
 }
@@ -81,7 +81,7 @@
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
 	border: 1px solid {{ focus_border_color }};
-	background: {{ focus_background_color }} url({% url texture project_name=project_name %}?filename={{ focus_background_texture }}&bg_color={{ focus_background_color|urlencode}}&percent={{ focus_background_percent }}) 50% 50% repeat-x;
+	background: {{ focus_background_color }} url({% url texture project_name=project_name %}?filename={{ focus_background_texture }}&bg_color={{ focus_background_color|urlencode}}&percent={{ focus_background_percent }}) 50% 50% repeat;
 	font-weight: normal;
 	color: {{ focus_text_color }};
 }
@@ -91,7 +91,7 @@
 }
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
 	border: 1px solid {{ active_border_color }};
-	background: {{ active_background_color }} url({% url texture project_name=project_name %}?filename={{ active_background_texture }}&bg_color={{ active_background_color|urlencode}}&percent={{ active_background_percent }}) 50% 50% repeat-x;
+	background: {{ active_background_color }} url({% url texture project_name=project_name %}?filename={{ active_background_texture }}&bg_color={{ active_background_color|urlencode}}&percent={{ active_background_percent }}) 50% 50% repeat;
 	font-weight: normal;
 	color: {{ active_text_color }};
 }
@@ -106,14 +106,14 @@
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {
 	border: 1px solid {{ highlight_border_color }};
 	color: {{ highlight_text_color }};
-	background: {{ highlight_background_color }} url({% url texture project_name=project_name %}?filename={{ highlight_background_texture }}&bg_color={{ highlight_background_color|urlencode}}&percent={{ highlight_background_percent }}) 50% 50% repeat-x;
+	background: {{ highlight_background_color }} url({% url texture project_name=project_name %}?filename={{ highlight_background_texture }}&bg_color={{ highlight_background_color|urlencode}}&percent={{ highlight_background_percent }}) 50% 50% repeat;
 }
 .ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a {
 	color: {{ highlight_link_color }};
 }
 .ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {
 	border: 1px solid {{ error_border_color }};
-	background: {{ error_background_color }} url({% url texture project_name=project_name %}?filename={{ error_background_texture }}&bg_color={{ error_background_color|urlencode}}&percent={{ error_background_percent }}) 50% 50% repeat-x;
+	background: {{ error_background_color }} url({% url texture project_name=project_name %}?filename={{ error_background_texture }}&bg_color={{ error_background_color|urlencode}}&percent={{ error_background_percent }}) 50% 50% repeat;
 	color: {{ error_text_color }};
 }
 .ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a {
@@ -351,7 +351,7 @@
 
 /* Overlays */
 .ui-widget-overlay {
-	background: {{ overlay_background_color }} url({% url texture project_name=project_name %}?bg_color={{ overlay_background_color|urlencode}}?filename={{ overlay_background_texture }}?percent=100) 50% 50% repeat-x;
+	background: {{ overlay_background_color }} url({% url texture project_name=project_name %}?bg_color={{ overlay_background_color|urlencode}}?filename={{ overlay_background_texture }}?percent=100) 50% 50% repeat;
 	opacity: .30
 	;filter:Alpha(Opacity=30);
 }
@@ -359,7 +359,7 @@
 	margin: -8px 0 0 -8px;
 	padding: 8px;
 	background: #aaaaaa url({{ MEDIA_URL }}/images/jquery-ui/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
-	background: {{ shadow_background_color }} url({% url texture project_name=project_name %}?bg_color={{ shadow_background_color|urlencode}}?filename={{ shadow_background_texture }}?percent=100) 50% 50% repeat-x;
+	background: {{ shadow_background_color }} url({% url texture project_name=project_name %}?bg_color={{ shadow_background_color|urlencode}}?filename={{ shadow_background_texture }}?percent=100) 50% 50% repeat;
 	opacity: .30;
 	filter:Alpha(Opacity=30);
 	-moz-border-radius: {{ corner_radius }}; -webkit-border-radius: {{ corner_radius }}; border-radius: {{ corner_radius }};

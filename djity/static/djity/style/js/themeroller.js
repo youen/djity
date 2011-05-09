@@ -50,6 +50,7 @@ function themeroller_widgetify(){
 		edited_project_style = true;
 	});
 
+	/* DEPRECATED SINCE SWITCH FROM FARBTASTIC TO COLORPICKER
 	$(".color_picker").each(function(){
 			var colorpicker = $(this);
 			var colorpicker_ref = $(this).text();
@@ -68,6 +69,26 @@ function themeroller_widgetify(){
 	$(".color_picker div").mouseup(function(){
 		edited_project_style = true;	
 	});
+	*/
+	$(".color").ColorPicker({
+		
+		onSubmit: function(hsb, hex, rgb, el) {
+			$(el).val('#'+hex);
+			$(el).ColorPickerHide();
+			edited_project_style = true;
+		},
+		onBeforeShow: function () {
+			$(this).ColorPickerSetColor(this.value.substr(1,this.value.length-1));
+		},
+		onShow: function () {
+			$('.colorpicker').css('left','0px');
+			$('.colorpicker').css('z-index','4');
+		},
+	})
+	.bind('keyup', function(){
+		$(this).ColorPickerSetColor(this.value);
+		edited_project_style = true;
+	});
 
 	$(".texture_picker").each(function(){
 		var texturepicker = $(this);
@@ -84,7 +105,7 @@ function themeroller_widgetify(){
 			});
 		texturepicker.append("<div class='spacer'>&nbsp;</div>");
 		for(t in textures){
-			texturepicker.append("<a class='texture_link' title='"+textures[t]+"' id='"+textures[t]+"||"+texturepicker_ref+"'><div class ='texture' style='background:#555555 url(/"+top.LANGUAGE_CODE+"/"+top.project_name+"/css/texture?filename="+textures[t]+"&bg_color="+encodeURIComponent('#555555')+"&percent=100) 50% 50% repeat-x;'></div></a>");
+			texturepicker.append("<a class='texture_link' title='"+textures[t]+"' id='"+textures[t]+"||"+texturepicker_ref+"'><div class ='texture_display' style='background:#555555 url(/"+top.dj.context.LANGUAGE_CODE+"/"+top.dj.context.project_name+"/css/texture?filename="+textures[t]+"&bg_color="+encodeURIComponent('#555555')+"&percent=100) 50% 50% repeat;'></div></a>");
 		};
 		texturepicker.append("<div class='spacer'>&nbsp;</div>");
 	});

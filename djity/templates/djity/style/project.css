@@ -73,7 +73,20 @@ html>body #main {
 #djity_header {
     position: relative;
 	height:60px;
+
+	/* inspired by .ui-widget-header from jquery-ui.css but separated because the banner is autonomous */
+        border: 1px solid {{ banner_border_color }};
 	border-bottom:0px;
+        background: {{ banner_background_color }} url({% url texture project_name=project_name %}?filename={{ banner_background_texture }}&bg_color={{ banner_background_color|urlencode}}&percent={{ banner_background_percent }}) 50% 50% repeat;
+        color: {{ banner_text_color }};
+        font-weight: bold;
+}
+
+#djity_header a {
+	color: {{ banner_link_color }};
+}
+
+
 }
 
 #projects_hierarchy{
@@ -286,6 +299,15 @@ html>body #main {
     padding: 10px;
     clear: both;
     width: 800px;
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because the footer is autonomous */
+    border: 1px solid {{ footer_border_color }};
+    background: {{ footer_background_color }} url({% url texture project_name=project_name %}?filename={{ footer_background_texture }}&bg_color={{ footer_background_color|urlencode}}&percent={{ footer_background_percent }}) 50% 50% repeat;
+    color: {{ footer_text_color }};
+    font-weight: bold;
+}
+
+.footer a {
+	color: {{ footer_link_color }};
 }
 
 #amazon_groups{

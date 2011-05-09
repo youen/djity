@@ -45,7 +45,7 @@ body{
 .texture_picker{
 }
 
-.texture{
+.texture_display{
 	width:25px;
 	height:25px;
 	float:left;
