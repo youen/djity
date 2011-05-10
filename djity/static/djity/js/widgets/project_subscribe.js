@@ -1,16 +1,26 @@
+buttons_options = {};
+
+buttons_options[gettext('Cancel')] = function(){
+	$(this).dialog('close');
+};
+
+buttons_options[gettext('Create an account')] =	function(){
+					$(this).dialog('close');
+					dj.widgets.register.open()
+};
+
+buttons_options[gettext('Sign in')] =	function(){
+					$(this).dialog('close');
+					dj.widgets.login.open()
+};
+
 dj.functions.project_subscribe_button = function (){
 	$("#project_subscribe_dialog").dialog({
 		autoOpen:false,
 		modal:true,
 		show:'blind',
-		buttons:{
-			Ok:function(){
-			},
-			Cancel:function(){
-				$(this).dialog('close');
-				return false;
-			}
-		}
+		width: 460 ,
+		buttons: buttons_options
 
 	})
 	var icon = "";
