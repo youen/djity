@@ -60,9 +60,7 @@ class Project(models.Model):
         If a project is new initialize all its dependances
         """
         # Is the project new ?
-        new = False
-        if self.id == None:
-            new = True
+        new = (self.id == None)
 
         # to do before saving
         if new:
