@@ -223,6 +223,10 @@ html>body #main {
 	margin:0.2em 0.1em 0 0;
 }
 
+#right_tabs_list a{
+    padding: .7em .8em;
+}
+
 #right_tabs_list .ui-state-default {
     /* inspired by .ui-widget-header from jquery-ui.css but separated because djity tabs are autonomous */
     border: 1px solid {{ othertab_border_color }};
