@@ -20,7 +20,7 @@ dj.remote = function(func,params){
 	/* add standard dj.context context parameters */
 	params.project_name = this.context.project_name;
 	params.module_name = this.context.module_name;
-	params.LANGUAGE_CODE = this.context.LANGUAGE_CODE;
+	if(!( 'LANGUAGE_CODE' in params)) 	params.LANGUAGE_CODE = this.context.LANGUAGE_CODE;
 
 
 	/* check if js_target is present and register object (if not already registered) */

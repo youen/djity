@@ -53,6 +53,9 @@ def get_lang_version(instance,field):
             result = getattr(settings, 'TRANSMETA_DEFAULT_LANGUAGE', 'en')
     return result
 
+def get_value(instance,field,lang):
+    attname = lambda x: get_real_fieldname(field, x)
+    return  getattr(instance, attname(lang),None)
 
 def default_value(field):
     '''
