@@ -73,7 +73,20 @@ html>body #main {
 #djity_header {
     position: relative;
 	height:60px;
+
+	/* inspired by .ui-widget-header from jquery-ui.css but separated because the banner is autonomous */
+    border: 1px solid {{ banner_border_color }};
 	border-bottom:0px;
+    background: {{ banner_background_color }} url({% url texture project_name=project_name %}?filename={{ banner_background_texture }}&bg_color={{ banner_background_color|urlencode}}&percent={{ banner_background_percent }}) 50% 50% repeat;
+    color: {{ banner_text_color }};
+}
+
+#djity_header a {
+	color: {{ banner_link_color }};
+}
+
+#djity_header .ui-icon {
+	background-image: url({% url icons project_name=project_name %}?color={{ banner_icon_color|urlencode}});
 }
 
 #projects_hierarchy{
@@ -210,6 +223,35 @@ html>body #main {
 	margin:0.2em 0.1em 0 0;
 }
 
+#right_tabs_list .ui-state-default {
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because djity tabs are autonomous */
+    border: 1px solid {{ othertab_border_color }};
+    background: {{ othertab_background_color }} url({% url texture project_name=project_name %}?filename={{ othertab_background_texture }}&bg_color={{ othertab_background_color|urlencode}}&percent={{ othertab_background_percent }}) 50% 50% repeat;
+}
+
+#right_tabs_list .ui-state-default a {	
+    color: {{ othertab_link_color }};
+}
+
+#right_tabs_list .ui-state-active {
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because djity tabs are autonomous */
+    border: 1px solid {{ activetab_border_color }};
+    background: {{ activetab_background_color }} url({% url texture project_name=project_name %}?filename={{ activetab_background_texture }}&bg_color={{ activetab_background_color|urlencode}}&percent={{ activetab_background_percent }}) 50% 50% repeat;
+}
+
+#right_tabs_list .ui-state-active a {	
+    color: {{ activetab_link_color }};
+}
+
+#right_tabs_list .ui-state-active .ui-icon {
+	background-image: url({% url icons project_name=project_name %}?color={{ activetab_icon_color|urlencode}});
+}
+
+#body_active{
+    border: 1px solid {{ activetab_border_color }};
+    background: {{ activetab_background_color }};
+}
+
 .dj-sorting-tab{
 	width:70px;
 }
@@ -281,11 +323,39 @@ html>body #main {
 
 /* portlet classes */
 
+.portlet {
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because portlets are autonomous */
+    border: 1px solid {{ portlet_border_color }};
+    background: {{ portlet_background_color }} url({% url texture project_name=project_name %}?filename={{ portlet_background_texture }}&bg_color={{ portlet_background_color|urlencode}}&percent={{ portlet_background_percent }}) 50% 50% repeat;
+    color: {{ portlet_text_color }};
+}
+
+.portlet a {
+	color: {{ portlet_link_color }};
+}
+
+.portlet .ui-icon {
+	background-image: url({% url icons project_name=project_name %}?color={{ portlet_icon_color|urlencode}});
+}
+
 .footer {
-    margin: 50px auto;
-    padding: 10px;
-    clear: both;
-    width: 800px;
+	margin: 50px auto;
+	padding: 10px;
+	clear: both;
+	width: 800px;
+
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because the footer is autonomous */
+    border: 1px solid {{ footer_border_color }};
+    background: {{ footer_background_color }} url({% url texture project_name=project_name %}?filename={{ footer_background_texture }}&bg_color={{ footer_background_color|urlencode}}&percent={{ footer_background_percent }}) 50% 50% repeat;
+    color: {{ footer_text_color }};
+}
+
+.footer a, .footer a:link, .footer a:visited {
+	color: {{ footer_link_color }};
+}
+
+.footer .ui-icon {
+	background-image: url({% url icons project_name=project_name %}?color={{ footer_icon_color|urlencode}});
 }
 
 #amazon_groups{
