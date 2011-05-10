@@ -323,18 +323,20 @@ html>body #main {
 
 /* portlet classes */
 
-.portlet {
+.dj-portlet {
+	padding: 5px;
+	margin: 5px;
     /* inspired by .ui-widget-header from jquery-ui.css but separated because portlets are autonomous */
     border: 1px solid {{ portlet_border_color }};
     background: {{ portlet_background_color }} url({% url texture project_name=project_name %}?filename={{ portlet_background_texture }}&bg_color={{ portlet_background_color|urlencode}}&percent={{ portlet_background_percent }}) 50% 50% repeat;
     color: {{ portlet_text_color }};
 }
 
-.portlet a {
+.dj-portlet a {
 	color: {{ portlet_link_color }};
 }
 
-.portlet .ui-icon {
+.dj-portlet .ui-icon {
 	background-image: url({% url icons project_name=project_name %}?color={{ portlet_icon_color|urlencode}});
 }
 

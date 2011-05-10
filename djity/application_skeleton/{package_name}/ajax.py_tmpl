@@ -1,0 +1,26 @@
+"""
+Ajax views for {application_name}.
+"""
+
+from django.utils.translation import ugettext_lazy as _
+
+from djity.utils.decorators import djity_view
+
+# permission needed to access a view can be 'view', 'edit', 'manage'
+@djity_view(perm='view')
+def example_ajax(context,js_target,text):
+    """
+    This function simply transforms a text in upper case and put it in a div given as js_target
+
+    Arguments:
+     * context - standard Djity context built by decorator djity_view using session and url data
+     * js_target - Proxy object to generate javascript code. Functions called on js_target here will be translated in javascript onto the object passed as target.
+     * text - text to make upper case
+    """
+    text = text.uppercase()
+    js_target.html(text)
+    js_target.message(_("%s written by ajax function !") % text)
+    # If you want to reload the page and send a message to display after you can do:
+    # js_target.message(_"%s written by ajax function !" % text, post=True)
+    # js_target.reload()
+
