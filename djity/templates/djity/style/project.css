@@ -85,10 +85,6 @@ html>body #main {
 	color: {{ banner_link_color }};
 }
 
-#djity_header .ui-icon {
-	background-image: url({% url icons project_name=project_name %}?color={{ banner_icon_color|urlencode}});
-}
-
 #projects_hierarchy{
 	float:left;
 }
@@ -245,6 +241,7 @@ html>body #main {
 
 #right_tabs_list .ui-state-active a {	
     color: {{ activetab_link_color }};
+    font-weight:bold;
 }
 
 #right_tabs_list .ui-state-active .ui-icon {
@@ -269,14 +266,14 @@ html>body #main {
 	background:none repeat scroll 0 0;
 	margin-left:-100%;
 	width:150px;
-	z-index:100;
+	z-index:90;
 }
 
 #right{
 	background:none repeat scroll 0 0;
 	margin-left:-200px;
 	width:200px;
-	z-index:100;
+	z-index:90;
 }
 
 #toolbar{
