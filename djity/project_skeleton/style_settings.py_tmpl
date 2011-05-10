@@ -2,6 +2,7 @@
 DEFAULT_STYLE = [
         ["background_color","#ffffff"],
         ["content_background_color","#ffffff"],
+        ["content_border_color","#000000"],
         ["corner_radius","4px"],
         ["font_family","Verdana,Arial,sans-serif"],
         ["font_size","1.1em"],
@@ -13,6 +14,35 @@ DEFAULT_STYLE = [
         ["banner_text_color","#000000"],
         ["banner_link_color","#000000"],
         ["banner_icon_color","#000000"],
+
+        ["activetab_background_color","#e7dada"],
+        ["activetab_background_texture","03_highlight_soft.png"],
+        ["activetab_background_percent","80"],
+        ["activetab_border_color","#000000"],
+        ["activetab_link_color","#000000"],
+        ["activetab_icon_color","#000000"],
+
+        ["othertab_background_color","#e7dada"],
+        ["othertab_background_texture","03_highlight_soft.png"],
+        ["othertab_background_percent","80"],
+        ["othertab_border_color","#000000"],
+        ["othertab_link_color","#000000"],
+
+        ["portlet_background_color","#ff3838"],
+        ["portlet_background_texture","03_highlight_soft.png"],
+        ["portlet_background_percent","100"],
+        ["portlet_border_color","#000000"],
+        ["portlet_text_color","#000000"],
+        ["portlet_link_color","#000000"],
+        ["portlet_icon_color","#000000"],
+
+        ["footer_background_color","#ff3838"],
+        ["footer_background_texture","03_highlight_soft.png"],
+        ["footer_background_percent","100"],
+        ["footer_border_color","#000000"],
+        ["footer_text_color","#000000"],
+        ["footer_link_color","#000000"],
+        ["footer_icon_color","#000000"],
 
         ["header_background_color","#ff3838"],
         ["header_background_texture","03_highlight_soft.png"],
@@ -75,6 +105,7 @@ EDIT_STYLE_ORDER = [
     ("Global",[
             ("Background","background_color"),
             ("Content background","content_background_color"),
+            ("Content border","content_border_color"),
             ("Corner radius","corner_radius"),
             ("Font family","font_family"),
             ("Font size","font_size"),
@@ -87,6 +118,30 @@ EDIT_STYLE_ORDER = [
             ("Text color","banner_text_color"),
             ("Link color","banner_link_color"),
             ("Icon color","banner_icon_color"),
+        ]),
+	("Active tab",[
+            ("Border color","activetab_border_color"),
+            ("Background color","activetab_background_color"),
+            ("Background texture","activetab_background_texture"),
+            ("Texture %","activetab_background_percent"),
+            ("Link color","activetab_link_color"),
+            ("Icon color","activetab_icon_color"),
+        ]),
+	("Other tabs",[
+            ("Border color","othertab_border_color"),
+            ("Background color","othertab_background_color"),
+            ("Background texture","othertab_background_texture"),
+            ("Texture %","othertab_background_percent"),
+            ("Link color","othertab_link_color"),
+        ]),
+	("Portlets",[
+            ("Border color","portlet_border_color"),
+            ("Background color","portlet_background_color"),
+            ("Background texture","portlet_background_texture"),
+            ("Texture %","portlet_background_percent"),
+            ("Text color","portlet_text_color"),
+            ("Link color","portlet_link_color"),
+            ("Icon color","portlet_icon_color"),
         ]),
     ("Footer",[
             ("Border color","footer_border_color"),
@@ -115,7 +170,7 @@ EDIT_STYLE_ORDER = [
             ("Link color","wcontent_link_color"),
             ("Icon color","wcontent_icon_color"),
         ]),
-    ("Default state",[
+    ("Buttons - Default state",[
             ("Border color","default_border_color"),
             ("Background color","default_background_color"),
             ("Background texture","default_background_texture"),
@@ -124,7 +179,7 @@ EDIT_STYLE_ORDER = [
             ("Link color","default_link_color"),
             ("Icon color","default_icon_color"),
         ]),
-    ("Focus state",[
+    ("Buttons - Focus state",[
             ("Border color","focus_border_color"),
             ("Background color","focus_background_color"),
             ("Background texture","focus_background_texture"),
@@ -133,7 +188,7 @@ EDIT_STYLE_ORDER = [
             ("Link color","focus_link_color"),
             ("Icon color","focus_icon_color"),
         ]),
-    ("Active state",[
+    ("Buttons - Active state",[
             ("Border color","active_border_color"),
             ("Background color","active_background_color"),
             ("Background texture","active_background_texture"),
@@ -142,7 +197,7 @@ EDIT_STYLE_ORDER = [
             ("Link color","active_link_color"),
             ("Icon color","active_icon_color"),
         ]),
-    ("Highlight",[
+    ("Buttons - Highlight",[
             ("Border color","highlight_border_color"),
             ("Background color","highlight_background_color"),
             ("Background texture","highlight_background_texture"),
@@ -151,7 +206,7 @@ EDIT_STYLE_ORDER = [
             ("Link color","highlight_link_color"),
             ("Icon color","highlight_icon_color"),
         ]),
-    ("Error",[
+    ("Buttons - Error",[
             ("Border color","error_border_color"),
             ("Background color","error_background_color"),
             ("Background texture","error_background_texture"),

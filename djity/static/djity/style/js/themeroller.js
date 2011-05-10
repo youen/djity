@@ -50,26 +50,6 @@ function themeroller_widgetify(){
 		edited_project_style = true;
 	});
 
-	/* DEPRECATED SINCE SWITCH FROM FARBTASTIC TO COLORPICKER
-	$(".color_picker").each(function(){
-			var colorpicker = $(this);
-			var colorpicker_ref = $(this).text();
-			$(this).text("");
-			$(this).farbtastic(colorpicker_ref);
-			$(colorpicker_ref)
-			.attr('maxlength','7')
-			.attr('size','7')
-			.focus(function(){
-				colorpicker.show("blind");
-			})
-			.blur(function(){
-				colorpicker.hide("blind");
-			});
-		});
-	$(".color_picker div").mouseup(function(){
-		edited_project_style = true;	
-	});
-	*/
 	$(".color").ColorPicker({
 		
 		onSubmit: function(hsb, hex, rgb, el) {
