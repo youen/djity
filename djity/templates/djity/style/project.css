@@ -437,16 +437,16 @@ html>body #main {
 
 /* LANG FLAG */
 
-.ui-widget .dj-icon-fr {
+#djity_header .dj-icon-fr,.ui-widget .dj-icon-fr {
 	background-image : url('{{ STATIC_URL }}/djity/images/flag/fr.png');
 	margin-top:-5px;
 }
 
-.ui-widget .dj-icon-en {
+#djity_header .dj-icon-en,.ui-widget .dj-icon-en {
 	background-image : url('{{ STATIC_URL }}/djity/images/flag/en.png');
 	margin-top:-5px;
 }
-.ui-widget .dj-icon-zh {
+#djity_header .dj-icon-zh,.ui-widget .dj-icon-zh {
 	background-image : url('{{ STATIC_URL }}/djity/images/flag/zh.png');
 	margin-top:-5px;
 }

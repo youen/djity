@@ -9,6 +9,8 @@ $.widget("ui.editable",{
 			autoOpen:false,
 			save_function : function(){},
 			effect:'clip',
+			lang:'',
+			get_function:undefined,
 	},
 	_create: function() {
 		var self=this,
@@ -32,46 +34,76 @@ $.widget("ui.editable",{
 
 			
 			doc.attr('contentEditable',true);
-			
+				
+			var toolbar = $('<span></span>')
+				.appendTo(editorBox);
+
 		    $('<button title="' + gettext('Save') + '">' + gettext('Save') + '</button>')
 				.button({
 					icons:{
-						'primary':''
+						'primary':'ui-icon-disk'
 					},
 					text:false,
 					label:gettext('Save'),
 								
 				})
-				.addClass('dj-mini-button')
 				.click(	function (event){self.save();})
-				.appendTo(editorBox);
+				.appendTo(toolbar);
 
 
 			$('<button  title="'+gettext('Rich Edit')+'">'+gettext('Rich Edit')+'</button>')
 				.button({
 					icons:{
-						'primary':''
+						'primary':'ui-icon-plusthick'
 					},
 					text:false,
 					label:gettext('Rich Edit'),
 								
 				})
-				.addClass('dj-mini-button')
 				.click(	function (event){self.editor();})
-				.appendTo(editorBox);
+				.appendTo(toolbar);
 
 			$('<button  title="'+gettext('Cancel')+'">'+gettext('Cancel')+'</button>')
 				.button({
 					icons:{
-						'primary':''
+						'primary':'ui-icon-cancel'
 					},
 					text:false,
 					label:gettext('Cancel'),
 								
 				})
-				.addClass('dj-mini-button')
 				.click(	function (event){self.cancel();})
+				.appendTo(toolbar);
+
+			toolbar.buttonset();
+
+			if(self.options.lang != ''){
+			self.langbar = $('<span></span>')
 				.appendTo(editorBox);
+
+
+			$.each(dj.context.LANGUAGES,function(i,lang)
+			{
+				$('<button class="'+lang[0] +'" title="'+gettext(lang[1])+'">'+gettext(lang[1])+'</button>')
+				.button({
+					icons:{
+						'primary':'dj-icon-'+lang[0]
+					},
+					text:false,
+					label:gettext(lang[1]),
+				})
+				.click(	function (event){self.activate_lang(lang[0]);})
+				.appendTo(self.langbar);
+
+								
+
+			});
+			
+			self.langbar.find('.'+self.options.lang).addClass('ui-state-highlight');
+			self.lang = self.options.lang;	
+			self.langbar.buttonset();
+			
+			}
 
 			editorBox.position({
 						my:'left bottom',
@@ -79,13 +111,17 @@ $.widget("ui.editable",{
 						of:self.element,
 					 });
 
-					
     },
 
 	_init: function() {
 		    if ( this.options.autoOpen ) {
 				this.open();
 			}
+		    if ( this.options.get_function != undefined ) {
+				self.rollback=this.element.html();
+				this.activate_lang(this.options.lang);
+			}
+
 	},
 	close : function(){
 
@@ -122,10 +158,10 @@ $.widget("ui.editable",{
 			editorBox
 				.show(options.effect);
 					
+	
 			self.doc.addClass('ui-state-highlight')
 			self._isOpen  = true;
 			self.rollback=self.element.html();
-			
 			  
 	},
 
@@ -133,8 +169,60 @@ $.widget("ui.editable",{
 			var self = this,
 				options = self.options,
 				editorBox = self.editorBox;
-			self.options.save_function(self.element.html(),self.element.attr('id'));
+			self.options.save_function(self.element.html(),self.element.attr('id'),self.lang);
 			self.close();	
+	},
+
+
+	activate_lang: function(lang)
+	{
+
+			var self = this,
+				langbar = self.langbar;
+
+			if(lang == self.lang){return}
+			if(self.rollback!=self.element.html()){
+				msg = $('<div id="dialog-message" title="' + gettext("Text not save") + '">'
+					  +'<p>' + gettext("Save your change in the current language or cancel edition before changing language.") + '</p>'
+					  +'<div>')
+					.dialog({
+						modal:true,
+						buttons: {Ok: function() {$( this ).dialog( "close" );}}
+					});
+				return;
+			}
+			langbar.find('.'+self.lang).removeClass('ui-state-highlight');
+			langbar.find('.'+lang).addClass('ui-state-highlight');
+			self.lang = lang;
+			dj.remote(self.options.get_function,
+					{
+						js_target:self,
+						lang:lang,
+					});
+
+	},
+
+	set_html:function(html)
+	{
+		var self = this,
+			langbar = self.langbar;
+
+		if(html == null)
+		{
+				msg = $('<div id="dialog-message" title="' + gettext("New version") + '">'
+					  +'<p>' + gettext("This text haven't the required language version you are just starting a new version.") + '</p>'
+					  +'<div>')
+					.dialog({
+						modal:true,
+						buttons: {Ok: function() {$( this ).dialog( "close" );}}
+					});
+				return;
+		}
+		else
+		{
+			self.element.html(html);
+			self.rollback=self.element.html();
+		}
 	},
 
 	editor : function(){
