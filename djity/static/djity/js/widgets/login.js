@@ -20,22 +20,26 @@ dj.widgets.login =
 			})
 			.addClass('dj-mini-button');
 
+		bt_opts ={};
+		bt_opts[gettext('Sign in')] = function(){dj.widgets.login.login();};
+		bt_opts[gettext('Create an account')] = function()
+		{
+			dj.widgets.login.close();
+			dj.widgets.register.open();
+	
+		};
+
 		this.dialog = $('#login_dialog')
+			.keyup(function(e)
+			{
+				if( e.keyCode == 13){ dj.widgets.login.login()};
+			})
 			.dialog(
 			{
 				autoOpen:false,
 				modal:true,
 				show:'blind',
-				buttons:
-				{
-					'Login':function(){dj.widgets.login.login();},
-					'Create an account':function()
-						{
-							dj.widgets.login.close();
-							dj.widgets.register.open();
-						
-						},
-				}
+				buttons:bt_opts,
 					
 			});
 		this.dialog

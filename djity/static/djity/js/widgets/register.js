@@ -21,27 +21,34 @@ dj.widgets.register =
 		
 		
 		//init dialog
+		
+		bt_opts ={};
+
+		bt_opts[gettext('OK')] = function(){
+			dj.widgets.register.validate();
+		};
+		bt_opts[gettext('Cancel')] = function(){
+			dj.widgets.register.close();
+		};
+
+		bt_opts[gettext('Sign in')] = function()
+		{
+			dj.widgets.register.close();
+			dj.widgets.login.open();
+	
+		};
+
 		this.dialog = $('<div id="register_dialog" class="ui-helper-hidden" title="' + gettext('Create an account') +'"></div>')
 			.keyup(function(e)
 			{
-				
-				if( e.keyCode == 13){ self.element.register('validate')};
+				if( e.keyCode == 13){ dj.widgets.register.validate()};
 			})
 			.dialog(
 			{
 				autoOpen:false,
 				modal: true,
 				show:'blind',
-				buttons : {
-					OK : function()
-						{
-							dj.widgets.register.validate();
-						},
-					Cancel : function()
-						{
-							dj.widgets.register.close();
-						},
-				},
+				buttons : bt_opts,
 			});
 
 

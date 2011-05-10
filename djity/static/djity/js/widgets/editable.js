@@ -33,13 +33,13 @@ $.widget("ui.editable",{
 			
 			doc.attr('contentEditable',true);
 			
-		    $('<button title="'+gettext('save')+'">'+gettext('save')+'</button>')
+		    $('<button title="' + gettext('Save') + '">' + gettext('Save') + '</button>')
 				.button({
 					icons:{
 						'primary':''
 					},
 					text:false,
-					label:'save',
+					label:gettext('Save'),
 								
 				})
 				.addClass('dj-mini-button')
@@ -53,7 +53,7 @@ $.widget("ui.editable",{
 						'primary':''
 					},
 					text:false,
-					label:'Rich Edit',
+					label:gettext('Rich Edit'),
 								
 				})
 				.addClass('dj-mini-button')
@@ -66,7 +66,7 @@ $.widget("ui.editable",{
 						'primary':''
 					},
 					text:false,
-					label:'Cancel',
+					label:gettext('Cancel'),
 								
 				})
 				.addClass('dj-mini-button')
