@@ -41,7 +41,7 @@ msg = template;
 template = null;
 
 //foreground messages
-this.element.zIndex(3);
+this.element.zIndex(3000);
 
 }
 

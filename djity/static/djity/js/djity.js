@@ -167,7 +167,7 @@ function widgetify() {
 
 	$('#messages').notify();
 
-	$("#project_title").editable({save_function:dj.functions.save_project_title});
+	$("#project_title").editable({simple:true,save_function:dj.functions.save_project_title});
 
 	if(dj.context.perm.edit){
 		$(".dj-text-portlet").each(function(i,e){$(e).editable({save_function:dj.functions.save_text_portlet});});

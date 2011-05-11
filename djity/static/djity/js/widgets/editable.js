@@ -6,6 +6,7 @@ $.widget("ui.editable",{
 		 */
 	options : {
 			show :'',
+			simple:false,
 			autoOpen:false,
 			save_function : function(){},
 			effect:'clip',
@@ -20,7 +21,7 @@ $.widget("ui.editable",{
 					 .appendTo(document.body)
 					 .css('position','absolute')
 			         .hide()
-					 .addClass('ui-widget ui-widget-header dj-editor-box ui-corner-top'),
+					 .addClass('ui-widget ui-widget-content dj-editor-box ui-corner-top'),
 
 			
 			_isOpen = false,
@@ -49,19 +50,24 @@ $.widget("ui.editable",{
 				})
 				.click(	function (event){self.save();})
 				.appendTo(toolbar);
-
-
-			$('<button  title="'+gettext('Rich Edit')+'">'+gettext('Rich Edit')+'</button>')
-				.button({
-					icons:{
-						'primary':'ui-icon-plusthick'
-					},
-					text:false,
-					label:gettext('Rich Edit'),
-								
-				})
-				.click(	function (event){self.editor();})
-				.appendTo(toolbar);
+			
+			/*
+			 * No rich editor for simple edition
+			 */
+			if(! self.options.simple)
+			{
+				$('<button  title="'+gettext('Rich Edit')+'">'+gettext('Rich Edit')+'</button>')
+					.button({
+						icons:{
+							'primary':'ui-icon-plusthick'
+						},
+						text:false,
+						label:gettext('Rich Edit'),
+									
+					})
+					.click(	function (event){self.editor();})
+					.appendTo(toolbar);
+			}
 
 			$('<button  title="'+gettext('Cancel')+'">'+gettext('Cancel')+'</button>')
 				.button({
@@ -157,9 +163,13 @@ $.widget("ui.editable",{
 			
 			editorBox
 				.show(options.effect);
-					
+				
+			editorBox.position({
+						my:'left bottom',
+						at:'left top',
+						of:self.element,
+					 });	
 	
-			self.doc.addClass('ui-state-highlight')
 			self._isOpen  = true;
 			self.rollback=self.element.html();
 			  

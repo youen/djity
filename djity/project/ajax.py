@@ -6,6 +6,7 @@ from django.conf import settings
 
 from dajax.core import Dajax
 from djity.utils.decorators import djity_view
+from djity.utils.security import sanitize
 from dajaxice.core import dajaxice_functions
 from .models import Project, Member
 
@@ -30,7 +31,7 @@ register('edit_tab')
 def save_project_title(request,js_target,html,context=None):
     project = context['project']
     if html != '':
-        project.label = html
+        project.label = sanitize(html)
         project.save()
         js_target.message(_('Project title saved.'))
 register('save_project_title')
