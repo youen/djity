@@ -44,7 +44,7 @@ function themeroller_widgetify(){
 	 */
 	$("#style_tabs").tabs({});
 
-	$("#style_accordion").accordion({});
+	$("#style_accordion").accordion({collapsible:true});
 
 	$("input").change(function(){
 		edited_project_style = true;
