@@ -351,20 +351,21 @@
 
 /* Overlays */
 .ui-widget-overlay {
-	background: {{ overlay_background_color }} url({% url texture project_name=project_name %}?bg_color={{ overlay_background_color|urlencode}}?filename={{ overlay_background_texture }}?percent=100) 50% 50% repeat;
-	opacity: .30
-	;filter:Alpha(Opacity=30);
+    background: {{ overlay_background_color }} url({% url texture project_name=project_name %}?filename={{ overlay_background_texture }}&bg_color={{ overlay_background_color|urlencode}}&percent={{ overlay_background_percent }}) 50% 50% repeat;
+    opacity: .30;
+    filter:Alpha(Opacity=30);
 }
 .ui-widget-shadow {
-	margin: -8px 0 0 -8px;
-	padding: 8px;
-	background: #aaaaaa url({{ MEDIA_URL }}/images/jquery-ui/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
-	background: {{ shadow_background_color }} url({% url texture project_name=project_name %}?bg_color={{ shadow_background_color|urlencode}}?filename={{ shadow_background_texture }}?percent=100) 50% 50% repeat;
-	opacity: .30;
-	filter:Alpha(Opacity=30);
-	-moz-border-radius: {{ corner_radius }}; -webkit-border-radius: {{ corner_radius }}; border-radius: {{ corner_radius }};
-}/* Resizable
-----------------------------------*/
+    margin: -8px 0 0 -8px;
+    padding: 8px;
+    background: {{ overlay_background_color }} url({% url texture project_name=project_name %}?bg_color={{ overlay_background_color|urlencode}}?filename={{ overlay_background_texture }}?percent=100) 50% 50% repeat;
+    opacity: .30;
+    filter:Alpha(Opacity=30);
+    -moz-border-radius: {{ corner_radius }};
+    -webkit-border-radius: {{ corner_radius }};
+    border-radius: {{ corner_radius }};
+}
+/* Resizable */
 .ui-resizable { position: relative;}
 .ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
 .ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
@@ -452,7 +453,6 @@ input.ui-button { padding: .4em 1em; }
 .ui-button-text-icon .ui-button-icon-primary, .ui-button-text-icons .ui-button-icon-primary, .ui-button-icons-only .ui-button-icon-primary { left: .5em; }
 .ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
 
-/*button sets*/
 .ui-buttonset { margin-right: 7px; }
 .ui-buttonset .ui-button { margin-left: 0; margin-right: -.3em; }
 

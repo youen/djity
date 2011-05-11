@@ -31,9 +31,24 @@ body {
 	position:relative;
 }
 
-#body_active{
-	padding:5px;
-	padding-top:5px;
+#top_container{
+    border: 1px solid {{ border_color }};
+    border-radius: {{ border_radius }};
+    -moz-border-radius: {{ border_radius }};
+    -webkit-border-radius: {{ border_radius }};
+    box-shadow: {{ border_color }} 0px 0px {{ border_shadow }};
+    -webkit-box-shadow: {{ border_color }} 0px 0px {{ border_shadow }};
+    -moz-box-shadow: {{ border_color }} 0px 0px {{ border_shadow }};
+}
+
+#body_active, #body_default{
+	/*padding:5px;*/
+    -moz-border-radius-bottomleft: {{ border_radius }};
+    -webkit-border-top-bottom-radius: {{ border_radius }};
+    border-bottom-left-radius: {{ border_radius }};
+    -moz-border-radius-bottomright: {{ border_radius }};
+    -webkit-border-bottom-right-radius: {{ border_radius }};
+    border-bottom-right-radius: {{ border_radius }};
 }
 
 #content {
@@ -72,14 +87,20 @@ html>body #main {
 
 #djity_header {
     position: relative;
-	height:60px;
-
+    height:60px;
+    border:0px;
+    border-bottom: 1px solid {{ activetab_border_color }};
 	/* inspired by .ui-widget-header from jquery-ui.css but separated because the banner is autonomous */
-    border: 1px solid {{ banner_border_color }};
-	border-bottom:0px;
     background: {{ banner_background_color }} url({% url texture project_name=project_name %}?filename={{ banner_background_texture }}&bg_color={{ banner_background_color|urlencode}}&percent={{ banner_background_percent }}) 50% 50% repeat;
     color: {{ banner_text_color }};
+    -moz-border-radius-topleft: {{ border_radius }};
+    -webkit-border-top-left-radius: {{ border_radius }};
+    border-top-left-radius: {{ border_radius }};
+    -moz-border-radius-topright: {{ border_radius }};
+    -webkit-border-top-right-radius: {{ border_radius }};
+    border-top-right-radius: {{ border_radius }};
 }
+
 
 #djity_header a {
 	color: {{ banner_link_color }};
@@ -110,7 +131,7 @@ html>body #main {
 	margin:5px 10px 5px 10px;
 	color: {{ title_color }};
 	font: {{ title_font_size }} {{ title_font_family }};
-    background: {{ title_background_color }} url({% url texture project_name=project_name %}?filename={{ title_background_texture }}&bg_color={{ title_background_color|urlencode}}&percent={{ title_background_percent }}) 50% 50% repeat;
+        background: {{ title_background_color }} url({% url texture project_name=project_name %}?filename={{ title_background_texture }}&bg_color={{ title_background_color|urlencode}}&percent={{ title_background_percent }}) 50% 50% repeat;
 	text-shadow: {{ title_color }} 1px 1px {{ title_text_shadow }};
 	border: {{ title_border_width }} solid {{ title_border_color }};
 	-moz-border-radius: {{ title_border_radius }};
@@ -228,7 +249,14 @@ html>body #main {
 #right_tabs_list .ui-state-default {
     /* inspired by .ui-widget-header from jquery-ui.css but separated because djity tabs are autonomous */
     border: 1px solid {{ othertab_border_color }};
+    border-bottom: 0px;
     background: {{ othertab_background_color }} url({% url texture project_name=project_name %}?filename={{ othertab_background_texture }}&bg_color={{ othertab_background_color|urlencode}}&percent={{ othertab_background_percent }}) 50% 50% repeat;
+    -moz-border-radius-topleft: {{ othertab_border_radius }};
+    -webkit-border-top-left-radius: {{ othertab_border_radius }};
+    border-top-left-radius: {{ othertab_border_radius }};
+    -moz-border-radius-topright: {{ othertab_border_radius }};
+    -webkit-border-top-right-radius: {{ othertab_border_radius }};
+    border-top-right-radius: {{ othertab_border_radius }};
 }
 
 #right_tabs_list .ui-state-default a {	
@@ -237,8 +265,15 @@ html>body #main {
 
 #right_tabs_list .ui-state-active {
     /* inspired by .ui-widget-header from jquery-ui.css but separated because djity tabs are autonomous */
-    border: 1px solid {{ activetab_border_color }};
+    border-left: 1px solid {{ activetab_border_color }};
+    border-bottom: 0px }};
     background: {{ activetab_background_color }} url({% url texture project_name=project_name %}?filename={{ activetab_background_texture }}&bg_color={{ activetab_background_color|urlencode}}&percent={{ activetab_background_percent }}) 50% 50% repeat;
+    -moz-border-radius-topleft: {{ activetab_border_radius }};
+    -webkit-border-top-left-radius: {{ activetab_border_radius }};
+    border-top-left-radius: {{ activetab_border_radius }};
+    -moz-border-radius-topright: {{ activetab_border_radius }};
+    -webkit-border-top-right-radius: {{ activetab_border_radius }};
+    border-top-right-radius: {{ activetab_border_radius }};
 }
 
 #right_tabs_list .ui-state-active a {	
@@ -251,7 +286,7 @@ html>body #main {
 }
 
 #body_active{
-    border: 1px solid {{ activetab_border_color }};
+    border: 0px;
     background: {{ activetab_background_color }};
 }
 
@@ -333,6 +368,10 @@ html>body #main {
     border: 1px solid {{ portlet_border_color }};
     background: {{ portlet_background_color }} url({% url texture project_name=project_name %}?filename={{ portlet_background_texture }}&bg_color={{ portlet_background_color|urlencode}}&percent={{ portlet_background_percent }}) 50% 50% repeat;
     color: {{ portlet_text_color }};
+    -moz-border-radius: {{ portlet_border_radius }};
+    -webkit-border-radius: {{ portlet_border_radius }};
+    -webkit-box-shadow: {{ portlet_border_color }} 0px 0px {{ portlet_border_shadow }};
+    -moz-box-shadow: {{ portlet_border_color }} 0px 0px {{ portlet_border_shadow }};
 }
 
 .dj-portlet a {
@@ -353,6 +392,10 @@ html>body #main {
     border: 1px solid {{ footer_border_color }};
     background: {{ footer_background_color }} url({% url texture project_name=project_name %}?filename={{ footer_background_texture }}&bg_color={{ footer_background_color|urlencode}}&percent={{ footer_background_percent }}) 50% 50% repeat;
     color: {{ footer_text_color }};
+    -moz-border-radius: {{ footer_border_radius }};
+    -webkit-border-radius: {{ footer_border_radius }};
+    -webkit-box-shadow: {{ footer_border_color }} 0px 0px {{ footer_border_shadow }};
+    -moz-box-shadow: {{ footer_border_color }} 0px 0px {{ footer_border_shadow }};
 }
 
 .footer a, .footer a:link, .footer a:visited {
@@ -462,36 +505,6 @@ html>body #main {
 
 header,footer,section,aside,nav,article,figure,figcaption,hgroup,time  {
 	display:block;
-}
-
-
-/* TABLES */
-
-
-
-/* FORMS */
-
-form th {
-    text-align : left;
-}
-form.signup input[type="submit"], form.login input[type="submit"] {
-    margin: 20px 0;
-    font-size: 14pt;
-}
-input[type="text"], input[type="password"], textarea {
-    padding: 3px;
-    margin: 3px;
-    border: solid 1px #C6C6C6;
-    border-bottom: solid 1px #E3E3E3;
-    color: #666;
-    font-size: 12pt;
-    background: #F3F3F3 url('../images/form-shadow.png') left top repeat-x;
-}
-ul.errorlist {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    color: red;
 }
 
 /*
