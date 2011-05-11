@@ -87,19 +87,16 @@
 
 		<div id="projects_hierarchy" class="ui-widget">
             <div id="project_left1">
-				{% ifnotequal project.name "root" %}
-                    <div id="parent_projects">
-						{% for parent in parent_projects %}  <a href="{% djiurl parent %}">{{ parent }}</a>{% endfor %}
-					</div>
-                    <span id="project_title" class="dj-editable ui-widget ui-widget-content">
-                    {{ project }}
-					</span>
-                {% else %}
-	                <div id="project_logo" dir="ltr">
-						{% block logo_link_image %}<a href="{% djiurl project %}"><img src="{{ STATIC_URL }}/djity/images/djity_large_darkgreen.png" alt="{{ project.name }}"/></a>{% endblock %}
-					</div>
-                {% endifnotequal %}
-                </div>
+                <div id="parent_projects">
+					{% for parent in parent_projects %}  <a href="{% djiurl parent %}">{{ parent }}</a>{% endfor %}
+				</div>
+                <span id="project_title" class="dj-editable ui-widget ui-widget-content">{{ project }}</span>
+				<!-- Uncomment this code to add an image logo instead of a CSS one
+	            <div id="project_logo" dir="ltr">
+					{% block logo_link_image %}<a href="{% djiurl project %}"><img src="{{ STATIC_URL }}/djity/images/djity_large_darkgreen.png" alt="{{ project.name }}"/></a>{% endblock %}
+				</div>
+				-->
+            </div>
 
                 <div id="project_left2">
 					<nav id="project_buttons" class="ui-helper-hidden">

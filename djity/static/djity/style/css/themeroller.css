@@ -57,7 +57,7 @@ body{
 	clear:both;
 }
 
-.size_slider, .radius_slider, .percent_slider{
+.size_slider, .radius_slider, .percent_slider, .shadow_slider, .width_slider{
 	width: 80%;
 }
 
