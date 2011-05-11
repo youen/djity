@@ -62,7 +62,11 @@
 					{% endif %}
 					<br />
 					{% endfor %}
+                                    {% ifequal group.0 'Messages' %}
+                                        <button type="button" id="send_message_button" onclick="top.dj.message('This is a message sent by the themeroller in order to check out messages style while editing it.')">Send a test message !</button>
+                                    {% endifequal %}
 				</div>
+                                
 				{% endfor %}
 			</div>
 			<div id="style_code">
