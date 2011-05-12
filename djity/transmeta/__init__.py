@@ -57,6 +57,10 @@ def get_value(instance,field,lang):
     attname = lambda x: get_real_fieldname(field, x)
     return  getattr(instance, attname(lang),None)
 
+def set_value(instance,field,lang,value):
+    attname = lambda x: get_real_fieldname(field, x)
+    setattr(instance, attname(lang),value)
+
 def default_value(field):
     '''
     When accessing to the name of the field itself, the value

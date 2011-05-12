@@ -48,4 +48,4 @@ class Command(BaseCommand):
         static_link = settings.STATIC_ROOT+"/"+app
         create_link(static_path,static_link)
 
-        print "Application %s is installed.\nYou should use 'python manage.py sync_db'" % app
+        print "Application %s is installed.\nYou should use 'python manage.py syncdb'" % app

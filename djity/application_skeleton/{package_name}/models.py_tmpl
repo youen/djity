@@ -9,6 +9,7 @@ from djity.utils.inherit import SuperManager
 from djity.utils import djreverse
 from djity.utils.security import sanitize
 from djity.portlet.models import TemplatePortlet, TextPortlet
+from djity.transmeta import TransMeta
 
 class {class_name}(Module):
     """
@@ -21,7 +22,15 @@ class {class_name}(Module):
     #get the module manager
     objects = SuperManager()
 
+    #use transmeta for international message
+    __metaclass__ = TransMeta
+    
     message = models.CharField(max_length=200, default='Hello World !')
+
+    class Meta:
+        #specify that the field 'message' is translatable
+        translate = ('message',)
+        
 
     def save(self,*args,**kwargs):
         """
@@ -57,7 +66,7 @@ class {class_name}Portlet(TemplatePortlet):
         super({class_name}Portlet,self).save(*args, **kwargs)
         
         if new:    
-            self.onload = "alert('Custom ajax portlet !')"
+            self.onload = "$('.{module_name}-load-portlet').{module_name}_widget();" 
             self.template = "{package_name}/{module_name}_portlet2.html"
             super({class_name}Portlet,self).save(*args, **kwargs)
 

@@ -12,6 +12,8 @@ $.widget("ui.editable",{
 			effect:'clip',
 			lang:'',
 			get_function:undefined,
+			//send the id of the div to the save and get function
+			send_divid:false,
 	},
 	_create: function() {
 		var self=this,
@@ -179,7 +181,19 @@ $.widget("ui.editable",{
 			var self = this,
 				options = self.options,
 				editorBox = self.editorBox;
-			self.options.save_function(self.element.html(),self.element.attr('id'),self.lang);
+
+
+			var args =	{
+						js_target:self,
+						html:self.element.html(),
+						lang:self.lang,
+					};
+			if (self.options.send_divid)
+			{
+				args['div_id'] = parseInt(self.element.attr('id'));
+			}
+
+			dj.remote(self.options.save_function,args)
 			self.close();	
 	},
 

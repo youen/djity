@@ -3,12 +3,18 @@ Ajax views for {application_name}.
 """
 
 from django.utils.translation import ugettext_lazy as _
-
+from django.utils.translation import activate, get_language
 from djity.utils.decorators import djity_view
+from djity.utils.security import sanitize
+from djity.transmeta import get_value,set_value
+
+
+from dajaxice.core import dajaxice_functions
+register = lambda name:dajaxice_functions.register_function('{package_name}.ajax',name)
 
 # permission needed to access a view can be 'view', 'edit', 'manage'
 @djity_view(perm='view')
-def example_ajax(context,js_target,text):
+def example_ajax(request,js_target,text,context=None):
     """
     This function simply transforms a text in upper case and put it in a div given as js_target
 
@@ -17,10 +23,40 @@ def example_ajax(context,js_target,text):
      * js_target - Proxy object to generate javascript code. Functions called on js_target here will be translated in javascript onto the object passed as target.
      * text - text to make upper case
     """
-    text = text.uppercase()
-    js_target.html(text)
+    text = text.upper()
+    js_target.text(text)
     js_target.message(_("%s written by ajax function !") % text)
     # If you want to reload the page and send a message to display after you can do:
     # js_target.message(_"%s written by ajax function !" % text, post=True)
     # js_target.reload()
+    # your view work with js_target and return nothing
+
+#register your view in dajaxice
+register('example_ajax')
+
+# save the message in the database
+@djity_view(perm='edit')
+def save_message(request,js_target,html,lang,context=None):
+    #get the {module_name}.models.{class_name} for this view from the context
+    module = context['module']
+    #filter script tag with the sanitize function
+    message = sanitize(html)
+    # set the message in the specific language
+    set_value(module,'message',lang,message)
+    module.save()
+    js_target.message(_("your message '%(text)s' is save in the database for language code %(lang)s") %{{'text':html,'lang':lang}})
+register('save_message')
+
+# get the message in a lang for international editing
+@djity_view(perm='edit')
+def get_message(request,js_target,lang,context=None):
+    module = context['module']
+    # get the message for a specific languange
+    message = get_value(module,'message',lang)
+    # call the javascript editor methode with the message as parameter
+    js_target.set_html(message)
+
+register('get_message')
+    
+    
 

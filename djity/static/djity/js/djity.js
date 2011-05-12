@@ -167,10 +167,17 @@ function widgetify() {
 
 	$('#messages').notify();
 
-	$("#project_title").editable({simple:true,save_function:dj.functions.save_project_title});
+
+	
+	if(dj.context.perm.manage){
+		$("#project_title").editable({simple:true,save_function:'djity.project.save_project_title'});
+	}
 
 	if(dj.context.perm.edit){
-		$(".dj-text-portlet").each(function(i,e){$(e).editable({save_function:dj.functions.save_text_portlet});});
+		$(".dj-text-portlet").each(function(i,e){$(e).editable({
+			save_function:'djity.portlet.save_text_portlet',
+			send_divid:true,}
+			);});
 	}
 }
 
@@ -213,27 +220,6 @@ function paginator() {
 
 dj.message = function(msg) {
 	$('#messages').notify('create',{text:msg});
-};
-
-dj.functions.save_text_portlet = function(html,id) {
-	/*
-	 * save change for a text portlet 
-	 *
-	 */
-	dj.remote('djity.portlet.save_text_portlet',{
-			'js_target':document,
-			'div_id':parseInt(id),
-			'html':html,
-			}
-	);
-};
-
-dj.functions.save_project_title = function(html){
-	dj.remote('djity.project.save_project_title',{
-			'js_target':document,
-			'html':html,
-		}
-	);
 };
 
 

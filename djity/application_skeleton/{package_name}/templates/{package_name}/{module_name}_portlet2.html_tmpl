@@ -1,6 +1,6 @@
 {{% extends "djity/portlet/portlet.html" %}}
 
-{{% block class%}}{module_name}-portlet {{{{block.super}}}}{{% endblock %}}
+{{% block class%}}{module_name}-load-portlet {{{{block.super}}}}{{% endblock %}}
 {{% block content %}}
 This is another template portlet !
 {{% endblock %}}

@@ -2,5 +2,13 @@
 
 {{% block class%}}{module_name}-portlet {{{{block.super}}}}{{% endblock %}}
 {{% block content %}}
-This is a template portlet !
+<p>This is a template portlet !</p>
+
+<p>Members of this project:
+<ul>
+{{% for member in project.get_members %}}
+<li>{{{{member.user}}}}</li>
+{{% endfor %}}
+</ul>
+</p>
 {{% endblock %}}
