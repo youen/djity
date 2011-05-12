@@ -122,6 +122,8 @@ $.widget("ui.editable",{
     },
 
 	_init: function() {
+
+			this.element.addClass('dj-editable');
 		    if ( this.options.autoOpen ) {
 				this.open();
 			}

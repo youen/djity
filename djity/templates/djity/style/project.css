@@ -359,6 +359,9 @@ html>body #main {
 	padding:10px 5px;
 }
 
+.dj-editable{
+	border:1px solid #666666;
+}
 /* portlet classes */
 
 .dj-portlet {
