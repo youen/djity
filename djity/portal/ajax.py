@@ -1,3 +1,4 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 from dajax.core import Dajax
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import login as django_login
@@ -41,7 +42,8 @@ def register(request,js_target,username,email,password1,password2,context=None):
             js_target.message(_('Your account is created ! your are connected as %s.'%username),post=True)
             js_target.message(_('We are creating your account... please wait.'))
             js_target.close()
-            js_target.reload()
+            js_target.close()
+            js_target.next()
 
     else:
         render = render_to_string('djity/portal/registration_form.html',{'form':form})

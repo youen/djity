@@ -137,7 +137,7 @@ dj.init = function(){
    //change elRTE save function	
 
 	elRTE.prototype.save = function (){
-		this.editor.prev().editable('close_editor');
+		this.editor.prev().editable('save');
 	}	
    //after all send notification
 	$(dj.context.messages).each(function(item,msg){
@@ -176,7 +176,9 @@ function widgetify() {
 	if(dj.context.perm.edit){
 		$(".dj-text-portlet").each(function(i,e){$(e).editable({
 			save_function:'djity.portlet.save_text_portlet',
-			send_divid:true,}
+			send_divid:true,
+		    toolbar:'compact',
+			}
 			);});
 	}
 }

@@ -8,45 +8,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-05 17:06+0200\n"
+"POT-Creation-Date: 2011-05-13 11:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 
-#: portal/ajax.py:19
+#: portal/ajax.py:20
 msgid "You are now disconnected."
 msgstr ""
 
-#: portal/ajax.py:41
+#: portal/ajax.py:42
 #, python-format
 msgid "Your account is created ! your are connected as %s."
 msgstr ""
 
-#: portal/ajax.py:42
+#: portal/ajax.py:43
 msgid "We are creating your account... please wait."
 msgstr ""
 
-#: portal/ajax.py:81
+#: portal/ajax.py:83
 msgid "Your password has been changed."
 msgstr ""
 
-#: portal/ajax.py:96
+#: portal/ajax.py:98
 msgid "Authentication failed."
 msgstr ""
 
-#: portal/ajax.py:99
+#: portal/ajax.py:101
 msgid "This account is disabled."
 msgstr ""
 
-#: portal/ajax.py:102
+#: portal/ajax.py:104
 msgid "You were successfully connected !"
 msgstr ""
 
-#: portal/ajax.py:103
+#: portal/ajax.py:105
 msgid "Connecting... please wait."
 msgstr ""
 
@@ -68,72 +68,72 @@ msgstr ""
 msgid "Change in portlet saved."
 msgstr ""
 
-#: project/ajax.py:35
+#: project/ajax.py:36
 msgid "Project title saved."
 msgstr ""
 
-#: project/ajax.py:79
+#: project/ajax.py:80
 #, python-format
 msgid ""
 "Tab creation failed. There is no table %s in the database, contact the "
 "administrator."
 msgstr ""
 
-#: project/ajax.py:112
+#: project/ajax.py:113
 #, python-format
 msgid "Your new project %s was created !"
 msgstr ""
 
-#: project/ajax.py:143
+#: project/ajax.py:144
 #, python-format
 msgid "User %s is no longer a member of this project."
 msgstr ""
 
-#: project/ajax.py:153
+#: project/ajax.py:154
 msgid "Members of this project updated."
 msgstr ""
 
-#: project/ajax.py:158
+#: project/ajax.py:159
 msgid "You can't remove yourself from the managers of the current project."
 msgstr ""
 
-#: project/ajax.py:162
+#: project/ajax.py:163
 msgid "At least one manager is required."
 msgstr ""
 
-#: project/ajax.py:174
+#: project/ajax.py:175
 msgid "Root project can't inherit members."
 msgstr ""
 
-#: project/ajax.py:178
+#: project/ajax.py:179
 #, python-format
 msgid "This project inherits members of %s project."
 msgstr ""
 
-#: project/ajax.py:180
+#: project/ajax.py:181
 #, python-format
 msgid "This project doesn't inherit members of %s project."
 msgstr ""
 
-#: project/ajax.py:194
+#: project/ajax.py:195
 msgid "New subscriptions to this project are now forbidden."
 msgstr ""
 
-#: project/ajax.py:196
+#: project/ajax.py:197
 msgid "New subscriptions to this project are now allowed."
 msgstr ""
 
-#: project/ajax.py:216
+#: project/ajax.py:217
 msgid ""
 "Your subscription is registered. Wait for validation from a manager of this "
 "project."
 msgstr ""
 
-#: project/ajax.py:219
+#: project/ajax.py:220
 msgid "You are no longer a member of this project."
 msgstr ""
 
-#: project/views.py:38 templates/djity/base.html:147
+#: project/views.py:38 templates/djity/base.html:145
 msgid "Login"
 msgstr ""
 
@@ -153,11 +153,15 @@ msgid ""
 "You can subscribe using the button on the top left corner."
 msgstr ""
 
-#: simplepage/ajax.py:21
+#: simplepage/ajax.py:22
 msgid "Change in page saved."
 msgstr ""
 
-#: simplepage/views.py:32
+#: simplepage/ajax.py:24
+msgid "No change in the page."
+msgstr ""
+
+#: simplepage/views.py:25
 msgid "The current page is empty, you can write some content."
 msgstr ""
 
@@ -184,51 +188,51 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
-#: templates/djity/base.html:107
+#: templates/djity/base.html:105
 msgid "New project"
 msgstr ""
 
-#: templates/djity/base.html:109 templates/djity/base.html.py:200
+#: templates/djity/base.html:107 templates/djity/base.html.py:198
 msgid "Manage users"
 msgstr ""
 
-#: templates/djity/base.html:109
+#: templates/djity/base.html:107
 msgid "Awaiting members"
 msgstr ""
 
-#: templates/djity/base.html:110
+#: templates/djity/base.html:108
 msgid "Manage style"
 msgstr ""
 
-#: templates/djity/base.html:135
+#: templates/djity/base.html:133
 msgid "Add new tab"
 msgstr ""
 
-#: templates/djity/base.html:149
+#: templates/djity/base.html:147
 msgid "User"
 msgstr ""
 
-#: templates/djity/base.html:151 templates/djity/portal/profile_form.html:15
+#: templates/djity/base.html:149 templates/djity/portal/profile_form.html:15
 #: templates/djity/portal/registration_form.html:29
 msgid "Password"
 msgstr ""
 
-#: templates/djity/base.html:159
+#: templates/djity/base.html:157
 msgid "Remove tab ?"
 msgstr ""
 
-#: templates/djity/base.html:161 templates/djity/base.html.py:167
+#: templates/djity/base.html:159 templates/djity/base.html.py:165
 #, python-format
 msgid ""
 "Tab %(module_name)s will be permanently deleted and cannot be recovered. Are "
 "you sure?"
 msgstr ""
 
-#: templates/djity/base.html:165
+#: templates/djity/base.html:163
 msgid "Remove tab and delete project ?"
 msgstr ""
 
-#: templates/djity/base.html:170
+#: templates/djity/base.html:168
 #, python-format
 msgid ""
 "This is the last tab of the project %(project_name)s.\tIt will be "
@@ -236,35 +240,35 @@ msgid ""
 "cannot be recovered. Are you sure?"
 msgstr ""
 
-#: templates/djity/base.html:176
+#: templates/djity/base.html:174
 msgid "Edit tab parameters"
 msgstr ""
 
-#: templates/djity/base.html:186
+#: templates/djity/base.html:184
 msgid "Create new Tab"
 msgstr ""
 
-#: templates/djity/base.html:194
+#: templates/djity/base.html:192
 msgid "Create project"
 msgstr ""
 
-#: templates/djity/base.html:195
+#: templates/djity/base.html:193
 msgid "Permanent label"
 msgstr ""
 
-#: templates/djity/base.html:210
+#: templates/djity/base.html:208
 msgid "handle"
 msgstr ""
 
-#: templates/djity/base.html:214
+#: templates/djity/base.html:212
 msgid "Your browser doesn't support iframes"
 msgstr ""
 
-#: templates/djity/base.html:220
+#: templates/djity/base.html:218
 msgid "Connection needed"
 msgstr ""
 
-#: templates/djity/base.html:221
+#: templates/djity/base.html:219
 msgid "You need to be connected to request subscrition."
 msgstr ""
 
@@ -317,43 +321,43 @@ msgstr ""
 msgid "Configure\ttab"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:28
+#: templates/djity/style/themeroller.html:29
 msgid "Parameters"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:29
+#: templates/djity/style/themeroller.html:30
 msgid "Code"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:30
+#: templates/djity/style/themeroller.html:31
 msgid "Up/Down"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:63
+#: templates/djity/style/themeroller.html:74
 msgid "Link to the current CSS."
 msgstr ""
 
-#: templates/djity/style/themeroller.html:68
-msgid "Inherit style from the parent project"
+#: templates/djity/style/themeroller.html:79
+msgid "Inherit style from parent"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:69
+#: templates/djity/style/themeroller.html:80
 msgid "Get back to the default style"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:70
+#: templates/djity/style/themeroller.html:81
 msgid "Download active set of parameters"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:72
+#: templates/djity/style/themeroller.html:83
 msgid "Upload parameters"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:76
+#: templates/djity/style/themeroller.html:87
 msgid "Apply"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:77
+#: templates/djity/style/themeroller.html:88
 msgid "Save"
 msgstr ""
 

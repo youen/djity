@@ -10,69 +10,69 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-13 11:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Marek Hanik <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
 #: portal/ajax.py:20
 msgid "You are now disconnected."
-msgstr "Vous êtes maintenant déconnecté."
+msgstr "Ste odpojený."
 
 #: portal/ajax.py:42
 #, python-format
 msgid "Your account is created ! your are connected as %s."
-msgstr "Votre compte a été créé ! Vous êtes connecté en tant que %s."
+msgstr "Váš účet bol úspešne vytvorený! ste pripojený ako %s."
 
 #: portal/ajax.py:43
 msgid "We are creating your account... please wait."
-msgstr "Nous sommes en train de créer votre compte... veuillez patienter."
+msgstr "Váš účet sa práve vytvára......prosím čakajte."
 
 #: portal/ajax.py:83
 #, fuzzy
 msgid "Your password has been changed."
-msgstr "Votre mot de passe a été modifié."
+msgstr "Vaše prístupové heslo bolo zmenené."
 
 #: portal/ajax.py:98
 msgid "Authentication failed."
-msgstr "L'authentification à échoué."
+msgstr "Overenie zlyhalo"
 
 #: portal/ajax.py:101
 msgid "This account is disabled."
-msgstr "Ce compte est désactivé."
+msgstr "Tento účet je zablokovaný."
 
 #: portal/ajax.py:104
 msgid "You were successfully connected !"
-msgstr "Vous avez été connecté avec succès !"
+msgstr "Boli ste úspešne pripojený!"
 
 #: portal/ajax.py:105
 msgid "Connecting... please wait."
-msgstr "Connexion en cours... merci de patienter."
+msgstr "Pripájam.....prosím čakajte."
 
 #: portal/forms.py:27 portal/forms.py:111
 msgid "Passwords don't match."
-msgstr "Les mots de passe ne correspondent pas."
+msgstr "Zlé prístupové heslo."
 
 #: portal/forms.py:88
 #, python-format
 msgid "Username %s is not valid."
-msgstr "Le nom d'utilisateur %s n'est pas valide."
+msgstr "Užívateľské meno %s je neplatné."
 
 #: portal/forms.py:100
 #, python-format
 msgid "Username %s is not avaible."
-msgstr "Le nom d'utilisateur %s n'est pas disponible."
+msgstr "Užívateľské meno %s nie je dostupné."
 
 #: portlet/ajax.py:23
 msgid "Change in portlet saved."
-msgstr "Modification du portlet enregistrée."
+msgstr "Zmena v portlete bola uložená."
 
 #: project/ajax.py:36
 msgid "Project title saved."
-msgstr "Titre du projet sauvegardé."
+msgstr "Názov projektu bol uložený."
 
 #: project/ajax.py:80
 #, fuzzy, python-format
@@ -80,121 +80,122 @@ msgid ""
 "Tab creation failed. There is no table %s in the database, contact the "
 "administrator."
 msgstr ""
-"La création de l'onglet a échoué. Il n'y a pas de table %s dans la basede "
-"donnée, contactez votre administrateur"
+"Tabuľka nebola vytvorená. Žiadne tabuľky pre použite, kontaktujte prosím "
+"administrátora."
 
 #: project/ajax.py:113
 #, fuzzy, python-format
 msgid "Your new project %s was created !"
-msgstr "Votre nouveau projet %s a été créé !"
+msgstr "Váš nový projekt %s bol vytvorený !"
 
 #: project/ajax.py:144
-#, python-format
+#, fuzzy, python-format
 msgid "User %s is no longer a member of this project."
-msgstr "L'utilisateur %s n'est plus membre de ce project."
+msgstr "Člen %s už nie je členom tohto projektu."
 
 #: project/ajax.py:154
 msgid "Members of this project updated."
-msgstr "Les membres de ce project ont été mis à jour."
+msgstr "Členovia tohto projektu boli aktualizovaný."
 
 #: project/ajax.py:159
+#, fuzzy
 msgid "You can't remove yourself from the managers of the current project."
-msgstr ""
-"Vous ne pouvez pas vous supprimer vous même des managers du projet courant."
+msgstr "Nemúžte odstrániť samých seba z manažérov."
 
 #: project/ajax.py:163
 msgid "At least one manager is required."
-msgstr "Au moins un manager est requis."
+msgstr "Požadovaný je minimálne jeden manažér."
 
 #: project/ajax.py:175
 msgid "Root project can't inherit members."
-msgstr "Le projet racine ne peut pas hériter ses membres."
+msgstr "Root projekt nemôže prevziať členov."
 
 #: project/ajax.py:179
 #, python-format
 msgid "This project inherits members of %s project."
-msgstr "Ce projet hérite des membres du projet %s."
+msgstr "Tento projekt prevzal členov z projektu %s."
 
 #: project/ajax.py:181
 #, fuzzy, python-format
 msgid "This project doesn't inherit members of %s project."
-msgstr "Ce projet n'hérite pas des membres du projet %s."
+msgstr "Teento projekt neprevzal členov z projektu %s."
 
 #: project/ajax.py:195
 msgid "New subscriptions to this project are now forbidden."
-msgstr "De nouvelles inscription à ce projet sont maintenant interdites."
+msgstr "Nové príspevky na tento projekt sú teraz zakázané"
 
 #: project/ajax.py:197
 msgid "New subscriptions to this project are now allowed."
-msgstr "De nouvelles inscriptions à ce projet sont maintenant autorisées."
+msgstr "Nové príspevky na tento projekt sú teraz povolené."
 
 #: project/ajax.py:217
 msgid ""
 "Your subscription is registered. Wait for validation from a manager of this "
 "project."
 msgstr ""
-"Votre inscription est enregistrée. Attendez la validation d'unmanager de ce "
-"projet."
+"Váš príspevok bol registrovaný. Čakajte prosím na potvrdenie od manažera "
+"tohto projektu."
 
 #: project/ajax.py:220
 msgid "You are no longer a member of this project."
-msgstr "Vous n'êtes plus membre de ce projet."
+msgstr "Už nie ste členom tohto projektu."
 
 #: project/views.py:38 templates/djity/base.html:145
 msgid "Login"
-msgstr "Connexion"
+msgstr "Prihlásenie"
 
 #: project/views.py:52
 msgid ""
 "You can't view any page on this project !\n"
 "You can subscribe using the button on the top left corner."
 msgstr ""
-"Vous ne pouvez voir aucune page de ce projet !\n"
-"Vous pouvez vous inscrire en utilisant le bouton en haut à gauche."
+"Nemôžete vidieť žiadnu stranu z tohto projektu!\n"
+"Môžete prispieť použitím tlačidla v ľavom hornom rohu."
 
 #: project/views.py:53 project/views.py:63
+#, fuzzy
 msgid "Subscribe"
-msgstr "Inscription"
+msgstr "prispieť."
 
 #: project/views.py:62
 msgid ""
 "You can't view this page on this project !\n"
 "You can subscribe using the button on the top left corner."
 msgstr ""
-"Vous ne pouvez pas voir cette page sur ce projet !\n"
-"Vous pouvez vous inscrire en utilisant le bouton en haut à gauche."
+"Nemôžete vidieť túto stranu z tohto projektu!\n"
+"Môžete prispieť použitím tlačidla v ľavom hornom rohu."
 
 #: simplepage/ajax.py:22
 msgid "Change in page saved."
-msgstr "Modification de la page enregistrée."
+msgstr "Zmeny na stránke uložené."
 
 #: simplepage/ajax.py:24
 #, fuzzy
 msgid "No change in the page."
-msgstr "Modification du portlet enregistrée."
+msgstr "Zmena v portlete bola uložená."
 
 #: simplepage/views.py:25
 msgid "The current page is empty, you can write some content."
-msgstr "La page courante est vide, vous pouvez écrire du contenu."
+msgstr "Táto stránka je prázdna, môžete napísať nejaký obsah."
 
 #: style/ajax.py:27
 msgid "The style of the project has been saved."
-msgstr "Le style du projet a été enregistré."
+msgstr "Štýl projektu bol uložený."
 
 #: style/ajax.py:42
 msgid "The style of the project has been set to default."
-msgstr "Le style du projet a été mis à défaut."
+msgstr "Štýl tohto projektu bol nastavený ako predvolený."
 
 #: style/ajax.py:53
 #, python-format
 msgid ""
 "The style of the current project has been overwritten by the style of the "
 "project %s."
-msgstr "Le style du projet courant a été écrasé par le style du projet %s."
+msgstr "Štýl tohto projektu bol prepísaný štýlom projektu %s."
 
 #: style/ajax.py:56
 msgid "The current project is root and cannot inherit its style."
-msgstr "Le projet courant est racine et ne peut pas hériter de son style."
+msgstr "Tento projekt je root a nemožno prevziať jeho štýl."
 
 #: templates/djity/base.html:82
 msgid "Warning"
@@ -202,36 +203,39 @@ msgstr ""
 
 #: templates/djity/base.html:105
 msgid "New project"
-msgstr "Nouveau projet"
+msgstr "Nový projekt"
 
 #: templates/djity/base.html:107 templates/djity/base.html.py:198
 msgid "Manage users"
-msgstr "Gestion des utilisateurs"
+msgstr "správa užívateľov"
 
 #: templates/djity/base.html:107
+#, fuzzy
 msgid "Awaiting members"
-msgstr "Membres en attente"
+msgstr "čaká sa na členov"
 
 #: templates/djity/base.html:108
 msgid "Manage style"
-msgstr "Gestion du style"
+msgstr "Zmeniť štýl"
 
 #: templates/djity/base.html:133
 msgid "Add new tab"
-msgstr "Ajouter un nouvel onglet"
+msgstr "Pridať novú tabuľku"
 
 #: templates/djity/base.html:147
+#, fuzzy
 msgid "User"
-msgstr "Utilisateur"
+msgstr "Užívateľské meno:"
 
 #: templates/djity/base.html:149 templates/djity/portal/profile_form.html:15
 #: templates/djity/portal/registration_form.html:29
+#, fuzzy
 msgid "Password"
-msgstr "Mot de passe"
+msgstr "Heslo."
 
 #: templates/djity/base.html:157
 msgid "Remove tab ?"
-msgstr "Supprimer l'onglet ?"
+msgstr "Odstrániť tabuľku ?"
 
 #: templates/djity/base.html:159 templates/djity/base.html.py:165
 #, fuzzy, python-format
@@ -239,12 +243,14 @@ msgid ""
 "Tab %(module_name)s will be permanently deleted and cannot be recovered. Are "
 "you sure?"
 msgstr ""
-"L'onglet %(module_name)s sera supprimé de manière permanente et ne pourra "
-"pas être récupéré. Êtes vous sûr ?"
+"\n"
+"\t\t\tTab %(module_name)s  bude navždy vymazané a nebude možné ho obnoviť. "
+"Ste si istý?\"\n"
+"\t\t\t"
 
 #: templates/djity/base.html:163
 msgid "Remove tab and delete project ?"
-msgstr "Supprimer l'onglet et le projet ?"
+msgstr "Odstrániť tabuľku a zmazať projekt ?"
 
 #: templates/djity/base.html:168
 #, fuzzy, python-format
@@ -253,134 +259,180 @@ msgid ""
 "permanently deleted along with all its data (theme, memberships, etc.) and "
 "cannot be recovered. Are you sure?"
 msgstr ""
-"L'onglet %(module_name)s sera supprimé de manière permanente et ne pourra "
-"pas être récupéré. Êtes vous sûr ?"
+"\n"
+"\t\t\tToto je posledná tabuľka projektu %(project_name)s.\n"
+"\t\t\tIt bude navždy vymazaná spolu so všetkými jej dátami(témy, členstvami, "
+"atď.) a nebude možné ju obnoviť. Ste si istý?\n"
+"\t\t\t"
 
 #: templates/djity/base.html:174
 msgid "Edit tab parameters"
-msgstr "Éditer les paramètres de l'onglet"
+msgstr "Zmeniť parametre tabuľky"
 
 #: templates/djity/base.html:184
 msgid "Create new Tab"
-msgstr "Créer un nouvel onglet"
+msgstr "Vytvoriť novú tabuľku"
 
 #: templates/djity/base.html:192
 msgid "Create project"
-msgstr "Créer un projet"
+msgstr "Vytvoriť projekt"
 
 #: templates/djity/base.html:193
 msgid "Permanent label"
-msgstr "Label permanent"
+msgstr "Trvalé označenie"
 
 #: templates/djity/base.html:208
 msgid "handle"
-msgstr "poignée"
+msgstr "spracúva sa"
 
 #: templates/djity/base.html:212
 msgid "Your browser doesn't support iframes"
-msgstr "Votre navigateur ne supporte pas les iframes"
+msgstr "Váš prehľadávač nepodporuje iframi"
 
 #: templates/djity/base.html:218
 msgid "Connection needed"
-msgstr "Connexion requise"
+msgstr "Potrebné spojenie"
 
 #: templates/djity/base.html:219
 msgid "You need to be connected to request subscrition."
-msgstr "Vous devez être connecté pour vous inscrire à un projet."
+msgstr "Pre tento príspevok musíte byť pripojený."
 
 #: templates/djity/portal/profile_form.html:6
-#, fuzzy
 msgid "Please correct the errors below:"
-msgstr "Merci de corriger les erreurs ci-dessous"
+msgstr "Prosím opravte nižšie uvedené chyby."
 
 #: templates/djity/portal/profile_form.html:22
 #: templates/djity/portal/registration_form.html:36
+#, fuzzy
 msgid "Password (type again to catch typos)"
-msgstr "Mot de passe (une deuxième pour éviter les fautes de frappe)"
+msgstr "Heslo (napíšte znovu pre vyhnutie sa preklepom):"
 
 #: templates/djity/portal/registration_form.html:6
+#, fuzzy
 msgid "Please correct the errors below"
-msgstr "Merci de corriger les erreurs ci-dessous"
+msgstr "Prosím opravte nižšie uvedené chyby."
 
 #: templates/djity/portal/registration_form.html:15
 #, fuzzy
 msgid "Username"
-msgstr "Utilisateur"
+msgstr "Užívateľské meno:"
 
 #: templates/djity/portal/registration_form.html:22
+#, fuzzy
 msgid "Email address"
-msgstr "Adresse email"
+msgstr "Emailová adresa:"
 
 #: templates/djity/project/manage_users.html:23
 msgid "Deleted"
-msgstr "Supprimé"
+msgstr "Vymazaný"
 
 #: templates/djity/project/manage_users.html:34
+#, fuzzy
 msgid "Inherit permissions"
-msgstr "Hériter des permissions"
+msgstr "Povolenie vkladať"
 
 #: templates/djity/project/manage_users.html:43
+#, fuzzy
 msgid "Forbid subscriptions"
-msgstr "Inscriptions interdites"
+msgstr "Zákaz vkladania"
 
 #: templates/djity/project/paginator.html:24
 msgid "No next page"
-msgstr "Pas de page suivante"
+msgstr "Žiadna ďalšia strana"
 
 #: templates/djity/project/paginator.html:24
 msgid "Next"
-msgstr "Suivant"
+msgstr "Ďalší"
 
 #: templates/djity/project/tab.html:8
+#, fuzzy
 msgid "Remove tab"
-msgstr "Supprimer l'onglet"
+msgstr "Odstrániť tabuľku ?"
 
 #: templates/djity/project/tab.html:9
 #, fuzzy
 msgid "Configure\ttab"
-msgstr "Configurer l'onglet"
+msgstr "Konfigurovať tabuľku"
 
 #: templates/djity/style/themeroller.html:29
 msgid "Parameters"
-msgstr "Paramètres"
+msgstr "Nastavenia"
 
 #: templates/djity/style/themeroller.html:30
 msgid "Code"
-msgstr "Code"
+msgstr "Kód"
 
 #: templates/djity/style/themeroller.html:31
 msgid "Up/Down"
-msgstr "Téléchargements"
+msgstr "Hore/Dole"
 
 #: templates/djity/style/themeroller.html:74
 msgid "Link to the current CSS."
-msgstr "Lien vers le CSS courant"
+msgstr "Odkaz na aktuálny CSS."
 
 #: templates/djity/style/themeroller.html:79
 #, fuzzy
 msgid "Inherit style from parent"
-msgstr "Hériter du style depuis le parent projet"
+msgstr "ˇPrijatý štýl z pôvodného projektu"
 
 #: templates/djity/style/themeroller.html:80
 msgid "Get back to the default style"
-msgstr "Retourner au style par défaut"
+msgstr "Vráť sa späť k základnému štýlu"
 
 #: templates/djity/style/themeroller.html:81
 msgid "Download active set of parameters"
-msgstr "Télécharger paramètres courants"
+msgstr "Stiahnuť aktívny súbor nastavení"
 
 #: templates/djity/style/themeroller.html:83
 msgid "Upload parameters"
-msgstr "Envoyez les paramètres"
+msgstr "Nahrať nastavenia"
 
 #: templates/djity/style/themeroller.html:87
 msgid "Apply"
-msgstr "Appliquer"
+msgstr "Aplikovať"
 
 #: templates/djity/style/themeroller.html:88
 msgid "Save"
-msgstr "Enregistrer"
+msgstr "Uložiť"
 
 #: utils/decorators.py:103 utils/decorators.py:106
 msgid "You were redirected because you lacked a permission: "
-msgstr "Vous avez été redirigé parce qu'il vous manque une permission: "
+msgstr "Boli ste presmerovaný, pretože ste stratili povolenie: "
+
+#~ msgid "Passwords don't match"
+#~ msgstr "Zlé prístupové heslo."
+
+#~ msgid "TextPortlet: %s"
+#~ msgstr "TextPortlet: %s"
+
+#~ msgid "TemplatePortlet: %s"
+#~ msgstr "Vzor Portletu: %s"
+
+#~ msgid "login"
+#~ msgstr "prihlásenie"
+
+#~ msgid "<p><strong>Warning</strong></p>"
+#~ msgstr "<p><silné>Varovanie</ silné ></p>"
+
+#~ msgid "user"
+#~ msgstr "používateľ"
+
+#~ msgid "password"
+#~ msgstr "heslo"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t\t\tTab %(module_name)s  will be permanently deleted and cannot be "
+#~ "recovered. Are you sure?\"\n"
+#~ "\t\t\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t\tTab %(module_name)s  bude navždy vymazané a nebude možné ho "
+#~ "obnoviť. Ste si istý? \"\n"
+#~ "\t\t\t"
+
+#~ msgid "Users Manager"
+#~ msgstr "Správca užívateľov"
+
+#~ msgid "Remove Tab"
+#~ msgstr "Odstrániť tabuľku"

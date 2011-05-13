@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-05 17:14+0200\n"
+"POT-Creation-Date: 2011-05-13 11:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,41 +17,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: portal/ajax.py:19
+#: portal/ajax.py:20
 msgid "You are now disconnected."
 msgstr "离线"
 
-#: portal/ajax.py:41
+#: portal/ajax.py:42
 #, python-format
 msgid "Your account is created ! your are connected as %s."
 msgstr "你的账户已建立，登录名是%s"
 
-#: portal/ajax.py:42
+#: portal/ajax.py:43
 msgid "We are creating your account... please wait."
 msgstr "正在建立账户中...，请稍候"
 
-#: portal/ajax.py:81
-msgid "Your password is changed."
+#: portal/ajax.py:83
+#, fuzzy
+msgid "Your password has been changed."
 msgstr "你的密码已更改"
 
-#: portal/ajax.py:96
+#: portal/ajax.py:98
 msgid "Authentication failed."
 msgstr "验证失败"
 
-#: portal/ajax.py:99
+#: portal/ajax.py:101
 msgid "This account is disabled."
 msgstr "此帐户被禁用"
 
-#: portal/ajax.py:102
+#: portal/ajax.py:104
 msgid "You were successfully connected !"
 msgstr "您已成功登录"
 
-#: portal/ajax.py:103
+#: portal/ajax.py:105
 msgid "Connecting... please wait."
 msgstr "连接中...请稍候"
 
-#: portal/forms.py:27
-msgid "Passwords don't match"
+#: portal/forms.py:27 portal/forms.py:111
+msgid "Passwords don't match."
 msgstr "密码不匹配"
 
 #: portal/forms.py:88
@@ -64,89 +65,77 @@ msgstr "用户名%s无效"
 msgid "Username %s is not avaible."
 msgstr "用户名%s已存在"
 
-#: portal/forms.py:111
-msgid "Passwords don't match."
-msgstr "密码不匹配"
-
 #: portlet/ajax.py:23
 msgid "Change in portlet saved."
 msgstr ""
 
-#: portlet/models.py:71
-#, python-format
-msgid "TextPortlet: %s"
-msgstr ""
-
-#: portlet/models.py:92
-#, python-format
-msgid "TemplatePortlet: %s"
-msgstr ""
-
-#: project/ajax.py:35
+#: project/ajax.py:36
 msgid "Project title saved."
 msgstr ""
 
-#: project/ajax.py:79
+#: project/ajax.py:80
+#, python-format
 msgid ""
-"Tab creation failed. No table for application, contact the administrator."
+"Tab creation failed. There is no table %s in the database, contact the "
+"administrator."
 msgstr ""
 
-#: project/ajax.py:112
-#, python-format
-msgid "Your new project %s is created !"
+#: project/ajax.py:113
+#, fuzzy, python-format
+msgid "Your new project %s was created !"
 msgstr "新项目名%s建立"
 
-#: project/ajax.py:143
+#: project/ajax.py:144
 #, python-format
-msgid "Member %s is no longer a member of this project."
+msgid "User %s is no longer a member of this project."
 msgstr ""
 
-#: project/ajax.py:153
+#: project/ajax.py:154
 msgid "Members of this project updated."
 msgstr ""
 
-#: project/ajax.py:158
-msgid "You can't remove yourself from the managers."
+#: project/ajax.py:159
+msgid "You can't remove yourself from the managers of the current project."
 msgstr ""
 
-#: project/ajax.py:162
+#: project/ajax.py:163
 msgid "At least one manager is required."
 msgstr ""
 
-#: project/ajax.py:174
+#: project/ajax.py:175
 msgid "Root project can't inherit members."
 msgstr ""
 
-#: project/ajax.py:178
+#: project/ajax.py:179
 #, python-format
 msgid "This project inherits members of %s project."
 msgstr ""
 
-#: project/ajax.py:180
+#: project/ajax.py:181
 #, python-format
-msgid "This project doesn't inherits members of %s project."
+msgid "This project doesn't inherit members of %s project."
 msgstr ""
 
-#: project/ajax.py:194
+#: project/ajax.py:195
 msgid "New subscriptions to this project are now forbidden."
 msgstr ""
 
-#: project/ajax.py:196
+#: project/ajax.py:197
 msgid "New subscriptions to this project are now allowed."
 msgstr ""
 
-#: project/ajax.py:216
+#: project/ajax.py:217
 msgid ""
 "Your subscription is registered. Wait for validation from a manager of this "
 "project."
 msgstr ""
 
-#: project/ajax.py:219
+#: project/ajax.py:220
 msgid "You are no longer a member of this project."
 msgstr ""
 
-#: project/views.py:38
-msgid "login"
+#: project/views.py:38 templates/djity/base.html:145
+msgid "Login"
 msgstr "登录"
 
 #: project/views.py:52
@@ -156,20 +145,28 @@ msgid ""
 msgstr ""
 
 #: project/views.py:53 project/views.py:63
-msgid "subscribe"
+#, fuzzy
+msgid "Subscribe"
 msgstr "订阅"
 
 #: project/views.py:62
 msgid ""
 "You can't view this page on this project !\n"
 "You can subscribe using the button on the top left corner."
-msgstr "您不能在这个项目上查看此页!\n您可以订阅使用左上角的按钮订阅。"
+msgstr ""
+"您不能在这个项目上查看此页!\n"
+"您可以订阅使用左上角的按钮订阅。"
 
-#: simplepage/ajax.py:21
+#: simplepage/ajax.py:22
 msgid "Change in page saved."
 msgstr "在页面保存更改"
 
-#: simplepage/views.py:32
+#: simplepage/ajax.py:24
+#, fuzzy
+msgid "No change in the page."
+msgstr "在页面保存更改"
+
+#: simplepage/views.py:25
 msgid "The current page is empty, you can write some content."
 msgstr "当前页是空的，你可以写一些内容。"
 
@@ -193,134 +190,119 @@ msgid "The current project is root and cannot inherit its style."
 msgstr ""
 
 #: templates/djity/base.html:82
-msgid "<p><strong>Warning</strong></p>"
+msgid "Warning"
 msgstr ""
 
-#: templates/djity/base.html:107
+#: templates/djity/base.html:105
 msgid "New project"
 msgstr "新项目"
 
-#: templates/djity/base.html:108
+#: templates/djity/base.html:107 templates/djity/base.html.py:198
 msgid "Manage users"
 msgstr "管理用户"
 
-#: templates/djity/base.html:108
-msgid "awaiting members"
+#: templates/djity/base.html:107
+#, fuzzy
+msgid "Awaiting members"
 msgstr "等待成员"
 
-#: templates/djity/base.html:109
+#: templates/djity/base.html:108
 msgid "Manage style"
 msgstr "管理风格"
 
-#: templates/djity/base.html:134
+#: templates/djity/base.html:133
 msgid "Add new tab"
 msgstr "加入新标签"
 
-#: templates/djity/base.html:146
-msgid "Login"
-msgstr "登录"
-
-#: templates/djity/base.html:148
-msgid "user"
+#: templates/djity/base.html:147
+#, fuzzy
+msgid "User"
 msgstr "用户名"
 
-#: templates/djity/base.html:150
-msgid "password"
+#: templates/djity/base.html:149 templates/djity/portal/profile_form.html:15
+#: templates/djity/portal/registration_form.html:29
+#, fuzzy
+msgid "Password"
 msgstr "密码"
 
-#: templates/djity/base.html:158
+#: templates/djity/base.html:157
 msgid "Remove tab ?"
 msgstr "移除标签？"
 
-#: templates/djity/base.html:160
+#: templates/djity/base.html:159 templates/djity/base.html.py:165
 #, python-format
 msgid ""
-"\n"
-"\t\t\tTab %(module_name)s  will be permanently deleted and cannot be "
-"recovered. Are you sure?\"\n"
-"\t\t\t"
+"Tab %(module_name)s will be permanently deleted and cannot be recovered. Are "
+"you sure?"
 msgstr ""
 
-#: templates/djity/base.html:166
+#: templates/djity/base.html:163
 msgid "Remove tab and delete project ?"
 msgstr "从项目名中移除标签"
 
 #: templates/djity/base.html:168
 #, python-format
 msgid ""
-"\n"
-"\t\t\tTab %(module_name)s will be permanently deleted and cannot be "
-"recovered. Are you sure?\"\n"
-"\t\t\t"
+"This is the last tab of the project %(project_name)s.\tIt will be "
+"permanently deleted along with all its data (theme, memberships, etc.) and "
+"cannot be recovered. Are you sure?"
 msgstr ""
 
-#: templates/djity/base.html:173
-#, python-format
-msgid ""
-"\n"
-"\t\t\tThis is the last tab of the project %(project_name)s.\n"
-"\t\t\tIt will be permanently deleted along with all its data (theme, "
-"memberships, etc.) and cannot be recovered. Are you sure?\n"
-"\t\t\t"
-msgstr ""
-
-#: templates/djity/base.html:182
+#: templates/djity/base.html:174
 msgid "Edit tab parameters"
 msgstr "编辑选项卡参数“"
 
-#: templates/djity/base.html:192
+#: templates/djity/base.html:184
 msgid "Create new Tab"
 msgstr "创建新标签"
 
-#: templates/djity/base.html:200
+#: templates/djity/base.html:192
 msgid "Create project"
 msgstr "创建项目"
 
-#: templates/djity/base.html:201
+#: templates/djity/base.html:193
 msgid "Permanent label"
 msgstr "永久标签"
 
-#: templates/djity/base.html:206
-msgid "Users Manager"
-msgstr "用户管理"
-
-#: templates/djity/base.html:216
+#: templates/djity/base.html:208
 msgid "handle"
 msgstr "处理"
 
-#: templates/djity/base.html:220
+#: templates/djity/base.html:212
 msgid "Your browser doesn't support iframes"
 msgstr "您的浏览器不支持嵌入式框架"
 
-#: templates/djity/base.html:226
+#: templates/djity/base.html:218
 msgid "Connection needed"
 msgstr "连接需要"
 
-#: templates/djity/base.html:227
+#: templates/djity/base.html:219
 msgid "You need to be connected to request subscrition."
 msgstr ""
 
 #: templates/djity/portal/profile_form.html:6
-#: templates/djity/portal/registration_form.html:6
 msgid "Please correct the errors below:"
 msgstr "请更正下列错误"
 
-#: templates/djity/portal/profile_form.html:15
-#: templates/djity/portal/registration_form.html:29
-msgid "Password:"
-msgstr "密码"
-
 #: templates/djity/portal/profile_form.html:22
 #: templates/djity/portal/registration_form.html:36
-msgid "Password (type again to catch typos):"
+#, fuzzy
+msgid "Password (type again to catch typos)"
 msgstr "确认密码"
 
+#: templates/djity/portal/registration_form.html:6
+#, fuzzy
+msgid "Please correct the errors below"
+msgstr "请更正下列错误"
+
 #: templates/djity/portal/registration_form.html:15
-msgid "Username:"
+#, fuzzy
+msgid "Username"
 msgstr "用户名"
 
 #: templates/djity/portal/registration_form.html:22
-msgid "Email address:"
+#, fuzzy
+msgid "Email address"
 msgstr "电子邮件"
 
 #: templates/djity/project/manage_users.html:23
@@ -328,11 +310,13 @@ msgid "Deleted"
 msgstr "删除"
 
 #: templates/djity/project/manage_users.html:34
-msgid "Inherit Permissions"
+#, fuzzy
+msgid "Inherit permissions"
 msgstr "继承权限"
 
 #: templates/djity/project/manage_users.html:43
-msgid "Forbid Subscriptions"
+#, fuzzy
+msgid "Forbid subscriptions"
 msgstr "禁止订阅"
 
 #: templates/djity/project/paginator.html:24
@@ -344,53 +328,73 @@ msgid "Next"
 msgstr "下一步"
 
 #: templates/djity/project/tab.html:8
-msgid "Remove Tab"
-msgstr "删除标签"
+#, fuzzy
+msgid "Remove tab"
+msgstr "移除标签？"
 
 #: templates/djity/project/tab.html:9
-msgid "Configure Tab"
+#, fuzzy
+msgid "Configure\ttab"
 msgstr "配置标签"
 
-#: templates/djity/style/themeroller.html:28
+#: templates/djity/style/themeroller.html:29
 msgid "Parameters"
 msgstr "参数"
 
-#: templates/djity/style/themeroller.html:29
+#: templates/djity/style/themeroller.html:30
 msgid "Code"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:30
+#: templates/djity/style/themeroller.html:31
 msgid "Up/Down"
 msgstr "上传/下载"
 
-#: templates/djity/style/themeroller.html:63
+#: templates/djity/style/themeroller.html:74
 msgid "Link to the current CSS."
 msgstr "连结到目前的CSS风格"
 
-#: templates/djity/style/themeroller.html:68
-msgid "Inherit style from the parent project"
+#: templates/djity/style/themeroller.html:79
+msgid "Inherit style from parent"
 msgstr ""
 
-#: templates/djity/style/themeroller.html:69
+#: templates/djity/style/themeroller.html:80
 msgid "Get back to the default style"
 msgstr "返回到默认样式"
 
-#: templates/djity/style/themeroller.html:70
+#: templates/djity/style/themeroller.html:81
 msgid "Download active set of parameters"
 msgstr "下载活动参数设置"
 
-#: templates/djity/style/themeroller.html:72
+#: templates/djity/style/themeroller.html:83
 msgid "Upload parameters"
 msgstr "上传参数"
 
-#: templates/djity/style/themeroller.html:76
+#: templates/djity/style/themeroller.html:87
 msgid "Apply"
 msgstr "应用"
 
-#: templates/djity/style/themeroller.html:77
+#: templates/djity/style/themeroller.html:88
 msgid "Save"
 msgstr "保存"
 
 #: utils/decorators.py:103 utils/decorators.py:106
 msgid "You were redirected because you lacked a permission: "
 msgstr ""
+
+#~ msgid "Passwords don't match"
+#~ msgstr "密码不匹配"
+
+#~ msgid "login"
+#~ msgstr "登录"
+
+#~ msgid "user"
+#~ msgstr "用户名"
+
+#~ msgid "password"
+#~ msgstr "密码"
+
+#~ msgid "Users Manager"
+#~ msgstr "用户管理"
+
+#~ msgid "Remove Tab"
+#~ msgstr "删除标签"
