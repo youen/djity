@@ -47,9 +47,9 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: {{ font_family }}; font-size: {{ font_size }}; }
+/*.ui-widget { font-family: {{ font_family }}; font-size: {{ font_size }}; }
 .ui-widget .ui-widget { font-size: 1em; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: {{ font_family }}; font-size: 1em; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: {{ font_family }}; font-size: 1em; }*/
 .ui-widget-content {
 	border: 1px solid {{ wcontent_border_color }};
 	background: {{ wcontent_background_color }} url({% url texture project_name=project_name %}?filename={{ wcontent_background_texture }}&bg_color={{ wcontent_background_color|urlencode}}&percent={{ wcontent_background_percent }}) 50% 50% repeat;
