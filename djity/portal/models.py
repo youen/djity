@@ -1,3 +1,4 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.conf import settings 
@@ -15,7 +16,7 @@ class SiteRoot(models.Model):
     >>> site = SiteRoot.objects.create(label = 'root', name = 'djity', presentation = 'une presentation')
     """
 
-    label = models.CharField("label", max_length=4, default=_("home"))
+    label = models.CharField("label", max_length=4, default="home")
     name =  models.TextField()
     presentation =  models.TextField()
     portlets = generic.GenericRelation('portlet.Portlet')

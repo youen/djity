@@ -1,3 +1,4 @@
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 from django.utils.translation import ugettext_lazy as _ 
 from django.db import models
 from django.contrib.auth.models import User
@@ -7,9 +8,10 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 
 from djity.portal.models import SiteRoot
-from djity.portlet.models import TextPortlet
+from djity.portlet.models import Portlet,TextPortlet,get_portlets
 from djity.transmeta import TransMeta
-from djity.utils import has_perm, granted_perms
+from djity.utils import has_perm, granted_perms, djreverse
+from djity.utils.security import sanitize
 from djity.utils.inherit import SuperManager
 
 
@@ -27,6 +29,7 @@ class Project(models.Model):
     created_on = models.DateTimeField(auto_now=True)
     is_root = models.BooleanField(default=False)
     inherit_members = models.BooleanField(default=False)
+    forbid_subscriptions = models.BooleanField(default=False)
     parent = models.ForeignKey('self',related_name="children",null=True,default=None) 
     css = models.OneToOneField('style.CSS')
 
@@ -57,9 +60,7 @@ class Project(models.Model):
         If a project is new initialize all its dependances
         """
         # Is the project new ?
-        new = False
-        if self.id == None:
-            new = True
+        new = (self.id == None)
 
         # to do before saving
         if new:
@@ -88,10 +89,18 @@ class Project(models.Model):
             self.init_modules()
             
             #add a footer portlet
-            TextPortlet(content="This is a project footer. Edit me !",
-                    div_id="footer",container=self,position="bottom",
+            TextPortlet(content=sanitize("""This is a project footer. Edit me! <br><div style="text-align:right">powered by&nbsp;<a href="http://djity.net" style="text-align:right">Djity</a></div>"""),
+                    div_class="footer",container=self,position="bottom",
                     rel_position=0).save()
-            
+           
+    def delete(self):
+        """
+        When deleting a project, delete also all its portlets
+        """
+        for portlet in get_portlets(self):
+            portlet.delete()
+        super(Project,self).delete()
+
     def __unicode__(self):
         return self.label
 
@@ -106,13 +115,24 @@ class Project(models.Model):
             parents = []
         return parents
 
-    def get_members(self):
+    def get_members(self,inherit=False):
         """
         Return the members of this project.
-        If this project inherit permissions return the members for the parent project.
+        If this project inherit permissions or `inherit` is True then return the members for the parent project plus the members of this project.
         """
-        if self.inherit_members: 
-            return self.parent.get_members()
+        if self.parent != None and (inherit or self.inherit_members): 
+            users = {}
+            for member in self.parent.get_members():
+                users[member.user] = member
+            for local_member  in Member.objects.filter(project=self):
+                if local_member.user not in users:
+                    users[local_member.user] = local_member
+                # overwrite permission if user grant a permission
+                elif users[local_member.user].role < local_member.role:
+                    users[local_member.user] = local_member
+
+            return users.values()
+
         else:
             return  Member.objects.filter(project=self)     
 
@@ -122,17 +142,23 @@ class Project(models.Model):
         If `user` is anonymous or `user` haven't role for this project, return the anonymous role.
         If this project inherit permissions return the role for the parent project.
         """
+        # attempt to get the role of the user
+        try:
+            if user.is_anonymous():
+                local_role =  settings.ANONYMOUS
+            else:
+                local_role =  Member.objects.get(user=user,project=self).role     
+        except Member.DoesNotExist:
+            local_role = settings.ANONYMOUS
         if self.inherit_members: 
-            return self.parent.get_role(user)
+            parent_role = self.parent.get_role(user)
+            print parent_role, local_role
+            if parent_role > local_role:
+                return parent_role
+            else:
+                return local_role
         else:
-            # attempt to get the role of the user
-            try:
-                if user.is_anonymous():
-                    return settings.ANONYMOUS
-                else:
-                    return  Member.objects.get(user=user,project=self).role     
-            except Member.DoesNotExist:
-                return settings.ANONYMOUS
+            return local_role
 
     def can_view(self,user):
         """
@@ -185,6 +211,22 @@ class Project(models.Model):
         context['parent_projects'] = filter(lambda p:p.can_view(context['user']) ,self.get_parents())
         context['children_projects'] = filter(lambda p:p.can_view(context['user']) ,self.children.all())
     
+        # get the awaiting memebea
+        context['awaiting_members'] = self.count_awaiting_members()
+
+    def djity_url(self,context=None):
+        """
+        return the url of this project
+        """
+        return djreverse('first_tab',{'project_name':self.name})
+        
+    def count_awaiting_members(self):
+        """
+        Return the number of awaiting members for this project.
+        """
+        return self.members.filter(role=settings.AWAITING).count()
+
+
     def get_available_modules(self):
         """
         get the list of modules avaible for this project
@@ -204,19 +246,22 @@ class Project(models.Model):
         """
         add a user awaiting validation
         """
-        try:
-            member = Member.objects.get(project=self,user=user)
-            member.delete()
+        if self.forbid_subscriptions:
             return False
-        except Member.DoesNotExist:
-            Member(project=self,user=user,role=settings.AWAITING).save()
-            return True
+        else:
+            try:
+                member = Member.objects.get(project=self,user=user)
+                member.delete()
+                return False
+            except Member.DoesNotExist:
+                Member(project=self,user=user,role=settings.AWAITING).save()
+                return True
 
 class Member(models.Model):
     """
-    A member of a project in Djity's forge
+    A member of a project in Djity
     """
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, related_name='members')
     user = models.ForeignKey(User,related_name="project_memberships")
     role = models.IntegerField()
 
@@ -233,15 +278,13 @@ class Module(models.Model):
     content_type = models.ForeignKey(ContentType,editable=False,null=True)
     objects = SuperManager()
 
-    name =  models.SlugField(_('Module name'),max_length=50)
+    name =  models.SlugField('Module name',max_length=50)
     project = models.ForeignKey('Project', related_name='modules')
     tab_position = models.IntegerField('Tab position')
-    label = models.CharField(_('Label'),max_length=200,
-                help_text = _('the label view in tabs')
+    label = models.CharField('Label',max_length=200,
+                help_text = 'the label view in tabs'
             )
     status = models.IntegerField(default=settings.DRAFT)
-
-    module_label = _('Module')
 
     class Meta:
         translate = ('label',)
@@ -260,6 +303,14 @@ class Module(models.Model):
 
         super(Module,self).save(*args,**kwargs)
 
+    def delete(self):
+        """
+        When deleting a module, delete also all its portlets
+        """
+        for portlet in get_portlets(self):
+            portlet.delete()
+        super(Module,self).delete()
+    
     def as_leaf_class(self):
         content_type = self.content_type
         model = content_type.model_class()

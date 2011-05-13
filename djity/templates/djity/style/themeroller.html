@@ -4,15 +4,16 @@
 <!DOCTYPE html >
 <html>
 	<head>
-        <script type="text/javascript" src="{{ MEDIA_URL }}djity/js/jquery.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}djity/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}djity/js/jquery.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}djity/js/jquery-ui.js"></script>
         {% dajaxice_js_import %}
-        <script src="{{ MEDIA_URL }}djity/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/style/js/farbtastic.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}/djity/style/js/themeroller.js"></script>
-		<link rel="stylesheet" href="{{ MEDIA_URL }}djity/css/ui-darkness.css" type="text/css" />
-		<link rel="stylesheet" href="{{ MEDIA_URL }}/djity/style/css/farbtastic.css" type="text/css" />
-		<link rel="stylesheet" href="{{ MEDIA_URL }}/djity/style/css/themeroller.css" type="text/css" />
+        <script src="{{ STATIC_URL }}djity/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}/djity/style/js/colorpicker.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}/djity/style/js/themeroller.js"></script>
+		<link rel="stylesheet" href="{{ STATIC_URL }}djity/css/ui-darkness.css" type="text/css" />
+		<link rel="stylesheet" media="screen" type="text/css" href="{{ STATIC_URL }}/djity/style/css/colorpicker.css" />
+
+		<link rel="stylesheet" href="{{ STATIC_URL }}/djity/style/css/themeroller.css" type="text/css" />
 
 		<script type="text/javascript">
 			window.onload=function(){
@@ -35,12 +36,20 @@
 				<div>
 					{% for item in group.1 %}
 					<label for="{{ item.1 }}">{{ item.0 }}:</label>
-					<input id="{{ item.1 }}" name="{{ item.1 }}" value="{{ item.2 }}" type="text" size="10">
+					<input id="{{ item.1 }}" name="{{ item.1 }}" value="{{ item.2 }}" type="text" size="10" class="{{ item.3 }}">
 					{% if item.3 == 'color' %}
+						<!--
 						<div class="color_picker ui-helper-hidden ui-widget-content">#{{ item.1 }}</div>
+						-->
 					{% endif %}
 					{% if item.3 == 'radius' %}
 						<div class="radius_slider">#{{ item.1 }}</div>
+					{% endif %}
+					{% if item.3 == 'shadow' %}
+						<div class="shadow_slider">#{{ item.1 }}</div>
+					{% endif %}
+					{% if item.3 == 'width' %}
+						<div class="width_slider">#{{ item.1 }}</div>
 					{% endif %}
 					{% if item.3 == 'size' %}
 						<div class="size_slider">#{{ item.1 }}</div>
@@ -53,9 +62,11 @@
 					{% endif %}
 					<br />
 					{% endfor %}
-					<br/><br/><br/><br/>
-					<br/><br/><br/><br/>
+                                    {% ifequal group.0 'Messages' %}
+                                        <button type="button" id="send_message_button" onclick="top.dj.message('This is a message sent by the themeroller in order to check out messages style while editing it.')">Send a test message !</button>
+                                    {% endifequal %}
 				</div>
+                                
 				{% endfor %}
 			</div>
 			<div id="style_code">
@@ -65,7 +76,7 @@
 				<textarea id="style_code_extra" rows="10">{{ extra }}</textarea>
 			</div>
 			<div id="style_updown">
-				<input type="submit" id="inherit_style" class="inside-button" value="{% trans 'Inherit style from the parent project' %}"><br/>
+				<input type="submit" id="inherit_style" class="inside-button" value="{% trans 'Inherit style from parent' %}"><br/>
 				<input type="submit" id="set_default" class="inside-button"	value="{% trans 'Get back to the default style' %}"><br/>
 				<input type="submit" id="download_params" class="inside-button" value="{% trans 'Download active set of parameters' %}"><br/>
 				<textarea id="params_list" rows="10"></textarea>

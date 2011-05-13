@@ -24,7 +24,7 @@ def save_project_style(request,style_values,js_target,context=None):
         style_values = dict(style_values)
 
     context['project'].css.set_all_values(style_values)
-    message = _("The style of the project has been saved")
+    message = _("The style of the project has been saved.")
     js_target.message(message,post=True)
     js_target.reload()
 
@@ -39,7 +39,7 @@ register('download_params')
 @djity_view(perm='manage')
 def set_default(request,js_target,context=None):
     context['project'].css.set_to_default()
-    message = _("The style of the project has been set to default")
+    message = _("The style of the project has been set to default.")
     js_target.message(message,post=True)
     js_target.reload()
 
@@ -50,10 +50,10 @@ def inherit_style(request,js_target,context=None):
     project = context['project']
     if project.parent:
         project.css.set_all_values(project.parent.css.get_context())
-        js_target.message(_("Style of the current project has been overwritten by the style of its parent \"%s\"" % project.parent.name),post=True)
+        js_target.message(_("The style of the current project has been overwritten by the style of the project %s." % project.parent.name),post=True)
         js_target.reload()
     else:
-        js_target.message(_("The current project is root and cannot inherit its style"))
+        js_target.message(_("The current project is root and cannot inherit its style."))
 
 register('inherit_style')
 

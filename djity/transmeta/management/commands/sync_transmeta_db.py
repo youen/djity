@@ -14,7 +14,7 @@ from django.core.management.color import no_style
 from django.db import connection, transaction
 from django.db.models import get_models
 
-from djity.services.transmeta import get_real_fieldname
+from djity.transmeta import get_real_fieldname
 
 
 def get_real_columnname(field, model, lang=None):

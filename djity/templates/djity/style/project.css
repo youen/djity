@@ -31,12 +31,29 @@ body {
 	position:relative;
 }
 
-#body_active{
-	padding:5px;
-	padding-top:5px;
+#top_container{
+	font: {{ font_size }} {{ font_family }};
+    border: 1px solid {{ border_color }};
+    border-radius: {{ border_radius }};
+    -moz-border-radius: {{ border_radius }};
+    -webkit-border-radius: {{ border_radius }};
+    box-shadow: {{ border_color }} 0px 0px {{ border_shadow }};
+    -webkit-box-shadow: {{ border_color }} 0px 0px {{ border_shadow }};
+    -moz-box-shadow: {{ border_color }} 0px 0px {{ border_shadow }};
+}
+
+#body_active, #body_default{
+	/*padding:5px;*/
+    -moz-border-radius-bottomleft: {{ border_radius }};
+    -webkit-border-top-bottom-radius: {{ border_radius }};
+    border-bottom-left-radius: {{ border_radius }};
+    -moz-border-radius-bottomright: {{ border_radius }};
+    -webkit-border-bottom-right-radius: {{ border_radius }};
+    border-bottom-right-radius: {{ border_radius }};
 }
 
 #content {
+	font: {{ content_font_size }} {{ content_font_family }};
 	margin-left:-100%;
 	width:100%;
 }
@@ -55,7 +72,7 @@ html>body #main {
 }
 
 #sap-content {
-	padding:0 215px 5px 165px;
+	padding:0 215px 5px 215px;
 	margin:5px;
 	color:black;
 	border:0;
@@ -72,8 +89,23 @@ html>body #main {
 
 #djity_header {
     position: relative;
-	height:60px;
-	border-bottom:0px;
+    height:60px;
+    border:0px;
+    border-bottom: 1px solid {{ activetab_border_color }};
+	/* inspired by .ui-widget-header from jquery-ui.css but separated because the banner is autonomous */
+    background: {{ banner_background_color }} url({% url texture project_name=project_name %}?filename={{ banner_background_texture }}&bg_color={{ banner_background_color|urlencode}}&percent={{ banner_background_percent }}) 50% 50% repeat;
+    color: {{ banner_text_color }};
+    -moz-border-radius-topleft: {{ border_radius }};
+    -webkit-border-top-left-radius: {{ border_radius }};
+    border-top-left-radius: {{ border_radius }};
+    -moz-border-radius-topright: {{ border_radius }};
+    -webkit-border-top-right-radius: {{ border_radius }};
+    border-top-right-radius: {{ border_radius }};
+}
+
+
+#djity_header a {
+	color: {{ banner_link_color }};
 }
 
 #projects_hierarchy{
@@ -97,15 +129,17 @@ html>body #main {
 #project_title{
 	float:left;
 	clear:left;
-	padding:3px;
-	margin:3px;
-	text-shadow: #000 1px 1px 1px;
-	border-style:solid;
-	border-width:2px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-webkit-box-shadow: 1px 1px 1px;
-	-moz-box-shadow: 1px 1px 1px;
+	padding:0px 10px 0px 10px;
+	margin:5px 10px 5px 10px;
+	color: {{ title_color }};
+	font: {{ title_font_size }} {{ title_font_family }};
+    background: {{ title_background_color }} url({% url texture project_name=project_name %}?filename={{ title_background_texture }}&bg_color={{ title_background_color|urlencode}}&percent={{ title_background_percent }}) 50% 50% repeat;
+	text-shadow: {{ title_color }} 1px 1px {{ title_text_shadow }};
+	border: {{ title_border_width }} solid {{ title_border_color }};
+	-moz-border-radius: {{ title_border_radius }};
+	-webkit-border-radius: {{ title_border_radius }};
+	-webkit-box-shadow: {{ title_border_color }} 0px 0px {{ title_border_shadow }};
+	-moz-box-shadow: {{ title_border_color }} 0px 0px {{ title_border_shadow }};
 }
 
 #parent_projects{
@@ -210,6 +244,54 @@ html>body #main {
 	margin:0.2em 0.1em 0 0;
 }
 
+#right_tabs_list a{
+    padding: .7em .8em;
+}
+
+#right_tabs_list .ui-state-default {
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because djity tabs are autonomous */
+    border: 1px solid {{ othertab_border_color }};
+    border-bottom: 0px;
+    background: {{ othertab_background_color }} url({% url texture project_name=project_name %}?filename={{ othertab_background_texture }}&bg_color={{ othertab_background_color|urlencode}}&percent={{ othertab_background_percent }}) 50% 50% repeat;
+    -moz-border-radius-topleft: {{ othertab_border_radius }};
+    -webkit-border-top-left-radius: {{ othertab_border_radius }};
+    border-top-left-radius: {{ othertab_border_radius }};
+    -moz-border-radius-topright: {{ othertab_border_radius }};
+    -webkit-border-top-right-radius: {{ othertab_border_radius }};
+    border-top-right-radius: {{ othertab_border_radius }};
+}
+
+#right_tabs_list .ui-state-default a {	
+    color: {{ othertab_link_color }};
+}
+
+#right_tabs_list .ui-state-active {
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because djity tabs are autonomous */
+    border-left: 1px solid {{ activetab_border_color }};
+    border-bottom: 0px }};
+    background: {{ activetab_background_color }} url({% url texture project_name=project_name %}?filename={{ activetab_background_texture }}&bg_color={{ activetab_background_color|urlencode}}&percent={{ activetab_background_percent }}) 50% 50% repeat;
+    -moz-border-radius-topleft: {{ activetab_border_radius }};
+    -webkit-border-top-left-radius: {{ activetab_border_radius }};
+    border-top-left-radius: {{ activetab_border_radius }};
+    -moz-border-radius-topright: {{ activetab_border_radius }};
+    -webkit-border-top-right-radius: {{ activetab_border_radius }};
+    border-top-right-radius: {{ activetab_border_radius }};
+}
+
+#right_tabs_list .ui-state-active a {	
+    color: {{ activetab_link_color }};
+    font-weight:bold;
+}
+
+#right_tabs_list .ui-state-active .ui-icon {
+	background-image: url({% url icons project_name=project_name %}?color={{ activetab_icon_color|urlencode}});
+}
+
+#body_active{
+    border: 0px;
+    background: {{ activetab_background_color }};
+}
+
 .dj-sorting-tab{
 	width:70px;
 }
@@ -222,15 +304,15 @@ html>body #main {
 #left{
 	background:none repeat scroll 0 0;
 	margin-left:-100%;
-	width:150px;
-	z-index:100;
+	width:200px;
+	z-index:90;
 }
 
 #right{
 	background:none repeat scroll 0 0;
 	margin-left:-200px;
 	width:200px;
-	z-index:100;
+	z-index:90;
 }
 
 #toolbar{
@@ -279,13 +361,54 @@ html>body #main {
 	padding:10px 5px;
 }
 
+.dj-editable{
+	border:1px solid #666666;
+}
 /* portlet classes */
 
-#footer {
-    margin: 50px auto;
-    padding: 10px;
-    clear: both;
-    width: 800px;
+.dj-portlet {
+	padding: 5px;
+	margin: 5px;
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because portlets are autonomous */
+    border: 1px solid {{ portlet_border_color }};
+    background: {{ portlet_background_color }} url({% url texture project_name=project_name %}?filename={{ portlet_background_texture }}&bg_color={{ portlet_background_color|urlencode}}&percent={{ portlet_background_percent }}) 50% 50% repeat;
+    color: {{ portlet_text_color }};
+    -moz-border-radius: {{ portlet_border_radius }};
+    -webkit-border-radius: {{ portlet_border_radius }};
+    -webkit-box-shadow: {{ portlet_border_color }} 0px 0px {{ portlet_border_shadow }};
+    -moz-box-shadow: {{ portlet_border_color }} 0px 0px {{ portlet_border_shadow }};
+}
+
+.dj-portlet a {
+	color: {{ portlet_link_color }};
+}
+
+.dj-portlet .ui-icon {
+	background-image: url({% url icons project_name=project_name %}?color={{ portlet_icon_color|urlencode}});
+}
+
+.footer {
+	margin: 50px auto;
+	padding: 10px;
+	clear: both;
+	width: 800px;
+
+    /* inspired by .ui-widget-header from jquery-ui.css but separated because the footer is autonomous */
+    border: 1px solid {{ footer_border_color }};
+    background: {{ footer_background_color }} url({% url texture project_name=project_name %}?filename={{ footer_background_texture }}&bg_color={{ footer_background_color|urlencode}}&percent={{ footer_background_percent }}) 50% 50% repeat;
+    color: {{ footer_text_color }};
+    -moz-border-radius: {{ footer_border_radius }};
+    -webkit-border-radius: {{ footer_border_radius }};
+    -webkit-box-shadow: {{ footer_border_color }} 0px 0px {{ footer_border_shadow }};
+    -moz-box-shadow: {{ footer_border_color }} 0px 0px {{ footer_border_shadow }};
+}
+
+.footer a, .footer a:link, .footer a:visited {
+	color: {{ footer_link_color }};
+}
+
+.footer .ui-icon {
+	background-image: url({% url icons project_name=project_name %}?color={{ footer_icon_color|urlencode}});
 }
 
 #amazon_groups{
@@ -364,68 +487,99 @@ html>body #main {
 
 /* LANG FLAG */
 
-.ui-widget .dj-icon-fr {
-	background-image : url('{{ MEDIA_URL }}/djity/images/flag/fr.png');
+#djity_header .dj-icon-fr,.ui-widget .dj-icon-fr {
+	background-image : url('{{ STATIC_URL }}/djity/images/flag/fr.png');
 	margin-top:-5px;
 }
 
-.ui-widget .dj-icon-en {
-	background-image : url('{{ MEDIA_URL }}/djity/images/flag/en.png');
+#djity_header .dj-icon-en,.ui-widget .dj-icon-en {
+	background-image : url('{{ STATIC_URL }}/djity/images/flag/en.png');
 	margin-top:-5px;
 }
+#djity_header .dj-icon-zh,.ui-widget .dj-icon-zh {
+	background-image : url('{{ STATIC_URL }}/djity/images/flag/zh.png');
+	margin-top:-5px;
+}
+
+.ui-widget .dj-icon-sk {
+	background-image : url('{{ STATIC_URL }}/djity/images/flag/sk.png');
+	margin-top:-5px;
+}
+
 /* HTML5 */
 
 header,footer,section,aside,nav,article,figure,figcaption,hgroup,time  {
 	display:block;
 }
 
-
-/* TABLES */
-
-
-
-/* FORMS */
-
-form th {
-    text-align : left;
-}
-form.signup input[type="submit"], form.login input[type="submit"] {
-    margin: 20px 0;
-    font-size: 14pt;
-}
-input[type="text"], input[type="password"], textarea {
-    padding: 3px;
-    margin: 3px;
-    border: solid 1px #C6C6C6;
-    border-bottom: solid 1px #E3E3E3;
-    color: #666;
-    font-size: 12pt;
-    background: #F3F3F3 url('../images/form-shadow.png') left top repeat-x;
-}
-ul.errorlist {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    color: red;
-}
-
 /*
  * https://github.com/ehynds/jquery-notify/blob/master/ui.notify.css
  * Notify style
  */
-.ui-notify { width:350px; position:fixed; top:10px; right:10px; }
-.ui-notify-message { z-index:100; padding:10px; margin-bottom:15px; -moz-border-radius:8px; -webkit-border-radius:8px; border-radius:8px }
-.ui-notify-message h1 { font-size:14px; margin:0; padding:0 }
-.ui-notify-message p { margin:3px 0; padding:0; line-height:18px }
-.ui-notify-message:last-child { margin-bottom:0 }
-.ui-notify-message-style { background:#000; background:rgba(0,0,0,0.8); -moz-box-shadow: 0 0 6px #000; -webkit-box-shadow: 0 0 6px #000; box-shadow: 0 0 6px #000; }
-.ui-notify-message-style h1 { color:#fff; font-weight:bold }
-.ui-notify-message-style p { color:#fff }
-.ui-notify-close { color:#fff; text-decoration:underline }
-.ui-notify-click { cursor:pointer }
-.ui-notify-cross { margin-top:-4px; float:right; cursor:pointer; text-decoration:none; font-size:12px; font-weight:bold; text-shadow:0 1px 1px #fff; padding:2px }
-.ui-notify-cross:hover { color:#ffffab }
-.ui-notify-cross:active { position:relative; top:1px }
+.ui-notify {
+    width:350px;
+    position:fixed;
+    top:10px;
+    right:10px;
+}
+.ui-notify-message {
+    z-index:100;
+    padding:10px;
+    margin-bottom:15px;
+    -moz-border-radius:{{ message_border_radius }};
+    -webkit-border-radius:{{ message_border_radius }};
+    border-radius:{{ message_border_radius }};}
+.ui-notify-message h1 {
+    font-size:14px;
+    margin:0;
+    padding:0;
+}
+.ui-notify-message p {
+    margin:3px 0;
+    padding:0;
+    line-height:18px;
+}
+.ui-notify-message:last-child {
+    margin-bottom:0
+}
+.ui-notify-message-style {
+    background: {{ message_background_color }} url({% url texture project_name=project_name %}?filename={{ message_background_texture }}&bg_color={{ message_background_color|urlencode}}&percent={{ message_background_percent }}) 50% 50% repeat;
+    border-color: {{ message_border_color }};
+    -moz-box-shadow: 0 0 {{ message_border_shadow }} {{ message_border_color }};
+    -webkit-box-shadow: 0 0 {{ message_border_shadow }} {{ message_border_color }};
+    box-shadow: 0 0 {{ message_border_shadow }} {{ message_border_color }};
+}
+.ui-notify-message-style h1 {
+    color:{{ message_text_color }};
+    font-weight:bold
+}
+.ui-notify-message-style p {
+    color:{{ message_text_color }};
+}
+.ui-notify-close {
+    color:#fff;
+    text-decoration:underline;
+}
+.ui-notify-click {
+    cursor:pointer;
+}
+.ui-notify-cross {
+    margin-top:-4px;
+    float:right;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:bold;
+    text-shadow:0 1px 1px #fff;
+    padding:2px;
+}
+.ui-notify-cross:hover {
+    color:#ffffab;
+}
+.ui-notify-cross:active {
+    position:relative;
+    top:1px;
+}
 
 /*
  * user defined extra code

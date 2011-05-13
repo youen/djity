@@ -1,0 +1,41 @@
+{{% extends "djity/base.html" %}}
+
+{{% block module_head %}}
+
+<script type="text/javascript" src="{{{{STATIC_URL}}}}/{package_name}/js/{module_name}.js"></script>
+{{% endblock %}}
+
+
+{{% block module_onload %}}
+
+//Send the message to the notify framework 
+dj.message("{{{{message}}}}");
+
+//If user can edit apply the editor widget
+if( dj.context.perm.edit )
+{{
+    $('#{module_name}-message').editable({{
+        // No rich editor
+        simple:true,
+        // The ajax function to save the message
+        save_function:'{package_name}.save_message',
+        // The ajax function to get the message in a specific language
+        get_function:'{package_name}.get_message',
+        // The message language (if the message haven't the version of the current language)
+        lang:dj.context.{package_name}_lang
+    }});
+}}
+
+
+{{% endblock %}}
+
+{{% block body %}}
+
+<p>Your message  is  :  <span id="{module_name}-message">{{{{message}}}}</span> </p>
+
+<p>You can edit message : click it!</p>
+
+
+
+{{% endblock %}}
+

@@ -1,0 +1,18 @@
+$.widget("ui.{module_name}_widget", 
+{{
+
+_init:function()
+	  {{
+		   dj.remote('{package_name}.example_ajax',
+		   {{
+				js_target:this,
+				text:this.element.text(),
+			}});
+	   }},
+text : function(text)
+		//callback function
+	   {{
+		   this.element.text('from ajax: ' +text);
+	   }}
+}});
+

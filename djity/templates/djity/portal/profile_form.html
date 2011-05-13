@@ -12,14 +12,14 @@
       {% if form.password1.errors %}
 	  <p class="ui-state-error">{{ form.password1.errors.as_text }}</p><br/>
       {% endif %}
-	  <label for="id_password1">{% trans "Password:" %}</label><br/>
+	  <label for="id_password1">{% trans "Password" %}:</label><br/>
       {{ form.password1 }}
     </p>
     <p>
       {% if form.password2.errors %}
 	  <p class="ui-state-error">{{ form.password2.errors.as_text }}</p><br/>
       {% endif %}
-	  <label for="id_password2">{% trans "Password (type again to catch typos):" %}</label><br/>
+	  <label for="id_password2">{% trans "Password (type again to catch typos)" %}:</label><br/>
       {{ form.password2 }}
     </p>
 	
