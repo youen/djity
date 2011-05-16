@@ -16,24 +16,24 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
 #: static/djity/js/widgets/editable.js:45
 #: static/djity/js/widgets/editable.js:51
 msgid "Save"
-msgstr "Sauvegarder"
+msgstr ""
 
 #: static/djity/js/widgets/editable.js:62
 #: static/djity/js/widgets/editable.js:68
 msgid "Rich Edit"
-msgstr "Édition Avancé"
+msgstr ""
 
 #: static/djity/js/widgets/editable.js:75
 #: static/djity/js/widgets/editable.js:81
 #: static/djity/js/widgets/project_subscribe.js:3
 #: static/djity/js/widgets/register.js:28
 msgid "Cancel"
-msgstr "Annuler"
+msgstr ""
 
 #: static/djity/js/widgets/editable.js:237
 msgid "Text not save"
@@ -59,43 +59,43 @@ msgstr ""
 #: static/djity/js/widgets/portal_parameters.js:34
 #: static/djity/js/widgets/project_subscribe.js:12
 msgid "Sign in"
-msgstr "Connexion"
+msgstr ""
 
 #: static/djity/js/widgets/login.js:25
 #: static/djity/js/widgets/portal_parameters.js:39
 #: static/djity/js/widgets/project_subscribe.js:7
 #: static/djity/js/widgets/register.js:33
 msgid "Create an account"
-msgstr "Inscription"
+msgstr ""
 
 #: static/djity/js/widgets/manage_users.js:188
 #: static/djity/js/widgets/manage_users.js:193
 msgid "Manage users"
-msgstr "Gestions des utilistateurs"
+msgstr ""
 
 #: static/djity/js/widgets/manage_users.js:188
 msgid "awaiting members"
-msgstr "Membres en attentes"
+msgstr ""
 
 #: static/djity/js/widgets/portal_parameters.js:16
 msgid "Sign out"
-msgstr "Déconnexion"
+msgstr ""
 
 #: static/djity/js/widgets/portal_parameters.js:65
 msgid "Language"
-msgstr "Langue"
+msgstr ""
 
 #: static/djity/js/widgets/project_subscribe.js:30
 msgid "Cancel subscription"
-msgstr "Annuler la souscription"
+msgstr ""
 
 #: static/djity/js/widgets/project_subscribe.js:35
 msgid "Subscribe"
-msgstr "S'abonner"
+msgstr ""
 
 #: static/djity/js/widgets/project_subscribe.js:39
 msgid "Unsubscribe"
-msgstr "Se désabonner"
+msgstr ""
 
 #: static/djity/js/widgets/register.js:25
 msgid "OK"
@@ -103,4 +103,4 @@ msgstr ""
 
 #: static/djity/js/widgets/user_profile.js:20
 msgid "Your profile"
-msgstr "Votre Profile"
+msgstr ""

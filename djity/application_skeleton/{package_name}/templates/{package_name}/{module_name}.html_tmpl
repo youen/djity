@@ -31,7 +31,7 @@ if( dj.context.perm.edit )
 
 {{% block body %}}
 
-<p>Your message  is  :  <span id="{module_name}-message">{{{{message}}}}</span> </p>
+<p>Your message  is  :  <span id="{module_name}-message">{{{{message|safe}}}}</span> </p>
 
 <p>You can edit message : click it!</p>
 

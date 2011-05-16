@@ -7,19 +7,21 @@ from django.utils.translation import get_language
 from dajax.core import Dajax
 from djity.utils.decorators import djity_view
 from djity.utils.security import sanitize
-from djity.transmeta import get_value
+from djity.transmeta import get_value, set_value
 from dajaxice.core import dajaxice_functions
 register = lambda name:dajaxice_functions.register_function('djity.simplepage.ajax',name)
 
 
 @djity_view(perm='edit')
-def save_simple_page(request,js_target,html,context=None):
+def save_simple_page(request,js_target,html,lang,context=None):
     simple_page = context['module']
     html = sanitize(html)
     if simple_page.content != html :
-        simple_page.content = html
+        set_value(simple_page,'content',lang,html)
         simple_page.save()
         js_target.message(_('Change in page saved.'))
+    else:
+        js_target.message(_('No change in the page.'))
 
 register('save_simple_page')
 

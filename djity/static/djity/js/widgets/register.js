@@ -31,13 +31,6 @@ dj.widgets.register =
 			dj.widgets.register.close();
 		};
 
-		bt_opts[gettext('Sign in')] = function()
-		{
-			dj.widgets.register.close();
-			dj.widgets.login.open();
-	
-		};
-
 		this.dialog = $('<div id="register_dialog" class="ui-helper-hidden" title="' + gettext('Create an account') +'"></div>')
 			.keyup(function(e)
 			{
@@ -95,5 +88,16 @@ dj.widgets.register =
 	},
 
 
+	next : function()
+	{
+		if(dj.context.next_page != undefined)
+		{
+			location.href = dj.context.next_page;
+		}
+		else
+		{
+			location.reload();
+		}
+	},
 };
 
