@@ -3,6 +3,7 @@ import urllib
 import logging
 
 from django.http import HttpResponse,HttpResponseNotFound,HttpResponseForbidden,HttpResponseRedirect, Http404
+from django.shortcuts import render, render_to_response
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _ 
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -10,7 +11,7 @@ from django.utils.http import urlquote
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 
-from django.template import RequestContext
+from django.template import RequestContext, loader
 from djity.utils.context import DjityContext, JSTarget
 
 from djity.project.models import Project
@@ -91,10 +92,6 @@ def djity_view(perm='view'):
             # actually permissions are resolved here
             project.update_context(context)
 
-            # if module was not found by projet.update_context() raise 404
-            if module_name and not 'module' in context:
-                return HttpResponseRedirect(djreverse('page_not_found',context))
-
             # if the user is not allowed to use this view, redirect or ask for
             # authentication of return error
             if not perm in context['perm']:
@@ -117,7 +114,16 @@ def djity_view(perm='view'):
                     context['info_message'] = request.GET['info_message']
 
             kwargs['context'] = context
-            
+             
+            # if module was not found by projet.update_context() raise 404
+            if module_name and not 'module' in context:
+                context.message(_("This page does not exist on this project !"))
+                context["module"] = {'label':_('Page not found')}
+                return render_to_response('djity/base.html',context)
+                #t = loader.get_template('djity/base.html')
+                #r = t.render(context)
+                #return HttpResponseNotFound(r)
+
             if 'js_target' in context:
                 func(*args,**kwargs)
                 return context['js_target'].json()
