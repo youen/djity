@@ -31,7 +31,6 @@ dj.widgets.register =
 			dj.widgets.register.close();
 		};
 
-
 		this.dialog = $('<div id="register_dialog" class="ui-helper-hidden" title="' + gettext('Create an account') +'"></div>')
 			.keyup(function(e)
 			{

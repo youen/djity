@@ -14,6 +14,7 @@ $.widget("ui.editable",{
 			get_function:undefined,
 			//send the id of the div to the save and get function
 			send_divid:false,
+
 			toolbar:'maxi',
 	},
 	_create: function() {
@@ -59,6 +60,7 @@ $.widget("ui.editable",{
 			 */
 			if(! self.options.simple)
 			{
+
 				self.editor_button = $('<button  title="'+gettext('Rich Edit')+'">'+gettext('Rich Edit')+'</button>')
 					.button({
 						icons:{
@@ -143,12 +145,12 @@ $.widget("ui.editable",{
 				editorBox = self.editorBox;
 
 			editorBox.hide(options.effect);
+
 			self._isOpen = false;
 			if(self.is_editor){
 				self.close_editor();
 			}
 			self.close();	
-
 			
 	},
 
@@ -181,6 +183,7 @@ $.widget("ui.editable",{
 			self.rollback=self.element.html();
 			  
 	},
+
 
 	save : function(close){
 			var self = this,
@@ -354,9 +357,5 @@ $.widget("ui.editable",{
 	insertLineBreak : function(){
 			document.execCommand ('insertLineBreak', false, null);
 	},
-
-
-
-
 
 });
