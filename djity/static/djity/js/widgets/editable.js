@@ -184,21 +184,12 @@ $.widget("ui.editable",{
 			  
 	},
 
-<<<<<<< HEAD
-	save : function(){
-=======
+
 	save : function(close){
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 			var self = this,
 				options = self.options,
 				editorBox = self.editorBox;
 
-<<<<<<< HEAD
-
-			var args =	{
-						js_target:self,
-						html:self.element.html(),
-=======
 			if(self.is_editor){
 				var html =  self.element.elrte('val');
 			}
@@ -212,7 +203,6 @@ $.widget("ui.editable",{
 			var args =	{
 						js_target:self,
 						html:html,
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 						lang:self.lang,
 					};
 			if (self.options.send_divid)
@@ -220,17 +210,12 @@ $.widget("ui.editable",{
 				args['div_id'] = parseInt(self.element.attr('id'));
 			}
 
-<<<<<<< HEAD
-			dj.remote(self.options.save_function,args)
-			self.close();	
-=======
 			self.rollback=html;
 			dj.remote(self.options.save_function,args)
 			if(close)
 			{
 				self.close();
 			}
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 	},
 
 
@@ -241,9 +226,6 @@ $.widget("ui.editable",{
 				langbar = self.langbar;
 
 			if(lang == self.lang){return}
-<<<<<<< HEAD
-			if(self.rollback!=self.element.html()){
-=======
 			/*
 			if(self.is_editor){
 				var html =  self.element.elrte('val');
@@ -255,7 +237,6 @@ $.widget("ui.editable",{
 			}
 			if(self.rollback!= html ){
 				alert(self.rollback + '|' + html)
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 				msg = $('<div id="dialog-message" title="' + gettext("Text not save") + '">'
 					  +'<p>' + gettext("Save your change in the current language or cancel edition before changing language.") + '</p>'
 					  +'<div>')
@@ -265,10 +246,7 @@ $.widget("ui.editable",{
 					});
 				return;
 			}
-<<<<<<< HEAD
-=======
 			*/
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 			langbar.find('.'+self.lang).removeClass('ui-state-highlight');
 			langbar.find('.'+lang).addClass('ui-state-highlight');
 			self.lang = lang;
@@ -299,12 +277,9 @@ $.widget("ui.editable",{
 		else
 		{
 			self.element.html(html);
-<<<<<<< HEAD
-=======
 			if(self.is_editor){
 				self.element.elrte('val',self.element.html());
 			}
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 			self.rollback=self.element.html();
 		}
 	},
@@ -313,17 +288,6 @@ $.widget("ui.editable",{
 			var self = this,
 				options = self.options,
 				editorBox = self.editorBox;
-<<<<<<< HEAD
-			self.element.hide();
-
-			self.element.elrte({lang:dj.LANGUAGES_CODE,toolbar:'maxi'});
-			self.element.elrte('val',self.element.html());
-			self.element.elrte('open');
-			self.close();
-	},
-
-	close_editor : function() {
-=======
 
 			if(self.is_editor)
 			{
@@ -341,25 +305,17 @@ $.widget("ui.editable",{
 	},
 
 	close_editor : function(save) {
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 			var self = this;
 			self.element.html(self.element.elrte('val'));
 			self.element.elrte('close');
 			self.element.show();
-<<<<<<< HEAD
-			self.save();
-=======
 			self.is_editor = false;
 			self.editor_button.removeClass('ui-state-highlight');
 
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 	},
 
 	cancel : function(){
 			var self = this;
-<<<<<<< HEAD
-			self.element.html(self.rollback);
-=======
 			if(self.is_editor)
 			{
 				self.element.elrte('close');
@@ -368,7 +324,6 @@ $.widget("ui.editable",{
 				self.is_editor = false;
 				self.editor_button.removeClass('ui-state-highlight');
 			}
->>>>>>> 8c7b2cb91c1b0c2b27e438a4d3afbeb43c1379b6
 			self.close();
 	},
 
@@ -402,9 +357,5 @@ $.widget("ui.editable",{
 	insertLineBreak : function(){
 			document.execCommand ('insertLineBreak', false, null);
 	},
-
-
-
-
 
 });

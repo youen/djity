@@ -11,7 +11,7 @@ class JSONContext():
     def __init__(self,context):
         self.context = context
     def __repr__(self):
-         return json.dumps(dict([(k,self.context[k]) for k in self.context._marked_as_json if k != 'json_context']),cls=DjityJSONEncoder)
+        return json.dumps(dict([(k,self.context[k]) for k in self.context._marked_as_json if (k != 'json_context' and k in self.context)]),cls=DjityJSONEncoder)
 
 class DjityContext(RequestContext):
 
@@ -27,6 +27,14 @@ class DjityContext(RequestContext):
     def __setitem__(self,key,value):
         RequestContext.__setitem__(self,key,value)
         self._marked_as_json.add(key)
+
+    def __delitem__(self,key):
+        RequestContext.__delitem__(key)
+        del self._marked_as_json[key]
+
+    def __iter__(self):
+        for k in self._marked_as_json:
+            yield (k,self[k])
 
     def mark_as_json(self,attr_name):
         self._marked_as_json.add(attr_name)
