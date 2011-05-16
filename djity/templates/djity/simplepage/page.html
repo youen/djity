@@ -10,7 +10,7 @@
 {% block module_onload %}
 $('#simple_page_content').editable(
 	{
-		save_function:dj.functions.save_simple_page,
+		save_function:'djity.simplepage.save_simple_page',
 		get_function:'djity.simplepage.get_simple_page',
 		lang:dj.context.simple_page_lang
 	});

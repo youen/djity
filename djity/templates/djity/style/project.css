@@ -358,11 +358,14 @@ html>body #main {
 
 /* Text Editor */
 .dj-editor-box{
-	padding:10px 5px;
+	padding:1px 0px 0px 2px;
 }
 
-.dj-editable{
-	border:1px solid #666666;
+div .dj-editable{
+	border:thin dotted #666666;
+}
+span .dj-editable{
+	border-bottom: thin dotted #666666;
 }
 /* portlet classes */
 
