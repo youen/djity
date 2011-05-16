@@ -8,3 +8,9 @@ class SimplePageIndex(SearchIndex):
     project = CharField(model_attr='project')
 
 site.register(SimplePage, SimplePageIndex)
+
+class SimplePageIndex2(SearchIndex):
+    text = CharField(document=True, model_attr='content')
+    project = CharField(model_attr='project')
+
+site.register(SimplePage, SimplePageIndex2)
