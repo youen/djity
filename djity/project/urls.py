@@ -3,6 +3,7 @@ from django.conf.urls.defaults import *
 
 from djity.simplepage.urls import urlpatterns as simplepage_urls
 from djity.style.urls import urlpatterns as css_urls
+from djity.search.urls import urlpatterns as search_urls
 from djity.utils import djity_modules
 
 from django.utils.importlib import import_module
@@ -16,14 +17,15 @@ portal_urls = patterns('',
         url(r'^forbidden/*$','djity.project.views.forbidden',name='forbidden'),
 )
 
-
 urlpatterns = patterns('',
     # project page redirect to the first tab
     url(r'^(?P<project_name>[-\w]+)/*$','djity.project.views.first_tab',name='first_tab'),
-    # login view as a pseudo application
+    # login and navigation views as a pseudo applications
     (r'^(?P<project_name>[-\w]+)/',include(portal_urls)),
-    # all other urls are handled by djity.modules.simple_page
+    # css as a pseudo application too
     (r'^(?P<project_name>[-\w]+)/css/',include(css_urls)),
+    # and search also
+    (r'^(?P<project_name>[-\w]+)/search/',include(search_urls)),
 )
 
 #import urls from djity applications

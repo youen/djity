@@ -204,7 +204,7 @@ class Project(models.Model):
         # if no module name is declared we are in the project's context
         # for example the request might be for project.css
         # in this case permissions are asked for a current status of public
-        if context['module_name'] is None:
+        if not 'module' in context:
             context['perm'] = granted_perms(context['role'],settings.PUBLIC)
 
         # get hierarchy of parent projects
