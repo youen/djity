@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     (r'^(?P<project_name>[-\w]+)/css/',include(css_urls)),
     # and search also
     (r'^(?P<project_name>[-\w]+)/search/',include(search_urls)),
+
 )
 
 #import urls from djity applications

@@ -114,8 +114,8 @@ def djity_view(perm='view'):
                     context['info_message'] = request.GET['info_message']
 
             kwargs['context'] = context
-
-             # if module was not found by projet.update_context() raise 404
+             
+            # if module was not found by projet.update_context() raise 404
             if module_name and not 'module' in context:
                 context.message(_("This page does not exist on this project !"))
                 context["module"] = {'label':_('Page not found')}
