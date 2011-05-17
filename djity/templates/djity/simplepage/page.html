@@ -8,13 +8,14 @@
 {% endblock %}
 
 {% block module_onload %}
+if(dj.context.perm.edit){
 $('#simple_page_content').editable(
 	{
 		save_function:'djity.simplepage.save_simple_page',
 		get_function:'djity.simplepage.get_simple_page',
 		lang:dj.context.simple_page_lang
 	});
-
+}
 {% endblock %}
 {% block body %}
 <div id="simple_page_content" >

@@ -1,4 +1,3 @@
-
 Description
 ===========
 
@@ -24,9 +23,9 @@ License: GPL v3
 Links
 =====
 
-Homepage (roadmap, bug reports, etc.): http://redmine.djity.net/projects/djityportal
-Git page (forks, patches, etc.): https://github.com/djity/djity
-Official documentation: http://pypi.python.org/pypi/djity
+ * Homepage (roadmap, bug reports, etc.): http://redmine.djity.net/projects/djityportal
+ * Git page (forks, patches, etc.): https://github.com/djity/djity
+ * Official documentation: http://doc.djity.net/djity/
 
 Features
 ========

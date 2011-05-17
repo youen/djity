@@ -119,10 +119,8 @@ def djity_view(perm='view'):
             if module_name and not 'module' in context:
                 context.message(_("This page does not exist on this project !"))
                 context["module"] = {'label':_('Page not found')}
-                return render_to_response('djity/base.html',context)
-                #t = loader.get_template('djity/base.html')
-                #r = t.render(context)
-                #return HttpResponseNotFound(r)
+                templ = loader.get_template('djity/base.html')
+                return HttpResponseNotFound(templ.render(context))
 
             if 'js_target' in context:
                 func(*args,**kwargs)
