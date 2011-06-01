@@ -24,6 +24,7 @@ And for Javascript files ::
 You can update all messages for all languages by using ::
 
  django-admin.py makemessages -a
+ django-admin.py makemessages -a -d djangojs
 
 You should then edit files with extension '.po' in the locale directory. When
 edition is over, you can compile messages that will be automaticaly applied

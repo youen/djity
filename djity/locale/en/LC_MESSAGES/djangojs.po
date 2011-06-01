@@ -8,50 +8,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-13 11:37+0200\n"
+"POT-Creation-Date: 2011-06-01 17:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: static/djity/js/widgets/editable.js:45
-#: static/djity/js/widgets/editable.js:51
+#: static/djity/js/widgets/editable.js:46
+#: static/djity/js/widgets/editable.js:52
 msgid "Save"
 msgstr ""
 
-#: static/djity/js/widgets/editable.js:62
-#: static/djity/js/widgets/editable.js:68
+#: static/djity/js/widgets/editable.js:64
+#: static/djity/js/widgets/editable.js:70
 msgid "Rich Edit"
 msgstr ""
 
-#: static/djity/js/widgets/editable.js:75
-#: static/djity/js/widgets/editable.js:81
+#: static/djity/js/widgets/editable.js:77
+#: static/djity/js/widgets/editable.js:83
 #: static/djity/js/widgets/project_subscribe.js:3
 #: static/djity/js/widgets/register.js:28
 msgid "Cancel"
-msgstr ""
-
-#: static/djity/js/widgets/editable.js:237
-msgid "Text not save"
-msgstr ""
-
-#: static/djity/js/widgets/editable.js:238
-msgid ""
-"Save your change in the current language or cancel edition before changing "
-"language."
-msgstr ""
-
-#: static/djity/js/widgets/editable.js:265
-msgid "New version"
-msgstr ""
-
-#: static/djity/js/widgets/editable.js:266
-msgid ""
-"This text haven't the required language version you are just starting a new "
-"version."
 msgstr ""
 
 #: static/djity/js/widgets/login.js:24
@@ -63,7 +43,7 @@ msgstr ""
 #: static/djity/js/widgets/login.js:25
 #: static/djity/js/widgets/portal_parameters.js:39
 #: static/djity/js/widgets/project_subscribe.js:7
-#: static/djity/js/widgets/register.js:33
+#: static/djity/js/widgets/register.js:32
 msgid "Create an account"
 msgstr ""
 

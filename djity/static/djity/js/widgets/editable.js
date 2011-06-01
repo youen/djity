@@ -237,7 +237,7 @@ $.widget("ui.editable",{
 			}
 			if(self.rollback!= html ){
 				alert(self.rollback + '|' + html)
-				msg = $('<div id="dialog-message" title="' + gettext("Text not save") + '">'
+				msg = $('<div id="dialog-message" title="' + gettext("Text not saved") + '">'
 					  +'<p>' + gettext("Save your change in the current language or cancel edition before changing language.") + '</p>'
 					  +'<div>')
 					.dialog({
