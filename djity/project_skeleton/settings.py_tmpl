@@ -216,10 +216,25 @@ try:
 except:
     pass
 
-# add activated djity modules and services to installed apps
-if len (DJITY_APPS) >= 0:
-    INSTALLED_APPS += DJITY_APPS
-
+# try importing djity apps, add them to installed apps if successful and fetch their settings
+for app in DJITY_APPS:
+    try:    
+        app_mod = import_module(app)
+        INSTALLED_APPS.append(app)
+    except:
+        warn("no app '%s' found." % app)
+        continue
+    try:
+        exec("from %s.settings import *" % app)
+    except ImportError,e:
+        warn("no settings found for app '%s'" % app)
+        continue
+    try:
+        required_apps = import_module(app+'.settings').REQUIRED_APPS
+        INSTALLED_APPS += required_apps
+    except:
+        warn("no REQUIRED_APPS parameter found in %s.settings" % app)
+        continue
 
 # import and overwrite all settings defined locally
 try:
