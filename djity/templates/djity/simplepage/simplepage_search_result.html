@@ -1,0 +1,5 @@
+{% load highlight %}
+
+<a href="{{ result_url }}">{{ result.object.name }}</a><br>
+{% highlight result.object.content with query %}
+

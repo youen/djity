@@ -1,16 +1,10 @@
-from haystack.indexes import *
-from haystack import site
+from haystack import indexes
 
 from djity.simplepage.models import SimplePage
 
-class SimplePageIndex(SearchIndex):
-    text = CharField(document=True, model_attr='content')
-    project = CharField(model_attr='project')
+class SimplePageIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, model_attr='content')
+    project = indexes.CharField(model_attr='project')
 
-site.register(SimplePage, SimplePageIndex)
-
-class SimplePageIndex2(SearchIndex):
-    text = CharField(document=True, model_attr='content')
-    project = CharField(model_attr='project')
-
-site.register(SimplePage, SimplePageIndex2)
+    def get_model(self):
+        return SimplePage

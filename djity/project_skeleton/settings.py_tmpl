@@ -57,9 +57,6 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 DAJAXICE_MEDIA_PREFIX="dajaxice" # Will create http://yourdomain.com/dajaxice/...
 
-# Haystack configuration
-HAYSTACK_SITECONF = 'search_sites'
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{secret_key}'
 
@@ -125,6 +122,7 @@ INSTALLED_APPS = [
     'djity.project',
     'djity.simplepage',
     'djity.transmeta',
+    'djity.search',
 ]
 
 ###########################################
@@ -207,6 +205,34 @@ LOCALE_INDEPENDENT_PATHS = (
 #LOCALEURL_USE_ACCEPT_LANGUAGE = True
 
 FIXTURE_DIRS = 'data/fixtures'
+
+###########################
+# Djity indexing settings #
+###########################
+
+# Haystack search engine connections configuration
+HAYSTACK_CONNECTIONS = {{'default':{{
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': '%s/data/whoosh/djity_index/default' % (PROJECT_ROOT),
+        'STORAGE': 'file',
+        'POST_LIMIT': 128 * 1024 * 1024,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
+    }}
+}}
+
+for (language,language_repr) in LANGUAGES:
+    HAYSTACK_CONNECTIONS['default_'+language] = {{
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': '%s/data/whoosh/djity_index/%s' % (PROJECT_ROOT,language),
+        'STORAGE': 'file',
+        'POST_LIMIT': 128 * 1024 * 1024,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
+        'LANGUAGE': '%s' % language
+    }}
+    
+HAYSTACK_ROUTERS = ['haystack.routers.LanguageRouter']
 
 ###################################################################
 # Import local settings and those from djity apps                 #

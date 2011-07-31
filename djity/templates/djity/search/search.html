@@ -1,5 +1,7 @@
 {% extends "djity/base.html" %}
 
+{% load search_result %}
+
 {% block body %}
     <h2>Search</h2>
 
@@ -19,7 +21,7 @@
 
             {% for result in page.object_list %}
                 <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
+                    {% search_result result %}
                 </p>
             {% empty %}
                 <p>No results found.</p>
