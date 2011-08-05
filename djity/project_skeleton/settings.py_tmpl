@@ -162,6 +162,15 @@ STATUS_PERMISSIONS = {{
 # list of permissions to check when updating djity's context
 PERMISSIONS = ['view','edit','upload','manage']
 
+# List of visible statuses according to role (used to filter search results)
+LOWER_VISIBLE_STATUS = {{
+    ANONYMOUS:PUBLIC,
+    AWAITING:PUBLIC,
+    USER:PRIVATE,
+    CONTRIBUTOR:DRAFT,
+    MANAGER:DRAFT,
+}}
+
 # Status display in user interface
 STATUS_DISPLAY = [[DRAFT,'Draft'],[PRIVATE,'Private'],[PUBLIC,'Public']]
 

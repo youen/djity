@@ -164,9 +164,7 @@ function widgetify() {
 			}
 	);
 
-
 	$('#messages').notify();
-
 
 	
 	if(dj.context.perm.manage){
@@ -195,13 +193,13 @@ function toolbar() {
 	$("#toolbar").buttonset();
 	$("#toolbar a")
 		.button()
-		.addClass('dj.context.mini-button');
+		.addClass('dj-mini-button');
 };
 
 function paginator() {
 	$('#paginator a')
 		.button()
-		.addClass('dj.context.mini-button');
+		.addClass('dj-mini-button');
 	
 	$('#paginator .off')
 		.button('option','disabled','true');

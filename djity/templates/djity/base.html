@@ -124,6 +124,13 @@
                     {% endif %}
 				</div>
             </div>
+            
+            <div id="search_form">
+                <form method="get" action="{% djiurl project %}/search/">
+                    <input id="search_query" name='q' type="text"></input>
+                    <input type="submit" id="search_button" value="{% trans "Search" %}" />
+                </form>
+            </div>
 
             <nav id="portal_parameters" class="ui-helper-hidden">
             </nav>
