@@ -163,6 +163,25 @@ function widgetify() {
 				$(this).removeClass("ui-state-hover");
 			}
 	);
+	
+	$('#search_query').keypress(function(e) {
+        if(e.which == 13) {
+            $("#search_button").click();
+        }});
+	
+	$('#search_button')
+	    .addClass("dj-mini-button")
+	    .button({
+            icons: {
+                primary: "ui-icon-search"
+            },
+            text:false,
+            })
+        .click(function(){
+                query = $("#search_query").val();
+                project_url = $("#search_button .ui-button-text").text();
+                window.location.replace(project_url+"/search/?q="+query);
+            });
 
 	$('#messages').notify();
 
