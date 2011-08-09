@@ -52,6 +52,7 @@ Incoming features
 	
 	tutorial/index.rst
 	developer/index.rst
+	admin/index.rst
 	api/modules.rst
 
 

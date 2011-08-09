@@ -217,6 +217,19 @@ html>body #main {
 	float:right;
 }
 
+#search_form {
+	float:right;
+	padding-right:50px;
+}
+
+#search_query {
+}
+
+#search_button {
+    right:32px;
+    border:none;
+    background:none;
+}
 
 #create_tab_button {
 	float:right;
