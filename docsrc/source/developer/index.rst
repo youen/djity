@@ -1,17 +1,15 @@
-Developers Guide
+Developers guide
 ================
 
 
-This guide is write for programers wishing improve Djity itself. 
+This guide is written for programmers wishing to improve Djity itself or develop applications for Djity. 
 
 
 .. toctree::
 	:maxdepth: 2
 
 	environment.rst
-	documention.rst	
+	documentation.rst	
 	localization.rst
-	communication.rst
-	role.rst
-	conventions.rst
+
 

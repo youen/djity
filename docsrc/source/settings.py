@@ -37,18 +37,20 @@ DATE_FORMAT = None
 TIME_FORMAT = None 
 # Absolute path to the directory that holds media. Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = "%s/media" % PROJECT_ROOT
+STATIC_ROOT = "%s/static" % PROJECT_ROOT
 
 # Absolute path to the directory containing data for this intance of djity
 DATA_DIR = "%s/data" % PROJECT_ROOT
 
 # Djity's themeroller textures and icons directories
-TEXTURES_DIR = "%s/images/textures/" % MEDIA_ROOT
-ICONS_DIR = "%s/images/icons/" % MEDIA_ROOT
+TEXTURES_DIR = "%s/djity/images/textures/" % STATIC_ROOT
+ICONS_DIR = "%s/djity/images/icons/" % STATIC_ROOT
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/site_media/'
+STATIC_URL = '/site_static/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a trailing slash. Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
@@ -56,7 +58,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 DAJAXICE_MEDIA_PREFIX="dajaxice" # Will create http://yourdomain.com/dajaxice/...
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '+uf*31w)3i8w74)1(^6u%utlfyb^lzu_1_4rqt=+c55v*=lj3g'
+SECRET_KEY = 't%u=6xy3=1bhbf$2us1ekf4l8o(jiq_-!m&j=&ckd0u03dfh(1'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -69,6 +71,7 @@ MIDDLEWARE_CLASSES = (
     'localeurl.middleware.LocaleURLMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfResponseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -85,6 +88,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.static',
 )
 
 INSTALLED_APPS = [
@@ -97,25 +101,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.markup',
-    'django.contrib.admin',
     'django.contrib.messages',
     'django.contrib.comments',
+    'django.contrib.staticfiles',
 
     #extensions
-    'django_extensions',
-    'tagging',
 
     # Dajax
     'dajaxice',
     'dajax',
 
+    # Haystack for search
+    'haystack',
+
     #Djity Core
+    'djity',
     'djity.portlet',
     'djity.style',
     'djity.portal',
     'djity.project',
     'djity.simplepage',
     'djity.transmeta',
+    'djity.search',
 ]
 
 ###########################################
@@ -155,6 +162,15 @@ STATUS_PERMISSIONS = {
 # list of permissions to check when updating djity's context
 PERMISSIONS = ['view','edit','upload','manage']
 
+# List of visible statuses according to role (used to filter search results)
+HIDDEN_STATUSES = {
+    ANONYMOUS:[DRAFT,PRIVATE],
+    AWAITING:[DRAFT,PRIVATE],
+    USER:[DRAFT],
+    CONTRIBUTOR:[],
+    MANAGER:[],
+}
+
 # Status display in user interface
 STATUS_DISPLAY = [[DRAFT,'Draft'],[PRIVATE,'Private'],[PUBLIC,'Public']]
 
@@ -185,6 +201,7 @@ ugettext = lambda s: s # dummy ugettext function, as django's docs say
 LANGUAGES = (
     ('en', ugettext(u'English')),
     ('fr', ugettext(u'Français')),
+    ('zh', ugettext(u'中文')),
 )
 
 USE_L10N = True
@@ -198,6 +215,34 @@ LOCALE_INDEPENDENT_PATHS = (
 
 FIXTURE_DIRS = 'data/fixtures'
 
+###########################
+# Djity indexing settings #
+###########################
+
+# Haystack search engine connections configuration
+HAYSTACK_CONNECTIONS = {'default':{
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': '%s/data/whoosh/djity_index/default' % (PROJECT_ROOT),
+        'STORAGE': 'file',
+        'POST_LIMIT': 128 * 1024 * 1024,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
+    }
+}
+
+for (language,language_repr) in LANGUAGES:
+    HAYSTACK_CONNECTIONS['default_'+language] = {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': '%s/data/whoosh/djity_index/%s' % (PROJECT_ROOT,language),
+        'STORAGE': 'file',
+        'POST_LIMIT': 128 * 1024 * 1024,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
+        'LANGUAGE': '%s' % language
+    }
+    
+HAYSTACK_ROUTERS = ['haystack.routers.LanguageRouter']
+
 ###################################################################
 # Import local settings and those from djity apps                 #
 ###################################################################
@@ -206,5 +251,6 @@ FIXTURE_DIRS = 'data/fixtures'
 # in local_settings.py
 
 DJITY_APPS = []
-
 DEFAULT_STYLE = []
+
+

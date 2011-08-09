@@ -1,16 +1,16 @@
-Language Localisation
+Language localization
 =====================
 
-Instructions below are for localisation/internationalization of Djity. However
+Instructions below are for localization/internationalization of Djity. However
 Djity applications being organized in a very similar way, applications
-developpers could be interested as well.
+developers could be interested as well.
 
 Interface localisation
 ++++++++++++++++++++++
 
-Djity uses Django in a pretty standard way for internalization/localisation `<http://docs.djangoproject.com/en/dev/topics/i18n/>`_.
+Djity uses Django in a pretty standard way for internalization/localization `<http://docs.djangoproject.com/en/dev/topics/i18n/>`_.
 
-Messages are generated in the locale directory of djity's package. Commands
+Messages are generated in the locale directory of Djity's package. Commands
 below should be used in the directory of Djity's main package (directory 'djity' in root).
 
 A new language translation (chinese in the example below) for python file and template can be added by ::
@@ -32,7 +32,7 @@ afterwards. ::
  django-admin.py compilemessages
 
 
-User content localisation
+User content localization
 +++++++++++++++++++++++++
 
 Djity allows its users to define multi-language contents without any particular
