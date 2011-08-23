@@ -1,3 +1,10 @@
 # These apps will automatically be added to the INSTALLED_APPS
 # of a Djity instance that uses this Djity application
 REQUIRED_APPS = []
+
+# These haystack connections will automatically be added to the HAYSTACK_CONNECTIONS
+# of a Djity instance that uses this Djity application
+# this parameter is only useful for applications that require dedicated indexes,
+# if you only wish to index the content of your application to be searchable in djity integrated search engine just have a look at search_indexes.py
+
+REQUIRED_HAYSTACK_CONNECTIONS = {{}}

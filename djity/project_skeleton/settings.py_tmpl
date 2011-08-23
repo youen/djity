@@ -273,9 +273,15 @@ for app in DJITY_APPS:
     try:
         required_apps = import_module(app+'.settings').REQUIRED_APPS
         INSTALLED_APPS += required_apps
+        info("REQUIRED_APPS parameter found in %s.settings, add \"%s\" to list of INSTALLED_APPS" % (app,",".join(required_apps)))
     except:
-        warn("no REQUIRED_APPS parameter found in %s.settings" % app)
-        continue
+        pass
+    try:
+        required_haystack_connections = import_module(app+'settings').REQUIRED_HAYSTACK_CONNECTIONS
+        HAYSTACK_CONNECTIONS.update(required_haystack_connections)
+        info("REQUIRED_HAYSTACK_CONNECTIONS parameter found in %s.settings, add \"%s\" to dictionary of HAYSTACK_CONNECTIONS" % (app,",".join(required_haystack_connections.keys)))
+    except:
+        pass
 
 # import and overwrite all settings defined locally
 try:
