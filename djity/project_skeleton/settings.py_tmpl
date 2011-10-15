@@ -277,7 +277,7 @@ for app in DJITY_APPS:
     except:
         pass
     try:
-        required_haystack_connections = import_module(app+'settings').REQUIRED_HAYSTACK_CONNECTIONS
+        required_haystack_connections = import_module(app+'.settings').REQUIRED_HAYSTACK_CONNECTIONS
         HAYSTACK_CONNECTIONS.update(required_haystack_connections)
         info("REQUIRED_HAYSTACK_CONNECTIONS parameter found in %s.settings, add \"%s\" to dictionary of HAYSTACK_CONNECTIONS" % (app,",".join(required_haystack_connections.keys)))
     except:
