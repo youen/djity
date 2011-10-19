@@ -26,6 +26,11 @@ you may need to get back to a fresh start ::
 
  make clean
 
+You can use make to upload your updated doc to the `djity server <http://doc.djity.net/djity/>`_ ::
+
+ make upload
+
+
 Writing tutorials
 -----------------
 

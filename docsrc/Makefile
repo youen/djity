@@ -1,6 +1,8 @@
 # Makefile for Sphinx documentation
 #
 
+PUBLIC_DOC	  = dev@djity.net:/srv/web/doc/djity/
+
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
@@ -36,6 +38,9 @@ help:
 clean:
 	-rm -rf $(BUILDDIR)/*
 	-rm -rf ./source/api/*
+
+upload: html
+	rsync -a $(BUILDDIR)/html/ $(PUBLIC_DOC)
 
 api:
 	-python generate_modules.py -f -n Djity -s rst -d ./source/api ../djity
