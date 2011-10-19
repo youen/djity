@@ -111,6 +111,9 @@ INSTALLED_APPS = [
     'dajaxice',
     'dajax',
 
+    # Haystack for search
+    'haystack',
+
     #Djity Core
     'djity',
     'djity.portlet',
@@ -119,6 +122,7 @@ INSTALLED_APPS = [
     'djity.project',
     'djity.simplepage',
     'djity.transmeta',
+    'djity.search',
 ]
 
 ###########################################
@@ -157,6 +161,15 @@ STATUS_PERMISSIONS = {{
 
 # list of permissions to check when updating djity's context
 PERMISSIONS = ['view','edit','upload','manage']
+
+# List of visible statuses according to role (used to filter search results)
+LOWER_VISIBLE_STATUS = {{
+    ANONYMOUS:PUBLIC,
+    AWAITING:PUBLIC,
+    USER:PRIVATE,
+    CONTRIBUTOR:DRAFT,
+    MANAGER:DRAFT,
+}}
 
 # Status display in user interface
 STATUS_DISPLAY = [[DRAFT,'Draft'],[PRIVATE,'Private'],[PUBLIC,'Public']]
@@ -202,6 +215,34 @@ LOCALE_INDEPENDENT_PATHS = (
 
 FIXTURE_DIRS = 'data/fixtures'
 
+###########################
+# Djity indexing settings #
+###########################
+
+# Haystack search engine connections configuration
+HAYSTACK_CONNECTIONS = {{'default':{{
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': '%s/data/whoosh/djity_index/default' % (PROJECT_ROOT),
+        'STORAGE': 'file',
+        'POST_LIMIT': 128 * 1024 * 1024,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
+    }}
+}}
+
+for (language,language_repr) in LANGUAGES:
+    HAYSTACK_CONNECTIONS['default_'+language] = {{
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': '%s/data/whoosh/djity_index/%s' % (PROJECT_ROOT,language),
+        'STORAGE': 'file',
+        'POST_LIMIT': 128 * 1024 * 1024,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
+        'LANGUAGE': '%s' % language
+    }}
+    
+HAYSTACK_ROUTERS = ['haystack.routers.LanguageRouter']
+
 ###################################################################
 # Import local settings and those from djity apps                 #
 ###################################################################
@@ -216,10 +257,31 @@ try:
 except:
     pass
 
-# add activated djity modules and services to installed apps
-if len (DJITY_APPS) >= 0:
-    INSTALLED_APPS += DJITY_APPS
-
+# try importing djity apps, add them to installed apps if successful and fetch their settings
+for app in DJITY_APPS:
+    try:    
+        app_mod = import_module(app)
+        INSTALLED_APPS.append(app)
+    except:
+        warn("no app '%s' found." % app)
+        continue
+    try:
+        exec("from %s.settings import *" % app)
+    except ImportError,e:
+        warn("no settings found for app '%s'" % app)
+        continue
+    try:
+        required_apps = import_module(app+'.settings').REQUIRED_APPS
+        INSTALLED_APPS += required_apps
+        info("REQUIRED_APPS parameter found in %s.settings, add \"%s\" to list of INSTALLED_APPS" % (app,",".join(required_apps)))
+    except:
+        pass
+    try:
+        required_haystack_connections = import_module(app+'.settings').REQUIRED_HAYSTACK_CONNECTIONS
+        HAYSTACK_CONNECTIONS.update(required_haystack_connections)
+        info("REQUIRED_HAYSTACK_CONNECTIONS parameter found in %s.settings, add \"%s\" to dictionary of HAYSTACK_CONNECTIONS" % (app,",".join(required_haystack_connections.keys)))
+    except:
+        pass
 
 # import and overwrite all settings defined locally
 try:

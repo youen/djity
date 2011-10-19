@@ -1,0 +1,24 @@
+"""
+Haystack indexes definitions to make models from application {application_name} searchable.
+
+See Haystack documentation for information to write these indexes: http://docs.haystacksearch.org/dev/searchindex_api.html
+"""
+
+from haystack import indexes
+
+from {package_name}.models import {class_name}
+
+class {class_name}Index(indexes.RealTimeSearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, model_attr='message')
+    
+    # The following is necessary so that djity search engine shall be able to narrow results by projects and according to users roles.
+    project = indexes.IntegerField(model_attr='project__id')
+    status = indexes.MultiValueField()
+
+    def prepare_status(self,obj):
+        return range(obj.status+1)
+
+
+    def get_model(self):
+        return {class_name}
+

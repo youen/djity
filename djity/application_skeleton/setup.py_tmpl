@@ -13,6 +13,6 @@ setup(name={package_name}.pip_name,
     packages=['{package_name}'],
     package_data={{'{package_name}':[
 		'templates/{package_name}/*.html',
-		'media/*/*']
+		'static/*/*']
 		}},
 )

@@ -4,7 +4,7 @@ Development environment
 Virtualenv
 ++++++++++
 
-A virtual environment is mostly useful for a developer's working environment and more generally to put djity in a box separated from the rest of your system. You are free to skip this part if it is not relevant to your needs.
+A virtual environment is mostly useful for a developer's working environment and more generally to put Djity in a box separated from the rest of your system. You are free to skip this part if it is not relevant to your needs.
 See `<http://virtualenv.openplans.org/>`_, and `<http://www.doughellmann.com/projects/virtualenvwrapper/>`_ to learn more about the tools we recommend.
 You will need to have virtualenvwrapper installed, you can find installation instructions here: `<http://www.doughellmann.com/docs/virtualenvwrapper/install.html#basic-installation>`_.
 
@@ -33,7 +33,7 @@ Afterwards, each time you want to work with djity you should type something like
 
 	$ workon djity
 
-You can exit this environement with the deactivate command::
+You can exit this environment with the deactivate command::
 
 	$ deactivate
 
@@ -85,10 +85,16 @@ You have to install :
 
    $ sudo apt-get install python-imaging
    
+ * `Haystack <http://haystacksearch.org/>`_ (through our fork on github because of added features)::
+ 
+   $ git clone https://github.com/albanm/django-haystack haystack
+   $ cd haystack
+   $ python setup.py install
+   
 Optional dependences
 --------------------
 
- * `Django Debug Toolbar <http://robhudson.github.com/django-debug-toolbar/>`_ (useful for developpers and required by option 'develop' of 'djity-admin.py create_project')::
+ * `Django Debug Toolbar <http://robhudson.github.com/django-debug-toolbar/>`_ (useful for developers and required by option 'develop' of 'djity-admin.py create_project')::
 
    $ pip install django-debug-toolbar
 
@@ -108,7 +114,7 @@ without repeating the installation::
 
 	$ python setup.py develop
 
-Non-contributors Web admins or application developpers should probably use the 'install' command::
+Non-contributors Web admins or application developers should probably use the 'install' command::
 
 	$ python setup.py install
 
@@ -116,7 +122,7 @@ Non-contributors Web admins or application developpers should probably use the '
 Setup of a new project
 ++++++++++++++++++++++
 
-Now that djity and all its required packages are installed you can create a new development project::
+Now that Djity and all its required packages are installed you can create a new development project::
 
 	$ djity-admin.py create_project /path/to/my/project
 

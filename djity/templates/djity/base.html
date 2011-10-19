@@ -127,6 +127,12 @@
 
             <nav id="portal_parameters" class="ui-helper-hidden">
             </nav>
+                 
+
+            <div id="search_form">
+                <input id="search_query" name='q' type="text"></input>
+                <span class="ui-icon ui-icon-search" title="{% trans "Search" %}" id="search_button">{% djiurl project %}</span>
+            </div>
 			
 				<nav id="right_tabs" class="ui-helper-hidden" >
 					{% if perm.manage %}
