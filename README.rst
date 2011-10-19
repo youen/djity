@@ -46,6 +46,7 @@ Features
    project)
  * Easy internationalization of interface and user content (using i18n, django-localeurl and django-transmeta)
  * Rich WYSIWYG HTML edition wherever you want it (using eLRTE)
+ * Integrated search engine (using Haystack and Whoosh)
 
 Incoming features
 =================
@@ -53,7 +54,6 @@ Incoming features
  * Online administration of the portlets
  * Fully themable projects (not just some style parameters, but also the layouts)
  * Easy migration of data between versions (probably using South)
- * Integrated search engine (probably using Haystack)
  * User identification through OpenID
  * Recent advanced Web standards (PUSH, Websockets, etc)
  * Open data linking using standard ontologies (FOAF, SIOC, etc)
