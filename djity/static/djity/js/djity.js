@@ -29,7 +29,7 @@ dj.remote = function(func,params){
 		params.js_target = dj.namespace.register(params.js_target);
 	}
 	/* call the function using dajax */
-	eval("Dajaxice."+func+"('Dajax.process',params);");	
+	eval("Dajaxice."+func+"(Dajax.process,params);");	
 };
 
 dj.namespace = 
