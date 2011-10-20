@@ -17,7 +17,7 @@ Create a virtual environment and activate it (optional) ::
 
 Download and install from the requirement file ::
 
- pip install -r wget https://github.com/djity/djity/raw/master/stable-req.txt
+ pip install -r https://github.com/djity/djity/raw/master/stable-req.txt
 
 Create a Django project with the Djity's admin tool. Don't use the development option ::
 
