@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import djity,shutil,os,sys,random
+import djity,shutil,os,sys,random, os.path
 from optparse import OptionParser
 from skeleton import Skeleton, Var, Bool
 from subprocess import Popen,call,PIPE
@@ -75,6 +75,12 @@ class ProjectSkeleton(Skeleton):
 
         # Generate a secret key in the same way django-admin does
         self['secret_key'] = ''.join([random.choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
+
+        # The path to the project directory
+        self['project_path'] = os.path.abspath(dst_dir)
+
+        # The path to the virtual environement
+        self['virtualenv_path'] = os.__file__[:-20]
 
         # use skeleton to write the target directory
         self.write(dst_dir, run_dry=run_dry, ignore=['setup_trap'])

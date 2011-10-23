@@ -2,26 +2,22 @@
 
  #Djangos embeded mod_wsgi
  <VirtualHost *:80>
-      ServerName djity.net
-      ServerAlias www.djity.net
+      #ServerName djity.net
+      #ServerAlias www.djity.net
       ServerAdmin admin@djity.net
 
-      # ReWrite URL to WWW
-      RewriteEngine On
-      RewriteCond %{HTTP_HOST} ^www.djity.net
-      RewriteRule (.*) http://djity.net$1 [R=301,L]
 
       # Log Files
-      ErrorLog /var/log/apache2/error-djity.net.log
-      CustomLog /var/log/apache2/access-djity.net.log combined
+      ErrorLog /var/log/apache2/error-{project_label}.log
+      CustomLog /var/log/apache2/access-{project_label}.log combined
 
       # prevent django from seting static files
-      DocumentRoot /path/to/your/djity/instance/
-      Alias /site_static /path/to/your/djity/instance/static/
+      DocumentRoot {project_path}/
+      Alias /site_static {project_path}/static/
 
       # Setup mod_wsgi
-      WSGIDaemonProcess djity.net display-name=djity.net  user=www-data processes=2 threads=15
-      WSGIScriptAlias / /path/to/your/djity/instance/mod_wsgi/dispatch.wsgi
+      WSGIDaemonProcess djity.net display-name={project_label}  user=www-data processes=2 threads=15
+      WSGIScriptAlias / {project_path}/mod_wsgi/dispatch.wsgi
 
  </VirtualHost>
 

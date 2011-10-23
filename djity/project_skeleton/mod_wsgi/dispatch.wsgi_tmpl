@@ -3,8 +3,8 @@ import sys
 sys.stdout = sys.stderr
 
 
-PROJECT_ROOT=""
-ALLDIRS = ['/path/to/your/virtualenv/lib/python2.6/site-packages']
+PROJECT_ROOT="{project_path}"
+ALLDIRS = ['{virtualenv_path}/lib/python2.6/site-packages']
 
 import site 
 
