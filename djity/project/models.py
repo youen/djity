@@ -9,7 +9,7 @@ from django.conf import settings
 
 from djity.portal.models import SiteRoot
 from djity.portlet.models import Portlet,TextPortlet,get_portlets
-from djity.transmeta import TransMeta
+from transmeta import TransMeta
 from djity.utils import has_perm, granted_perms, djreverse
 from djity.utils.security import sanitize
 from djity.utils.inherit import SuperManager

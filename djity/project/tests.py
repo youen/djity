@@ -12,7 +12,7 @@ from djity.project.models import Project
 import djity 
 
 class ProjectTest(unittest.TestCase):
-    fixtures = [djity.__path__[0]+'/fixtures/test_project.json']
+    fixtures = ['test_project',]
 
     def setUp(self):
         # Every test needs a client.

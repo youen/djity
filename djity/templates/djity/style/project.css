@@ -8,6 +8,8 @@ body {
     background-color: {{ background_color }};
 }
 
+audio { width: 100%; display: block; margin:20px; }
+
 /* Main layout */
 
 .line {

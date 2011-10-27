@@ -9,7 +9,7 @@ from djity.utils.inherit import SuperManager
 from djity.utils import djreverse
 from djity.utils.security import sanitize
 from djity.portlet.models import TemplatePortlet, TextPortlet
-from djity.transmeta import TransMeta
+from transmeta import TransMeta
 
 class {class_name}(Module):
     """

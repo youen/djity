@@ -4,7 +4,7 @@ from djity.utils import djreverse
 from djity.project.models import Module
 from djity.portlet.models import TemplatePortlet
 #from djity.services.revtext.field import RevField
-from djity.transmeta import TransMeta
+from transmeta import TransMeta
 #from djity.services.lod import *
 #from djity.services.partner.models import AmazonBlendedPortlet
 

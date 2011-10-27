@@ -2,7 +2,7 @@
 
 {{% block module_head %}}
 
-<script type="text/javascript" src="{{{{STATIC_URL}}}}/{package_name}/js/{module_name}.js"></script>
+<script type="text/javascript" src="{{{{STATIC_URL}}}}{package_name}/js/{module_name}.js"></script>
 {{% endblock %}}
 
 
