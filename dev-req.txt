@@ -1,0 +1,12 @@
+-e git+https://github.com/djity/djity.git#egg=djity
+BeautifulSoup==3.2.0
+Django==1.3.1
+Whoosh==2.3.0
+django-dajax==0.8.4
+django-dajaxice==0.2
+git+https://github.com/albanm/django-haystack.git#egg=django-haystack
+django-localeurl==1.5
+git+https://github.com/albanm/skeleton.git#egg=skeleton
+wsgiref==0.1.2
+django-compressor
+git+https://github.com/richardbolt/django-transmeta.git#egg=transmeta
