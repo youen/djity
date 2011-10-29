@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from djity.utils.decorators import djity_view
-from djity.transmeta import get_lang_version
+from transmeta import get_lang_version
 
 
 

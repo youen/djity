@@ -26,8 +26,8 @@
 		{# Links to needed Javascript files. This should be replaced by a single file containing the minified equivalent #}
 		{# 3rd party Javascript libraries that Djity relies on #}
 		<script type="text/javascript" src="{% locale_url LANGUAGE_CODE django.views.i18n.javascript_catalog %}" charset="utf-8"></script>
-		{% compress js %}
         {% dajaxice_js_import  "djity/js/dajaxice.core.js" %}
+		{% compress js %}
 		<script type="text/javascript" src="{{ STATIC_URL }}djity/js/jquery.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}djity/js/jquery-ui.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}djity/js/elrte.min.js" charset="utf-8" ></script>
@@ -52,6 +52,7 @@
 		<script type="text/javascript" src="{{ STATIC_URL }}djity/js/widgets/portal_parameters.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}djity/js/widgets/right_tabs.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}djity/js/widgets/form.js"></script>
+		{% endcompress %}
 		{# Include project and application level header code #}
 	    {% block project_head %}{% endblock %}
 		{% block module_head %}{% endblock %}
@@ -74,7 +75,6 @@
 				{% block module_onload %}{% endblock %}
 		     };
 		</script>
-		{% endcompress %}
     </head>
 
 	<body class="{% block body_class %}{% endblock %}" >

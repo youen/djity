@@ -9,4 +9,4 @@ django-localeurl==1.5
 git+https://github.com/albanm/skeleton.git#egg=skeleton
 wsgiref==0.1.2
 django-compressor
-git+https://github.com/richardbolt/django-transmeta.git#egg=transmeta
+git+https://github.com/youen/django-transmeta.git#egg=transmeta
