@@ -42,7 +42,7 @@ Dependencies
 
 
 Embedded dependencies
-------------------
+---------------------
 
 The source from some 3rd party programs are embedded for convenience. The list
 below is for informational purpose, you don't need to do anything about it.
@@ -55,7 +55,17 @@ Djity embedded JS projects :
 
 Required dependencies
 ---------------------
-You have to install :
+
+Use pip to install all required packages ::
+
+ pip install -r https://github.com/djity/djity/raw/master/dev-req.txt
+
+
+Dependencies details
+--------------------
+
+If you don't use the require file method, you have to install this pakages by hand :
+
 
  * `Django <http://www.djangoproject.com/>`_::
    
