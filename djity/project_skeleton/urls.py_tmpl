@@ -14,6 +14,8 @@ urlpatterns = patterns('',
 
 	(r'^localeurl/', include('localeurl.urls')),
 
+	(r'^facebook/', include('django_facebook.urls')),
+
 	(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 
 	(r'^jsi18n/', 'django.views.i18n.javascript_catalog',{{ 'packages': ('djity')}}),

@@ -118,6 +118,7 @@ INSTALLED_APPS = [
 
     # Facebook
     'django_facebook',
+    'registration',
 
     # Haystack for search
     'haystack',
@@ -146,9 +147,14 @@ STATICFILES_FINDERS = (
 ###########################################
 
 
+#Authentification from the standard django backend  or the Facebook one
 AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
         'django_facebook.auth_backends.FacebookBackend',
     )
+
+AUTH_PROFILE_MODULE = 'portal.UserProfile'
+
 
 # Role values are defined in constants
 ANONYMOUS = 0
@@ -230,6 +236,7 @@ USE_L10N = True
 import re
 LOCALE_INDEPENDENT_PATHS = (
     re.compile('^/dajaxice/'),
+    re.compile('^/facebook/'),
 )
 
 #LOCALEURL_USE_ACCEPT_LANGUAGE = True

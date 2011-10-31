@@ -311,6 +311,14 @@ html>body #main {
 	width:70px;
 }
 
+div#fb-root a{
+        display:block;
+	height:70px;
+        width:70px;
+	background : transparent url('{{ STATIC_URL }}/djity/images/f_logo.png') 0 0 no-repeat;
+
+}
+
 /* portlet slots */
 
 #top{
