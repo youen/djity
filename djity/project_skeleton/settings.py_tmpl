@@ -89,6 +89,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.static',
+    'django_facebook.context_processors.facebook',
+
 )
 
 INSTALLED_APPS = [
@@ -111,7 +113,11 @@ INSTALLED_APPS = [
     'dajaxice',
     'dajax',
 
+    # compress css/js
     'compressor',
+
+    # Facebook
+    'django_facebook',
 
     # Haystack for search
     'haystack',
@@ -138,6 +144,11 @@ STATICFILES_FINDERS = (
 ###########################################
 # Djity roles and permissions definitions #
 ###########################################
+
+
+AUTHENTICATION_BACKENDS = (
+        'django_facebook.auth_backends.FacebookBackend',
+    )
 
 # Role values are defined in constants
 ANONYMOUS = 0

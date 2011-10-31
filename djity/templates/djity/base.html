@@ -157,6 +157,10 @@
 				<label for="login_password">{% trans "Password" %}</label><br/>
 				<input id="login_password" name="Password" type="password"><br/>
 			</form>
+            <form action="{% url facebook_connect %}?facebook_login=1" method="post">
+<a href="javascript:void(0);" style="font-size: 20px;" onclick="F.connect(this.parentNode);">Register, login or connect with facebook</a>
+<input type="hidden" value="{{ request.path }}" name="next" />
+</form>
 		</div>
         {% if perm.manage %}
         <!-- Delete Tab -->
@@ -299,5 +303,15 @@
 		</div>
 		</div>
 </div>
+    <script src="{{ STATIC_URL }}js/facebook.js" type="text/javascript"></script>
+<script>
+facebookAppId = '{{ FACEBOOK_APP_ID }}';
+function facebookJSLoaded(){
+FB.init({appId: facebookAppId, status: false, cookie: true, xfbml: true, oauth: true});
+}
+window.fbAsyncInit = facebookJSLoaded;
+F = new facebookClass(facebookAppId);
+F.load();
+</script>
     </body>
 </html>
