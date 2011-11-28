@@ -29,7 +29,8 @@ dj.remote = function(func,params){
 		params.js_target = dj.namespace.register(params.js_target);
 	}
 	/* call the function using dajax */
-	eval("Dajaxice."+func+"(Dajax.process,params);");	
+	//eval("Dajaxice."+func+"(Dajax.process,params);");
+	dj.ws.send("dajax",{func:func,params:params})	
 };
 
 dj.namespace = 
@@ -112,13 +113,33 @@ dj.namespace =
 	}
 }
 
+/* Define tools function  */
+
+dj.message = function(msg) {
+	dj.messages_box.notify('create',{text:msg});
+};
+
 dj.init = function(){
 	/*
 	 * encapsulate all Djity initialization functions and widgets
 	 *
 	 * dj.context must have been set before calling this function
 	 */
+	dj.messages_box = $('#messages')
+	// Try to open a websocket
+		dj.ws = $.websocket(dj.context.ws_url,{
+		events: {
+         		notify: function(e) {
+                        	dj.message(e.data); // 'baa'
+                	},
+         		dajax: function(e) {
+                        	Dajax.process(e.data); // 'baa'
+                	}
+        	
+        	}
+		});
 	dj.namespace.init();
+
 	init_right_tabs();
 	if (dj.context.perm.manage){
 		project_manage_buttons();
@@ -235,10 +256,5 @@ function paginator() {
 
 }
 
-/* Define tools function  */
-
-dj.message = function(msg) {
-	$('#messages').notify('create',{text:msg});
-};
 
 

@@ -2,6 +2,7 @@ from django.template import RequestContext
 from dajax.core.Dajax import Dajax
 import json
 from django.contrib import messages
+from django.conf import settings
 
 class DjityJSONEncoder(json.JSONEncoder):
     def default(self,obj):
@@ -21,6 +22,8 @@ class DjityContext(RequestContext):
         #messages from django framwork
         self._marked_as_json.add('messages')
         self['messages'] = list(self['messages'])
+
+        self['ws_url'] = settings.WEBSOCKET_URL
 
         self['json_context'] = JSONContext(self)
 
