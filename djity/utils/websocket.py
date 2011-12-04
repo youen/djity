@@ -12,11 +12,6 @@ import random
 import json
 
 
-
-
-from tweepy.streaming import StreamListener, Stream
-from tweepy.auth import BasicAuthHandler
-
 from dajaxice.core import dajaxice_autodiscover
 
 dajaxice_autodiscover()
@@ -155,35 +150,3 @@ class DajaxMultiplexServelet(MultiplexServelet):
             resp = DajaxiceRequest(req,message['func']).process()
             self.req_fact.post_request_update(req,resp)
             self.send(resp.content,force_json=False)
-
-
-def multiplex(environ, start_response):
-    """
-    A multiplex websocket
-    """
-
-    req_fact = RequestFactory(environ)
-
-    ws = environ['wsgi.websocket']
-    pid = fork()
-    try:
-        while True:
-
-            if pid == 0 :
-                print "tac" 
-                sleep(2)
-                ws.send('{"type":"notify", "data" : "tic"}')
-                continue
-       
-            m = ws.receive()
-            message = json.loads(m)
-            META = {'REMOTE_ADDR':'127.0.0.1'}
-            req = req_fact.request('/dajaxice',{'argv':json.dumps(message['data']['params'])})
-            resp = DajaxiceRequest(req,message['data']['func']).process()
-            req_fact.post_request_update(req,resp)
-            ws.send('{"type":"dajax", "data" : %s}'%resp.content)
-    finally:
-        pass
-
-
-

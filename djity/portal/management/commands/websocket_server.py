@@ -4,9 +4,10 @@ from django.core.management.base import BaseCommand
 from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 
-from djity.utils.websocket import Multiplex, TweetMultiplexServelet, DajaxMultiplexServelet, ChatMultiplexServelet
+from djity.utils.websocket import Multiplex,  DajaxMultiplexServelet, ChatMultiplexServelet
 
-multiplex_servelets = [TweetMultiplexServelet,DajaxMultiplexServelet]
+from tweet import TweetMultiplexServelet
+multiplex_servelets = [TweetMultiplexServelet,ChatMultiplexServelet]
 #multiplex_servelets = [DajaxMultiplexServelet]
 
 
@@ -24,7 +25,7 @@ class Command(BaseCommand):
 
     def handle(slef,*args,**options):
 
-        server = pywsgi.WSGIServer(('127.0.0.1', 8001), dispatch,
+        server = pywsgi.WSGIServer(('0.0.0.0', 8001), dispatch,
             handler_class=WebSocketHandler)
         server.serve_forever()
 
