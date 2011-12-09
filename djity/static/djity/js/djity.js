@@ -119,6 +119,113 @@ dj.message = function(msg) {
 	dj.messages_box.notify('create',{text:msg});
 };
 
+var DjityWebSocket = {
+	init : function(params){
+		       var self = this;
+		       self.connected = false;
+		       if ("WebSocket" in window)
+		       {
+			       params.open = function () 
+			       {
+				       // HTML5 WebSocket is activate 
+			       	       dj.ws = self.ws; // I'm useless, replace me!
+			               $(self).trigger('open'); //fire delayed "send" message
+			       };
+			       self.ws = $.websocket(dj.context.ws_url,params);
+			       self.timeout = window.setTimeout(function() { self.connection_check();},100);
+		       }
+		       else
+		       {
+			       // HTML5 WebSocket is not activate 
+			       self.connect();
+		       }
+
+		       return self;
+	       },
+
+	connection_check: function()
+	{
+		var self = this;
+		if(self.ws.readyState in [0,2,3])
+		{	
+			if(self.ws.readyState == 3){self.ws.close();}
+			self.connect();
+		}
+	},
+
+	connect: function()
+	{
+		var self = this;
+		self.generateUUID(); // generate an unique identifier for this socket
+		dj.remote('djity.portal.wsopen', // create a web socket over dajax
+				{
+					uuid:self.uuid,
+					js_target:self
+				}
+			);
+		self.connected = true;
+	},
+
+	syn : function()
+	{
+		var self = this;
+
+		$(self).trigger('open'); //fire delayed "send" message
+	},
+
+	generateUUID : function()
+	{
+		var self = this;
+		self.uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) 
+				{
+					var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+			        	return v.toString(16);
+				});
+
+	},
+
+	send: function(channel,message)
+	{
+		var self = this;
+
+		if( !self.connected)
+		{
+			// delay the function
+			$(self).on('open',function(){ dj.ws.send(type,message);});
+		}
+		else
+		{
+			dj.remote('djity.portal.wssend',{ // send message over dajax
+				js_target : self,
+				uuid : self.uuid,
+				channel : channel,
+				message :message
+				});
+		}
+	   
+	},
+	recv: function(m)
+	{
+
+		var self = this;
+		var h = $.websocketSettings.events[m.type];
+		if (h) h.call(this, m);
+		self.send('djity','wait');
+		
+	},
+
+	register: function(type,func)
+	{
+		$.websocketSettings.events[type] = func;
+	},
+
+	error: function()
+	{
+	},
+
+};
+
+
 dj.init = function(){
 	/*
 	 * encapsulate all Djity initialization functions and widgets
@@ -127,14 +234,14 @@ dj.init = function(){
 	 */
 	dj.messages_box = $('#messages')
 	// Try to open a websocket
-		dj.ws = $.websocket(dj.context.ws_url,{
+		dj.ws = DjityWebSocket.init({
 		events: {
          		notify: function(e) {
                         	dj.message(e.data); // 'baa'
                 	},
          		dajax: function(e) {
                         	Dajax.process(e.data); // 'baa'
-                	}
+                	},
         	
         	}
 		});

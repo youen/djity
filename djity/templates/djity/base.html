@@ -309,7 +309,8 @@
 		</div>
 		</div>
 </div>
-    <script src="{{ STATIC_URL }}js/facebook.js" type="text/javascript"></script>
+	{% if FACEBOOK_APP_ID %}
+        <script src="{{ STATIC_URL }}js/facebook.js" type="text/javascript"></script>
 <script>
 facebookAppId = '{{ FACEBOOK_APP_ID }}';
 function facebookJSLoaded(){
@@ -319,5 +320,7 @@ window.fbAsyncInit = facebookJSLoaded;
 F = new facebookClass(facebookAppId);
 F.load();
 </script>
+ {% endif %}
+
     </body>
 </html>

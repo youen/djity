@@ -8,10 +8,14 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 
 from djity.portal.forms import RegistrationForm, ProfileForm
+from djity.portal.messaging import send_to_servelet, create_server , recv_from_servelet
 from djity.utils.decorators import djity_view
+
 
 from dajaxice.core import dajaxice_functions
 dajax_register = lambda name:dajaxice_functions.register_function('djity.portal.ajax',name)
+
+
 
 @djity_view()
 def logout(request,context=None):
@@ -107,3 +111,29 @@ def login(request,js_target, username, password, context):
     js_target.next()
 
 dajax_register('login')
+
+
+
+@djity_view()
+def wsopen(request,js_target, uuid, context=None):
+    try:
+        create_server(uuid,{})                
+        js_target.syn()
+    except Exception as e:
+        js_target.error(repr(e))
+
+dajax_register('wsopen')
+
+@djity_view()
+def wssend(request,js_target, uuid,channel,  message, context):
+    if channel == 'djity' and message == "wait":
+        for msg in recv_from_servelet(uuid,wait=True):
+            js_target.recv(msg)
+    else:
+        send_to_servelet(uuid,channel,message)
+        for msg in recv_from_servelet(uuid,wait=False):
+            js_target.recv(msg)
+    js_target.send('djity','wait')
+    
+
+dajax_register('wssend')

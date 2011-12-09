@@ -4,13 +4,9 @@ from django.core.management.base import BaseCommand
 from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 
-from djity.utils.websocket import Multiplex,  DajaxMultiplexServelet, ChatMultiplexServelet
+from djity.utils.websocket import websocket_autodiscover, Multiplex
 
-from tweet import TweetMultiplexServelet
-multiplex_servelets = [TweetMultiplexServelet,ChatMultiplexServelet]
-#multiplex_servelets = [DajaxMultiplexServelet]
-
-
+websocket_autodiscover()
 
 def dispatch(environ, start_response):
 
@@ -18,7 +14,7 @@ def dispatch(environ, start_response):
 
     if environ['PATH_INFO'] == '/ws':
         
-        return Multiplex(environ, start_response, multiplex_servelets).start()
+        return Multiplex(environ, start_response).start()
 
 class Command(BaseCommand):
     help = """Start a greenlet server for websocket."""
