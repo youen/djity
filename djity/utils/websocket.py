@@ -1,69 +1,96 @@
 import sys
 import os
 import gevent
-
-from gevent import monkey
-monkey.patch_all(thread=False)
-
-from gevent import pywsgi , fork, sleep, Greenlet
+from gevent import  Greenlet
 from gevent.queue import Queue
 from geventwebsocket.handler import WebSocketHandler
 import random
 import json
+import logging 
 
+from djity.utils.messaging import ConnectionManager
 
 from dajaxice.core import dajaxice_autodiscover
 
 dajaxice_autodiscover()
 
-from dajaxice.core import DajaxiceRequest
-from django.test.client import Client
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.contrib.auth import get_user
 
-class DummyRequest:
-    def __init__(self,environ):
-        self.COOKIES = dict(map(lambda x:x.split("="),environ['HTTP_COOKIE'].split('; ')))
+try:
+        from importlib import import_module
+except:
+    try:
+        from django.utils.importlib import import_module
+    except:
+        from dajaxice.utils import simple_import_module as import_module
 
-class RequestFactory:
+log = logging.getLogger('djity')
 
-    def __init__(self,environ):
-        self.environ = environ
-        self.smw = SessionMiddleware()
-        dr = DummyRequest(self.environ)
-        self.smw.process_request(dr)
-        self.user = get_user(dr)
-        self.session = dr.session
+def websocket_autodiscover():
+    """
+    Auto-discover INSTALLED_APPS websocket.py modules and fail silently when
+    not present. NOTE: websocket_autodiscover was inspired/copied from
+    django.contrib.admin autodiscover
+    """
+    global LOADING_WEBSOCKET
+    if LOADING_WEBSOCKET:
+        return
+    LOADING_WEBSOCKET = True
 
-    def request(self,path,POST=None):
-        return WebSocketRequest(self.environ, self.session,self.user,path,POST)
-        
+    import imp
+    from django.conf import settings
 
-    def post_request_update(self,request,response):
-        self.smw.process_response(request,response)
+    for app in settings.INSTALLED_APPS:
 
-class WebSocketRequest:
+        try:
+            app_path = import_module(app).__path__
+        except AttributeError:
+            continue
 
-    def __init__(self,environ,session,user,path,POST):
-        self.META = environ
-        self.session = session
-        self.user = user
-        self._path = path
-        self.POST = POST
-        self.method = 'POST'
+        try:
+            imp.find_module('websocket', app_path)
+        except ImportError:
+            continue
 
-    def get_full_path(self):
-        return self._path
+        import_module("%s.websocket" % app)
 
+LOADING_WEBSOCKET = False
+
+class ServeletsManager(object):
+
+    instance = None
+    def __new__(theClass):
+        if theClass.instance is None:
+            theClass.instance = object.__new__(theClass)
+            theClass.instance.servelets = []
+            theClass.instance.autostart = []
+
+        return theClass.instance
+
+    
+    def register(self,serveletClass, autostart=False):
+        self.servelets.append(serveletClass)
+        if autostart:
+            self.autostart.append(serveletClass.channel_name)
+
+    def __iter__(self):
+        return self.servelets.__iter__()
+
+    
 class Multiplex():
 
-    def __init__(self,environ,start_response,servelets):
+    def __init__(self,environ):
         self.ws = environ['wsgi.websocket']
-        self.servelets = dict([(ms_class.channel_name,ms_class(environ)) for ms_class in servelets])
+        self.servelets = dict([(ms_class.channel_name,ms_class(self,environ)) for ms_class in ServeletsManager()])
+        print self.servelets
+        self.started = dict()
+
 
     def start(self):
-        for s in self.servelets.values():
+        log.debug('Starting websocket ...')
+        for name in ServeletsManager().autostart:
+            s = self.servelets[name]
             s.start()
+            self.started[name] = s
         self.receiving()
 
     def receiving(self):
@@ -72,17 +99,29 @@ class Multiplex():
                     if message == None :
                         break
                     data = json.loads(message)
-                    self.servelets[data['type']].channel.put(data['data'])
-            
-            for s in self.servelets.values():
+                    try:
+                        self.started[data['type']].channel.put(data['data'])
+                    except KeyError:
+                        name = data['type']
+                        s = self.servelets[name]
+                        s.start()
+                        self.started[name] = s
+                        try:
+                            self.started[data['type']].channel.put(data['data'])
+                        except KeyError:
+                            log.warn('client sent message to an unknown channel %s'%name)
+
+            for s in self.started.values():
                 s.shut_down()
+            log.debug('Shutdown websocket ...')
     def close(self):
         pass
 
 class MultiplexServelet(Greenlet):
     channel_name = "notify"
-    def __init__(self,environ):
+    def __init__(self,server,environ):
         Greenlet.__init__(self)
+        self.server = server
         self.channel = Queue() 
         self.environ = environ
         self.ws = environ['wsgi.websocket']
@@ -100,7 +139,35 @@ class MultiplexServelet(Greenlet):
 
     def shut_down(self):
         self.kill()
- 
+
+
+class WebSocketOverDajax():
+
+    def __init__(self,uuid):
+        self.uuid = uuid
+
+    def send(self,message):
+        queue_name = str(self.uuid) + 'down'
+        with ConnectionManager().get_publisher(queue_name) as pub:
+            pub.publish(message)
+
+    def receive(self):
+        queue_name = str(self.uuid)+'up'
+        log.debug('get message for %s'%queue_name)
+        with ConnectionManager().get_consumer(queue_name,block=True,) as queue:
+            for m in queue:
+                return m
+
+class WebSocketOverDajaxServer(Greenlet):
+
+    def _run(self):
+        print "starting Web Coket Over Dajax Server"
+        with ConnectionManager().get_consumer('create',block=True) as queue:
+            for m in queue:
+                log.debug('create server uuid=%s'% m)
+                #environ = {'wsgi.websocket':WebSocketOverDajax(m)}
+                #Multiplex(environ, None).start()
+
 class ChatMultiplexServelet(MultiplexServelet):
     channel_name = "chat"
     participants = set()
@@ -135,18 +202,3 @@ class TicMultiplexServelet(MultiplexServelet):
             sleep(2)
             self.send("tic")
 
-class DajaxMultiplexServelet(MultiplexServelet):
-    
-    channel_name = "dajax"
-
-    def __init__(self,environ):
-        super(DajaxMultiplexServelet,self).__init__(environ)
-        self.req_fact = RequestFactory(environ)
-        
-    def run(self):
-        while True:
-            message = self.channel.get()
-            req = self.req_fact.request('/dajaxice',{'argv':json.dumps(message['params'])})
-            resp = DajaxiceRequest(req,message['func']).process()
-            self.req_fact.post_request_update(req,resp)
-            self.send(resp.content,force_json=False)
