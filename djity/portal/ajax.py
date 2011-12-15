@@ -126,14 +126,16 @@ dajax_register('wsopen')
 
 @djity_view()
 def wssend(request,js_target, uuid,channel,  message, context):
-    if channel == 'djity' and message == "wait":
-        for msg in recv_from_servelet(uuid,wait=True):
-            js_target.recv(msg)
-    else:
-        send_to_servelet(uuid,channel,message)
-        for msg in recv_from_servelet(uuid,wait=False):
-            js_target.recv(msg)
-    js_target.send('djity','wait')
+    send_to_servelet(uuid,channel,message)
     
 
 dajax_register('wssend')
+
+@djity_view()
+def wsrecv(request,js_target, uuid, context):
+    for msg in recv_from_servelet(uuid,wait=True):
+        js_target.recv(msg)
+    js_target.request()
+    
+
+dajax_register('wsrecv')

@@ -42,8 +42,8 @@ class DajaxMultiplexServelet(MultiplexServelet):
     
     channel_name = "dajax"
 
-    def __init__(self,environ):
-        super(DajaxMultiplexServelet,self).__init__(environ)
+    def __init__(self,server,environ):
+        super(DajaxMultiplexServelet,self).__init__(server,environ)
         self.req_fact = RequestFactory(environ)
         
     def run(self):
@@ -54,4 +54,4 @@ class DajaxMultiplexServelet(MultiplexServelet):
             self.req_fact.post_request_update(req,resp)
             self.send(resp.content,force_json=False)
 
-ServeletsManager().register(DajaxMultiplexServelet)
+#ServeletsManager().register(DajaxMultiplexServelet)

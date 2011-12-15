@@ -125,14 +125,14 @@ var DjityWebSocket = {
 		       self.connected = false;
 		       if ("WebSocket" in window)
 		       {
-			       params.open = function () 
+                   $.websocketSettings.open  = function () 
 			       {
 				       // HTML5 WebSocket is activate 
 			       	       dj.ws = self.ws; // I'm useless, replace me!
 			               $(self).trigger('open'); //fire delayed "send" message
 			       };
 			       self.ws = $.websocket(dj.context.ws_url,params);
-			       self.timeout = window.setTimeout(function() { self.connection_check();},100);
+                   //self.timeout = window.setTimeout(function() { self.connection_check();},2000);
 		       }
 		       else
 		       {
@@ -146,7 +146,7 @@ var DjityWebSocket = {
 	connection_check: function()
 	{
 		var self = this;
-		if(self.ws.readyState in [0,2,3])
+		if(self.ws.readyState != 1)
 		{	
 			if(self.ws.readyState == 3){self.ws.close();}
 			self.connect();
@@ -204,13 +204,23 @@ var DjityWebSocket = {
 		}
 	   
 	},
-	recv: function(m)
+	
+    request: function()
+    {
+        var self = this;
+        dj.remote('djity.portal.wsrecv',{ // request message over dajax
+				js_target : self,
+				uuid : self.uuid,
+				});
+
+    },
+    
+    recv: function(m)
 	{
 
 		var self = this;
 		var h = $.websocketSettings.events[m.type];
 		if (h) h.call(this, m);
-		self.send('djity','wait');
 		
 	},
 

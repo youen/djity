@@ -14,7 +14,7 @@ def dispatch(environ, start_response):
 
     if environ['PATH_INFO'] == '/ws':
         
-        return Multiplex(environ, start_response).start()
+        return Multiplex(environ).start()
 
 class Command(BaseCommand):
     help = """Start a greenlet server for websocket."""
