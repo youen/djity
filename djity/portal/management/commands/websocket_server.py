@@ -25,7 +25,7 @@ class Command(BaseCommand):
 
     def handle(slef,*args,**options):
 
-        server = pywsgi.WSGIServer(('0.0.0.0', 8001), dispatch,
+        server = pywsgi.WSGIServer(('0.0.0.0', 8181), dispatch,
             handler_class=WebSocketHandler)
         server.serve_forever()
 
