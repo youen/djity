@@ -125,8 +125,8 @@ def wsopen(request,js_target, uuid, context=None):
 dajax_register('wsopen')
 
 @djity_view()
-def wssend(request,js_target, uuid,channel,  message, context):
-    send_to_servelet(uuid,channel,message)
+def wssend(request,js_target, uuid,  message, context):
+    send_to_servelet(uuid,message)
     
 
 dajax_register('wssend')

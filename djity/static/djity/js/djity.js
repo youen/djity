@@ -195,11 +195,13 @@ var DjityWebSocket = {
 		}
 		else
 		{
+	            var m = {type: channel};
+        	    m = $.extend(true, m, $.extend(true, {}, $.websocketSettings.options, m));
+            	    if (message) m['data'] = message;
 			dj.remote('djity.portal.wssend',{ // send message over dajax
 				js_target : self,
 				uuid : self.uuid,
-				channel : channel,
-				message :message
+				message : $.toJSON(m),
 				});
 		}
 	   

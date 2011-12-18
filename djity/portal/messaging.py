@@ -13,10 +13,10 @@ def create_server_process():
             print m
 
         
-def send_to_servelet(uuid,channel,message):
+def send_to_servelet(uuid,message):
     queue_name = str(uuid)+'up'
     with ConnectionManager().get_publisher(queue_name) as pub:
-        pub.publish('{"type":"%s","data":"%s"}'%(channel,message))
+        pub.publish(message)
                              
                              
 def recv_from_servelet(uuid,wait=False):
@@ -25,10 +25,10 @@ def recv_from_servelet(uuid,wait=False):
         for m in queue:
             yield m
 
-def send_to_brother(uuid,channel,message):
+def send_to_brother(uuid,message):
     queue_name = str(uuid)+'down'
     with ConnectionManager().get_publisher(queue_name) as pub:
-        pub.publish((channel,message))
+        pub.publish(message)
 
 def recv_from_brother(uuid):
     queue_name = str(uuid)+'up'
