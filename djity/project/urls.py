@@ -33,7 +33,7 @@ urlpatterns = patterns('',
 for app in settings.DJITY_APPS:
     app_url = import_module('%s.urls'%app)
     urlpatterns += patterns('',
-                (r'^(?P<project_name>[-\w]+)/%s/*'%app_url.prefix,include(app_url)),
+                (r'^(?P<project_name>[-\w]+)/%s/+'%app_url.prefix,include(app_url)),
     )
 
 #redirect to a simple or the root project
