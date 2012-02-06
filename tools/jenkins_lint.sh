@@ -1,3 +1,4 @@
+. ${WORKSPACE}/tools/jenkins_virtualenv.sh
 
 pylint --rcfile ${WORKSPACE}/tools/pylintrc -f parseable `find djity  -name "*.py"` > ${WORKSPACE}/pylint.txt
 echo "pylint complete"
