@@ -1,6 +1,6 @@
 PATH=${WORKSPACE}/.env/bin:$PATH
 
-if [ -d "${WORKSPACE}/.env"]; then
+if [ -d "${WORKSPACE}/.env" ]; then
 	echo "**> Virtualenv exists"
 else
 	echo "**> Creating virtualenv"
