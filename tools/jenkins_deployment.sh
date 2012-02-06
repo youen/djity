@@ -1,9 +1,16 @@
 . ${WORKSPACE}/tools/jenkins_virtualenv.sh
 
-echo "change directory to /srv/web/test.djity.net"
-cd /srv/web/test.djity.net
+ROOTDIR=${WORKSPACE}/../
+
+echo "change directory to ${ROOTDIR}"
+cd ${ROOTDIR}
 
 echo "create new project"
-djity-admin create_project /srv/web/test.djity.net/project
+djity-admin.py create_project ${ROOTDIR} << EOF Djity
+admin
+admin@djity.net
+y
+y
+EOF
 
 
