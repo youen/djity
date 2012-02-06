@@ -1,4 +1,4 @@
-PATH=${WORKSPACE}/.env/bin:$PATH
+export PATH=${WORKSPACE}/.env/bin:$PATH
 
 if [ -d "${WORKSPACE}/.env" ]; then
 	echo "**> Virtualenv exists"
