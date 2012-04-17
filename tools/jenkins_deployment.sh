@@ -34,6 +34,7 @@ cd  ${ROOTDIR}/${JOB_NAME}
 
 ./manage.py collectstatic --noinput
 
+BUILD_ID="Don't kill my unicorn!"
 
 gunicorn_django --bind 0.0.0.0:8002 --daemon --pid $pidfile --log-file $logfile
 echo "gunicorn launch!"
