@@ -5,8 +5,12 @@ ROOTDIR=${WORKSPACE}/../
 echo "change directory to ${ROOTDIR}"
 cd ${ROOTDIR}
 
+ROOTDIR=`pwd`
+
 echo "create new project"
-djity-admin.py create_project ${ROOTDIR} << EOF Djity
+echo "djity-admin.py create_project ${ROOTDIR}/${JOB_NAME} "
+djity-admin.py create_project ${ROOTDIR}/${JOB_NAME} << EOF
+Djity
 admin
 admin@djity.net
 y
