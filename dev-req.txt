@@ -14,3 +14,4 @@ git+git://github.com/tschellenbach/Django-facebook.git#egg=django-facebook
 hg+https://bitbucket.org/ubernostrum/django-registration#egg=django-registration
 django-debug-toolbar
 pil
+gunicorn

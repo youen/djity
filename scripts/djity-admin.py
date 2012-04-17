@@ -54,6 +54,8 @@ class ProjectSkeleton(Skeleton):
             Var('project_label', description="The label of the root project of this instance of Djity", default="Djity"),
             Var('admin_name', description="Your name", default="admin"),
             Var('admin_email', description="Your email address", default="admin@example.com"),
+            Var('admin_password', description="Your password", default="admin"),
+
             Bool('develop', description="Build and run a default development project server and activate debug options (logging, templates and debug toolbar) ", default=False),
             ]
        
@@ -95,15 +97,25 @@ class ProjectSkeleton(Skeleton):
         print "setup a bare project in %s" % dst_dir
         if self['develop']:
             print "make it ready for quick development..."
-            p = Popen("python manage.py syncdb",stdin=PIPE,stdout=PIPE,stderr=PIPE,shell=True,cwd=dst_dir)
+            sys.path = [dst_dir] + sys.path
+            os.environ['DJANGO_SETTINGS_MODULE'] = 'settings' 
+            from django.core.management import call_command
+            from django.contrib.auth.models import User
+            from django.db.utils import IntegrityError
             print "create tables"
+            call_command('syncdb', interactive=False)
             print "define superuser '%s'" % self['admin_name']
-            p.communicate("yes\n%s\n%s\n" % (self['admin_name'],self['admin_email']))
+            try:
+                my_admin = User.objects.create_superuser(self['admin_name'], self['admin_email'], self['admin_password'])
+            except IntegrityError :
+                print "superuser already defined"
+                
             print "install indexes"
             print "run 'manage.py create_portal'"
-            call("python manage.py create_portal",shell=True,cwd=dst_dir)
-            print "run 'manage.py runserver'"
-            call("python manage.py runserver",shell=True,cwd=dst_dir)
+            call_command('create_portal', interactive=False)
+            #print "run 'manage.py runserver'"
+            #call("python manage.py runserver",shell=True,cwd=dst_dir)
+
 
 class ApplicationSkeleton(Skeleton):
     src = djity.__path__[0]+'/application_skeleton'
