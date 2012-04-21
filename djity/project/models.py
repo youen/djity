@@ -30,7 +30,7 @@ class Project(models.Model):
     is_root = models.BooleanField(default=False)
     inherit_members = models.BooleanField(default=False)
     forbid_subscriptions = models.BooleanField(default=False)
-    parent = models.ForeignKey('self',related_name="children",null=True,default=None) 
+    parent = models.ForeignKey('self',related_name="children",null=True,blank=True,default=None) 
     css = models.OneToOneField('style.CSS')
 
     class Meta :

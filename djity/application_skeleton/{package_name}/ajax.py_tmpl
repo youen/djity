@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language
 from djity.utils.decorators import djity_view
 from djity.utils.security import sanitize
-from transmeta import get_value,set_value
+from transmeta import getlangattr, setlangattr
 
 
 from dajaxice.core import dajaxice_functions

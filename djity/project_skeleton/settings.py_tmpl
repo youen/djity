@@ -53,7 +53,7 @@ MEDIA_URL = '/site_media/'
 STATIC_URL = '/site_static/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a trailing slash. Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/site_static/media/'
 
 DAJAXICE_MEDIA_PREFIX="dajaxice" # Will create http://yourdomain.com/dajaxice/...
 
@@ -106,6 +106,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.comments',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
 
     #extensions
 
