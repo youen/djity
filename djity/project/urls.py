@@ -42,5 +42,5 @@ for app in settings.DJITY_APPS:
 #redirect to a simple or the root project
 urlpatterns += patterns('',
         (r'^(?P<project_name>[-\w]+)/+',include(simplepage_urls)),
-        #url(r'^(?P<path>[-\w]*)','djity.portal.views.redirect_root',name='redirect_root'),
+        url(r'^(?P<path>[-\w]*)','djity.portal.views.redirect_root',name='redirect_root'),
 )
