@@ -114,6 +114,8 @@ INSTALLED_APPS = [
     # Haystack for search
     'haystack',
 
+    'transmeta',
+
     #Djity Core
     'djity',
     'djity.portlet',
@@ -121,7 +123,6 @@ INSTALLED_APPS = [
     'djity.portal',
     'djity.project',
     'djity.simplepage',
-    'djity.transmeta',
     'djity.search',
 ]
 
