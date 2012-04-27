@@ -26,6 +26,9 @@ Links
  * Homepage (roadmap, bug reports, etc.): http://redmine.djity.net/projects/djityportal
  * Git page (forks, patches, etc.): https://github.com/djity/djity
  * Official documentation: http://doc.djity.net/djity/
+ * Continuous integration: http://jenkins.djity.net
+ * Online demo deploy after each commit (login=admin,password=admin): http://test.djity.net
+
 
 Features
 ========
