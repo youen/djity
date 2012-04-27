@@ -82,7 +82,14 @@ def change_view(request,object_id,context=None, extra_context=None):
     return get_site(context["project"]).get_model_admin(name).change_view(request,object_id,extra_context)
 
 
-
+@djity_view()
+def history_view(request,object_id,context=None, extra_context=None):
+    path =  context['path']
+    if path[-1] == "/":
+        path = path[:-1]
+    name = '/'.join(path.split('/')[-4:-2])
+    object_id = object_id.split('/')[-1]
+    return get_site(context["project"]).get_model_admin(name).history_view(request,object_id,extra_context)
 
 sites = {}
 apps = []
@@ -120,9 +127,9 @@ def get_url():
             url(r'^%s/%s/add/$'%info,
                 add_view,
                 name='%s_%s_add' % info),
-    #        url(r'^(.+)/history/$',
-    #            wrap(self.history_view),
-    #            name='%s_%s_history' % info),
+            url(r'^(.+)/history/$',
+                history_view,
+                name='%s_%s_history' % info),
     #        url(r'^(.+)/delete/$',
     #            wrap(self.delete_view),
     #            name='%s_%s_delete' % info),
