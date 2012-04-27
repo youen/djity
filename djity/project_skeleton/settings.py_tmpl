@@ -241,7 +241,7 @@ LOCALE_INDEPENDENT_PATHS = (
     re.compile('^/facebook/'),
 )
 
-#LOCALEURL_USE_ACCEPT_LANGUAGE = True
+LOCALEURL_USE_ACCEPT_LANGUAGE = True
 
 FIXTURE_DIRS = 'data/fixtures'
 
