@@ -134,6 +134,9 @@ INSTALLED_APPS = [
     'djity.project',
     'djity.simplepage',
     'djity.search',
+    
+    #south migration
+    'south',
 ]
 
 # django compress staticfiles finder
