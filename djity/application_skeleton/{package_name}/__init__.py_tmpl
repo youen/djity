@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Application metadata to be used by setup.py and displayed by 'djity-admin.py ls_apps'
 pip_name = "djity-{module_name}"
 version = '0.1'
